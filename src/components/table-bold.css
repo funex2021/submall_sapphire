@@ -1,0 +1,122 @@
+/* Components */
+/* table */
+
+.table-theme-bold-1 {
+  @apply min-w-full;
+}
+
+.table-theme-bold-1 thead {
+  @apply bg-gray-400;
+}
+
+.table-theme-bold-1 th {
+  @apply py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-50 uppercase;
+}
+
+.table-theme-bold-1 tbody tr {
+  @apply bg-white border-b;
+}
+
+.table-theme-bold-1 tbody tr td {
+  @apply py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap;
+}
+
+.table-theme-bold-2 {
+  @apply min-w-full;
+}
+
+.table-theme-bold-2 thead {
+  @apply bg-yellow-400;
+}
+
+.table-theme-bold-2 th {
+  @apply py-3 px-6 text-xs font-medium tracking-wider text-left text-yellow-50 uppercase;
+}
+
+.table-theme-bold-2 tbody tr {
+  @apply bg-white border-b;
+}
+
+.table-theme-bold-2 tbody tr td {
+  @apply py-4 px-6 text-sm font-medium text-yellow-900 whitespace-nowrap;
+}
+
+.table-theme-bold-3 {
+  @apply min-w-full;
+}
+
+.table-theme-bold-3 thead {
+  @apply bg-red-400;
+}
+
+.table-theme-bold-3 th {
+  @apply py-3 px-6 text-xs font-medium tracking-wider text-left text-red-50 uppercase;
+}
+
+.table-theme-bold-3 tbody tr {
+  @apply bg-white border-b;
+}
+
+.table-theme-bold-3 tbody tr td {
+  @apply py-4 px-6 text-sm font-medium text-red-900 whitespace-nowrap;
+}
+
+.table-theme-bold-4 {
+  @apply min-w-full;
+}
+
+.table-theme-bold-4 thead {
+  @apply bg-blue-400;
+}
+
+.table-theme-bold-4 th {
+  @apply py-3 px-6 text-xs font-medium tracking-wider text-left text-blue-50 uppercase;
+}
+
+.table-theme-bold-4 tbody tr {
+  @apply bg-white border-b;
+}
+
+.table-theme-bold-4 tbody tr td {
+  @apply py-4 px-6 text-sm font-medium text-blue-900 whitespace-nowrap;
+}
+
+.table-theme-bold-5 {
+  @apply min-w-full;
+}
+
+.table-theme-bold-5 thead {
+  @apply bg-pink-400;
+}
+
+.table-theme-bold-5 th {
+  @apply py-3 px-6 text-xs font-medium tracking-wider text-left text-pink-50 uppercase;
+}
+
+.table-theme-bold-5 tbody tr {
+  @apply bg-white border-b;
+}
+
+.table-theme-bold-5 tbody tr td {
+  @apply py-4 px-6 text-sm font-medium text-pink-900 whitespace-nowrap;
+}
+
+.table-theme-bold-6 {
+  @apply min-w-full;
+}
+
+.table-theme-bold-6 thead {
+  @apply bg-green-400;
+}
+
+.table-theme-bold-6 th {
+  @apply py-3 px-6 text-xs font-medium tracking-wider text-left text-green-50 uppercase;
+}
+
+.table-theme-bold-6 tbody tr {
+  @apply bg-white border-b;
+}
+
+.table-theme-bold-6 tbody tr td {
+  @apply py-4 px-6 text-sm font-medium text-green-900 whitespace-nowrap;
+}

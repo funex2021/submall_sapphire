@@ -1,0 +1,74 @@
+/* Components */
+/* Nav */
+
+.header {
+  @apply w-full bg-gray-900 fixed top-0 left-0 z-10;
+}
+
+.nav {
+  @apply h-14 flex justify-between items-center;
+}
+
+.nav__logo,
+.nav__toggle {
+  @apply text-white;
+}
+
+.nav__logo {
+  @apply flex items-center gap-2 font-bold;
+}
+
+.nav__logo-img {
+  @apply w-3;
+}
+
+.nav__toggle {
+  @apply inline-flex text-lg cursor-pointer;
+}
+
+.nav__menu {
+  @apply fixed  top-0 -right-full w-full h-full ease-in-out duration-300 xl:static xl:flex xl:justify-end;
+}
+
+.nav__list {
+  @apply flex flex-col text-center gap-y-12 pt-36 xl:flex-row xl:pt-0 xl:items-center xl:gap-12;
+}
+
+.nav__link {
+  @apply uppercase text-gray-100 text-sm ease-in-out duration-300;
+}
+
+.nav__link,
+.nav__logo {
+  @apply text-sm  hover:text-yellow-400;
+}
+
+.nav__close {
+  @apply text-3xl text-white absolute top-4 right-4 cursor-pointer;
+}
+
+.nav__toggle,
+.nav__close {
+  @apply xl:hidden;
+}
+
+.show__menu {
+  @apply right-0 bg-black;
+}
+
+.scroll__header {
+  @apply bg-gray-50 shadow-sm shadow-gray-200;
+}
+
+.scroll__header .nav__logo,
+.scroll__header .nav__toggle {
+  @apply text-gray-900;
+}
+
+.scroll__header .nav__link {
+  @apply xl:text-black;
+}
+
+.scroll__header .nav__logo-img {
+  @apply mix-blend-difference;
+}

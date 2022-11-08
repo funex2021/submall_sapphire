@@ -1,0 +1,45 @@
+/* Components */
+/* Button */
+.btn {
+  @apply inline-block text-center rounded-lg;
+}
+
+.btn-blue {
+  @apply inline-block text-white bg-blue-500 rounded-lg hover:bg-blue-700;
+}
+
+.btn-default {
+  @apply text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium;
+}
+
+.btn-light {
+  @apply text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700;
+}
+
+.btn-dark {
+  @apply text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg;
+}
+
+.btn-green {
+  @apply text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg;
+}
+
+.btn-red {
+  @apply text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg;
+}
+
+.btn-yellow {
+  @apply text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-400 font-medium rounded-lg;
+}
+
+.btn-orange {
+  @apply text-white bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:ring-orange-400 font-medium rounded-lg;
+}
+
+.btn-purple {
+  @apply text-white bg-purple-700 hover:bg-purple-900 focus:ring-4 focus:ring-purple-400 font-medium rounded-lg;
+}
+
+.btn-lightgreen {
+  @apply text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-400 font-medium rounded-lg;
+}

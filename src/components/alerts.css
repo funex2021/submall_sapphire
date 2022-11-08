@@ -1,0 +1,19 @@
+/* Components */
+/* Alerts */
+
+.alert-info {
+  @apply text-blue-700 bg-blue-100 rounded-lg;
+}
+
+.alert-danger {
+  @apply text-red-700 bg-red-100 rounded-lg;
+}
+.alert-success {
+  @apply text-green-700 bg-green-100 rounded-lg;
+}
+.alert-warning {
+  @apply text-yellow-700 bg-yellow-100 rounded-lg;
+}
+.alert-dark {
+  @apply text-gray-700 bg-gray-100 rounded-lg;
+}

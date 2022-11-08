@@ -1,0 +1,414 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Content */
+
+  .activity {
+    @apply text-yellow-400;
+  }
+
+  .content {
+    @apply px-2 lg:px-12;
+  }
+
+  .content-rounded {
+    @apply rounded-3xl shadow-2xl border;
+  }
+
+  /* Alerts */
+  .alert {
+    @apply rounded-lg p-4 text-sm;
+  }
+  .alert-primary {
+    @apply bg-red-100 text-red-700;
+  }
+  .alert-secondary {
+    @apply bg-gray-100 text-gray-700;
+  }
+  .alert-search {
+    @apply bg-green-100 text-green-700;
+  }
+  .alert-approve {
+    @apply bg-blue-100 text-blue-700;
+  }
+  .alert-cancel {
+    @apply bg-pink-100 text-pink-700;
+  }
+  .alert-increase {
+    @apply bg-yellow-100 text-yellow-700;
+  }
+
+  .alert-agree {
+    @apply bg-orange-100 text-orange-700;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex  items-center justify-center px-2.5 py-1 text-xs leading-none;
+  }
+  .badge-primary {
+    @apply bg-red-400 text-white rounded-md;
+  }
+  .badge-secondary {
+    @apply bg-gray-300 text-gray-800 rounded-md;
+  }
+  .badge-search {
+    @apply bg-green-600 text-white rounded-md;
+  }
+  .badge-approve {
+    @apply bg-gray-600 text-white rounded-md;
+  }
+  .badge-cancel {
+    @apply bg-pink-600 text-white rounded-md;
+  }
+  .badge-increase {
+    @apply bg-orange-400 text-gray-100 rounded-md;
+  }
+
+  /* Button */
+  /* Button Basic */
+  .btn {
+    @apply cursor-pointer inline-block px-1 py-1 rounded-lg focus:outline-none focus:ring focus:ring-offset-2 uppercase tracking-wider  text-sm;
+  }
+
+  .btn-small-square {
+    @apply cursor-pointer inline-block px-1 py-1  focus:outline-none focus:ring focus:ring-offset-2 uppercase tracking-wider text-xs;
+  }
+
+  .btn-rounded {
+    @apply cursor-pointer inline-block h-12 w-12 rounded-full;
+  }
+
+  .btn-square {
+    @apply cursor-pointer inline-block px-1 py-1 focus:outline-none focus:ring focus:ring-offset-2 uppercase tracking-wider  text-sm;
+  }
+
+  .btn-primary {
+    @apply bg-red-400 text-white hover:bg-red-400 focus:ring-red-500 focus:ring-opacity-50 active:bg-red-600;
+  }
+  .btn-secondary {
+    @apply bg-gray-300 text-gray-800 hover:bg-gray-200 focus:ring-gray-300 focus:ring-opacity-50 active:bg-gray-400;
+  }
+  .btn-search {
+    @apply bg-green-600 text-white hover:bg-green-500 focus:ring-green-600 focus:ring-opacity-50 active:bg-green-700;
+  }
+  .btn-approve {
+    @apply bg-gray-600 text-white hover:bg-gray-500 focus:ring-gray-600 focus:ring-opacity-50 active:bg-gray-700;
+  }
+  .btn-cancel {
+    @apply bg-sky-600 text-white hover:bg-sky-500 focus:ring-sky-600 focus:ring-opacity-50 active:bg-sky-700;
+  }
+  .btn-increase {
+    @apply bg-yellow-400 text-gray-800 hover:bg-yellow-300 focus:ring-yellow-400 focus:ring-opacity-50 active:bg-yellow-700;
+  }
+
+  .btn-dark {
+    @apply bg-gray-900 text-gray-50 hover:bg-gray-700 focus:ring-gray-400 focus:ring-opacity-50 active:bg-gray-700;
+  }
+
+  .btn-gradient-cyan-blue {
+    @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+  }
+
+  .btn-gradient-sky-indigo {
+    @apply bg-gradient-to-r from-sky-500 to-indigo-500;
+  }
+
+  .btn-gradient-violet-fuchsia {
+    @apply bg-gradient-to-r from-violet-500 to-fuchsia-500;
+  }
+
+  .btn-gradient-purple-pink {
+    @apply bg-gradient-to-r from-purple-500 to-pink-500;
+  }
+
+  /* CARD */
+  /* Default Card */
+
+  .card {
+    @apply block bg-white shadow-md border border-gray-200 rounded-lg max-w-sm;
+  }
+  .card-content {
+    @apply p-6;
+  }
+  .card-title {
+    @apply text-gray-900 font-bold text-2xl tracking-tight mb-2;
+  }
+  .card-description {
+    @apply font-normal text-gray-700;
+  }
+  /* Cards Colors */
+  /* Color Primary */
+  .card-primary {
+    @apply bg-red-100 hover:bg-red-300 border-red-400;
+  }
+
+  .card-primary .card-title {
+    @apply text-red-900;
+  }
+
+  .card-primary .card-description {
+    @apply text-red-700;
+  }
+
+  /* Color Secondary */
+  .card-secondary {
+    @apply bg-gray-100 hover:bg-gray-300 border-gray-400;
+  }
+
+  .card-secondary .card-title {
+    @apply text-gray-900;
+  }
+
+  .card-secondary .card-description {
+    @apply text-gray-700;
+  }
+
+  /* Color Search */
+  .card-search {
+    @apply bg-green-100 hover:bg-green-300 border-green-400;
+  }
+
+  .card-search .card-title {
+    @apply text-green-900;
+  }
+
+  .card-search .card-description {
+    @apply text-green-700;
+  }
+
+  /* Color approve */
+  .card-approve {
+    @apply bg-blue-100 hover:bg-blue-300 border-blue-400;
+  }
+
+  .card-approve .card-title {
+    @apply text-blue-900;
+  }
+
+  .card-approve .card-description {
+    @apply text-blue-700;
+  }
+
+  /* Color cancel */
+  .card-cancel {
+    @apply bg-pink-100 hover:bg-pink-300 border-pink-400;
+  }
+
+  .card-cancel .card-title {
+    @apply text-pink-900;
+  }
+
+  .card-cancel .card-description {
+    @apply text-pink-700;
+  }
+
+  /* Color increase */
+  .card-increase {
+    @apply bg-yellow-100 hover:bg-yellow-300 border-yellow-400;
+  }
+
+  .card-increase .card-title {
+    @apply text-yellow-900;
+  }
+
+  .card-increase .card-description {
+    @apply text-yellow-700;
+  }
+
+  /* Card With Image */
+  .card-img {
+    @apply rounded-t-lg;
+  }
+
+  /* Outline */
+  .outlineform {
+    @apply bg-transparent px-2 py-1 border rounded focus:outline-none focus:ring tracking-wider text-sm;
+  }
+  .outlineform-primary {
+    @apply border-red-500 focus:ring-red-500 focus:ring-opacity-50;
+  }
+  .outlineform-secondary {
+    @apply border-gray-300 focus:ring-gray-300 focus:ring-opacity-50;
+  }
+  .outlineform-search {
+    @apply border-green-600 focus:ring-green-600 focus:ring-opacity-50;
+  }
+  .outlineform-approve {
+    @apply border-blue-600 focus:ring-blue-600 focus:ring-opacity-50;
+  }
+  .outlineform-cancel {
+    @apply border-pink-600 focus:ring-pink-600 focus:ring-opacity-50;
+  }
+  .outlineform-increase {
+    @apply border-yellow-400 focus:ring-yellow-400 focus:ring-opacity-50;
+  }
+
+  /* Table Setting */
+  /* Table Theme-1 */
+  .table-theme-1 {
+    @apply outline-none border-collapse divide-y divide-solid divide-gray-300 w-full text-xs;
+  }
+  .table-theme-1 thead tr {
+    @apply bg-blue-900 text-white text-center;
+  }
+  .table-theme-1 thead tr th {
+    @apply outline-none border-collapse text-xs py-2 border-b-2 font-bold whitespace-nowrap;
+  }
+  .table-theme-1 thead tr td {
+    @apply outline-none border-collapse text-xs py-2 border-b-2 font-bold whitespace-nowrap;
+  }
+  .table-theme-1 tbody tr {
+    @apply outline-none border-collapse text-center;
+  }
+  .table-theme-1 tbody tr th {
+    @apply outline-none border-collapse px-1 whitespace-nowrap border-b border-solid border-gray-200 py-2;
+  }
+  .table-theme-1 tbody tr td {
+    @apply outline-none border-collapse px-1 whitespace-nowrap border-b border-solid border-gray-200 py-2;
+  }
+
+  /* Table Theme-2 */
+  .table-theme-2 {
+    @apply outline-none border-collapse w-full text-xs;
+  }
+  .table-theme-2 thead tr {
+    @apply bg-indigo-900 text-white text-center;
+  }
+  .table-theme-2 thead tr th {
+    @apply border-b-2 border-solid py-2 text-center border-gray-300 whitespace-nowrap;
+  }
+  .table-theme-2 thead tr td {
+    @apply border-b-2 border-solid py-2 text-center border-gray-300 whitespace-nowrap;
+  }
+  .table-theme-2 tbody tr {
+    @apply bg-white;
+  }
+  .table-theme-2 tbody tr th {
+    @apply border-b border-solid py-2 text-center border-gray-300;
+  }
+  .table-theme-2 tbody tr td {
+    @apply border-b border-solid py-2 text-center border-gray-300;
+  }
+
+  /* Table Theme-3 */
+  .table-theme-3 {
+    @apply outline-none border-collapse divide-y divide-solid divide-gray-300 w-full text-xs;
+  }
+
+  .table-theme-3 thead tr {
+    @apply bg-slate-800 text-white text-center;
+  }
+  .table-theme-3 thead tr th {
+    @apply py-2 px-1 whitespace-nowrap;
+  }
+  .table-theme-3 thead tr td {
+    @apply py-2 px-1 whitespace-nowrap;
+  }
+  .table-theme-3 tbody {
+    @apply bg-slate-500;
+  }
+
+  .table-theme-3 tbody tr {
+    @apply bg-slate-500;
+  }
+  .table-theme-3 tbody tr th {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap border-b border-solid border-gray-200;
+  }
+  .table-theme-3 tbody tr td {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap border-b border-solid border-gray-200;
+  }
+
+  /* Table Theme-4 */
+  .table-theme-4 {
+    @apply outline-none border-collapse divide-y divide-solid divide-gray-300 w-full text-xs;
+  }
+
+  .table-theme-4 thead tr {
+    @apply border-b border-solid text-center border-gray-300;
+  }
+  .table-theme-4 thead tr th {
+    @apply py-2 px-1 whitespace-nowrap;
+  }
+  .table-theme-4 thead tr td {
+    @apply py-2 px-1 whitespace-nowrap;
+  }
+  .table-theme-4 tbody {
+    @apply bg-white;
+  }
+
+  .table-theme-4 tbody tr {
+    @apply border-b border-solid border-gray-300;
+  }
+  .table-theme-4 tbody tr th {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap border-b border-solid border-gray-200;
+  }
+  .table-theme-4 tbody tr td {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap border-b border-solid border-gray-200;
+  }
+
+  /* Table Theme-5 */
+  .table-theme-5 {
+    @apply w-full border-b border-white divide-y divide-solid divide-gray-300 text-xs;
+  }
+
+  .table-theme-5 thead tr {
+    @apply whitespace-nowrap;
+  }
+  .table-theme-5 thead tr th {
+    @apply px-2 py-2 text-xs text-white;
+  }
+  .table-theme-5 thead tr td {
+    @apply px-2 py-2 text-xs text-white;
+  }
+  .table-theme-5 tbody {
+    @apply bg-white divide-y divide-gray-300;
+  }
+
+  .table-theme-5 tbody tr {
+    @apply outline-none border-collapse border-b border-solid border-gray-200 whitespace-nowrap;
+  }
+  .table-theme-5 tbody tr th {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap;
+  }
+  .table-theme-5 tbody tr td {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap;
+  }
+
+  .table-theme-6 thead tr {
+    @apply bg-gray-500 font-normal whitespace-nowrap;
+  }
+  .table-theme-6 thead tr th {
+    @apply px-2 py-2 text-xs text-white font-normal;
+  }
+  .table-theme-6 thead tr td {
+    @apply px-2 py-2 text-xs text-white font-normal;
+  }
+  .table-theme-6 tbody {
+    @apply bg-white divide-y divide-gray-300;
+  }
+
+  .table-theme-6 tbody tr {
+    @apply outline-none border-collapse border-b border-solid border-gray-200 whitespace-nowrap;
+  }
+  .table-theme-6 tbody tr th {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap;
+  }
+  .table-theme-6 tbody tr td {
+    @apply outline-none border-collapse px-1 py-3 text-center whitespace-nowrap;
+  }
+
+  .table-theme-6 tbody tr td:nth-child(4) {
+    @apply text-right;
+  }
+
+  .table-theme-6 tbody tr td:last-child {
+    @apply text-right;
+  }
+
+  .form-input {
+    @apply h-full;
+  }
+}

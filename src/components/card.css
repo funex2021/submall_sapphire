@@ -1,0 +1,18 @@
+/* Components */
+/* Card */
+
+.card {
+  @apply block p-6 rounded-lg border border-gray-200 shadow-md;
+}
+
+.card-title {
+  @apply text-2xl font-bold tracking-tight text-gray-900;
+}
+
+.card-text {
+  @apply font-normal text-gray-700 dark:text-gray-400;
+}
+
+.card-img {
+  @apply rounded-t-lg;
+}

@@ -1,0 +1,27 @@
+.specialty__button {
+  @apply ml-5;
+}
+
+.specialty__category {
+  @apply mt-16 grid grid-cols-1 w-52 mx-auto gap-y-10;
+}
+
+.specialty__title {
+  @apply text-xl font-bold;
+}
+
+.specialty__img {
+  @apply mb-4 w-14 mx-auto duration-300;
+}
+
+.specialty__group {
+  @apply text-center hover:-translate-y-1;
+}
+
+.specialty__title {
+  @apply text-2xl mb-1;
+}
+
+.specailty__img {
+  @apply -translate-y-1;
+}

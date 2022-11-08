@@ -1,0 +1,14 @@
+/* Components */
+/* input */
+
+.input-default {
+  @apply w-full p-2.5 rounded-lg;
+}
+
+.input-small {
+  @apply p-1.5 w-full rounded-lg;
+}
+
+.input-tiny {
+  @apply p-0.5 w-full rounded-lg;
+}

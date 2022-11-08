@@ -1,0 +1,15 @@
+.accordion-item {
+  @apply bg-white my-4 border-b border-gray-300;
+}
+.accordion-item-header {
+  @apply cursor-pointer relative items-center flex font-bold py-2  after:content-['\002B'] after:absolute after:right-4;
+}
+.accordion-item-header.active {
+  @apply after:content-["\2212"];
+}
+.accordion-item-body {
+  @apply overflow-hidden duration-300 ease-in-out;
+}
+.accordion-item-body-content {
+  @apply border-t border-gray-300;
+}
