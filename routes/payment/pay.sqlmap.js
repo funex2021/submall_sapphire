@@ -188,10 +188,24 @@ function fnGetCoinBuyList(param, conn) {
         sql += "  when ccs.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccs.buy_num , ccs.pay_num , ccs.send_txid , DATE_FORMAT(fn_get_time(ccs.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
         sql += "   from  " + param.cs_coin_sell + " ccs "
         sql += "  where  ccs.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
+
+        sql += "   union all"
+        sql += "  select '구매' title ,case when ccsl.sell_sts = 'CMDT00000000000024' then '대기' "
+        sql += "  when ccsl.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccsl.buy_num , ccsl.pay_num , ccsl.send_txid , DATE_FORMAT(fn_get_time(ccsl.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
+        sql += "   from cs_coin_sell_log ccsl "
+        sql += "  where  ccsl.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
+
         sql += "   union all"
         sql += "  select '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cct.trans_num , cct.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt "
         sql += "  from cs_coin_send_his ccsh "
-        sql += "   inner join " + param.cs_coin_trans + " cct on ccsh.txid = cct.trans_seq and cct.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "') ) t"
+        sql += "   inner join " + param.cs_coin_trans + " cct on ccsh.txid = cct.trans_seq and cct.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "') "
+
+        sql += "   union all"
+        sql += "  select '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cctl.trans_num , cctl.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt "
+        sql += "  from cs_coin_send_his ccsh "
+        sql += "   inner join cs_coin_trans_log cctl on ccsh.txid = cctl.trans_seq and cctl.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "') "
+
+        sql += " ) t"
         sql += " WHERE DATE_FORMAT(t.create_dt, '%Y-%m-%d') between DATE_FORMAT('" + param.srtDt + "', '%Y-%m-%d') and DATE_FORMAT('" + param.endDt + "', '%Y-%m-%d') ";
         sql += "  order by t.create_dt desc "
         sql += " limit " + (param.pageIndex - 1) * param.rowsPerPage + "," + param.rowsPerPage
