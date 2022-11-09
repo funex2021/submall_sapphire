@@ -152,8 +152,9 @@ module.exports = (pool) => {
     return new Promise(function (resolve, reject) {
       var sql =" SELECT cm.m_seq , cm.mem_id, cm.cmpny_cd, cm.mem_pass, cm.salt, cm.mem_nm, cm.mem_hp "
       sql += " , cm.mem_email, nation, fn_get_name(cm.nation) nation_name , DATE_FORMAT(cm.create_dt, '%Y-%m-%d %H:%i:%s') create_dt "
-      sql += " ,cw.coin_addr, cw.coin_pk "
-      sql += " FROM cs_member cm inner join cs_wallet cw ON cw.m_seq = cm.m_seq "   
+      // sql += " ,cw.coin_addr, cw.coin_pk "
+      // sql += " FROM cs_member cm inner join cs_wallet cw ON cw.m_seq = cm.m_seq "
+      sql += " FROM cs_member cm"
       sql += " WHERE cm.mem_id = '"+param.memId+"'"
       sql += " and cm.mem_status = 'CMDT00000000000030' "
       sql += " and cm.cmpny_cd = (select cmpny_cd from cs_company where cmpny_nm = '"+param.cmpnyNm+"' )"

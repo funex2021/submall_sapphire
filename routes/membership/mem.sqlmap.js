@@ -3,7 +3,7 @@ function fnGetMemTotal(param, conn) {
   return new Promise(function (resolve, reject) {
     var sql =" SELECT count(1) totSum "
     sql += " FROM cs_member cm "
-    sql += " inner join cs_wallet cw ON cm.m_seq = cw.m_seq "
+    // sql += " inner join cs_wallet cw ON cm.m_seq = cw.m_seq "
     sql += " inner join cs_bank cb ON cm.m_seq = cb.m_seq "   
     sql += " WHERE cm.cmpny_cd = '"+param.cmpnyCd+"'"
     sql += " AND cm.admin_grade != 'CMDT00000000000000'"
@@ -29,9 +29,10 @@ function fnGetMemTotal(param, conn) {
 function fnGetMemList(param, conn) {
   return new Promise(function (resolve, reject) {
     var sql =" SELECT cm.m_seq , cm.mem_id, cm.mem_pass, cm.salt, cm.mem_nm, cm.mem_hp, cm.mem_email, nation, fn_get_name(cm.nation) nation_name ,admin_grade, fn_get_name(cm.admin_grade) admin_grade_name, DATE_FORMAT(cm.create_dt, '%Y-%m-%d %H:%i:%s') create_dt "
-    sql += " , cw.coin_addr, cb.bank_info,cb.bank_acc,cb.acc_nm, concat(cb.bank_info,' ',cb.bank_acc,' ',cb.acc_nm) banks "
+    // sql += " , cw.coin_addr, cb.bank_info,cb.bank_acc,cb.acc_nm, concat(cb.bank_info,' ',cb.bank_acc,' ',cb.acc_nm) banks "
+    sql += " , cb.bank_info,cb.bank_acc,cb.acc_nm, concat(cb.bank_info,' ',cb.bank_acc,' ',cb.acc_nm) banks "
     sql += " FROM cs_member cm "
-    sql += " inner join cs_wallet cw ON cm.m_seq = cw.m_seq "
+    // sql += " inner join cs_wallet cw ON cm.m_seq = cw.m_seq "
     sql += " inner join cs_bank cb ON cm.m_seq = cb.m_seq "   
     sql += " WHERE cm.cmpny_cd = '"+param.cmpnyCd+"'"
     sql += " AND cm.admin_grade != 'CMDT00000000000000'"
