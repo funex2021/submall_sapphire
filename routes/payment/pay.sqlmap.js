@@ -434,6 +434,7 @@ function fnGetNftMstList(param, conn) {
         sql += "select seq, cmpny_cd, buy_amount, nft_id, nft_img, create_dt from cs_nft_mst";
         sql += " where 1=1";
         sql += " and cmpny_cd = '"+ param.cmpnyCd +"'";
+        sql += " order by buy_amount asc";
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
