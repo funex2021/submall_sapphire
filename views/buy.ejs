@@ -73,8 +73,8 @@
                         </div>
                         <div id="price-group" class="grid w-full grid-cols-2 gap-3 text-white sm:grid-cols-3">
                             <% nftList.forEach(function(el, index) { %>
-                                <div type="button" data-price='<%=el.buy_amount%>' data-nftSeq="<%=el.seq%>" class="py-2 text-center btn-small-square btn-primary bg-zinc-500">
-                                    +<%=el.buy_amount%>
+                                <div type="button" data-price='<%=el.sell_price%>' data-nftSeq="<%=el.nft_seq%>" class="py-2 text-center btn-small-square btn-primary bg-zinc-500">
+                                    +<%=el.sell_price%>
                                     <img src="<%=el.nft_img%>">
                                 </div>
                             <% })%>

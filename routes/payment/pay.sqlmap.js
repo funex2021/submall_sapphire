@@ -428,13 +428,14 @@ function fnSetIsBuy(param, conn) {
     });
 }
 
-function fnGetNftMstList(param, conn) {
+function fngetNftList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select seq, cmpny_cd, buy_amount, nft_id, nft_img, create_dt from cs_nft_mst";
+        sql += "select cns.nft_seq, cns.cmpny_cd, cns.sell_price, cnm.nft_id, cnm.nft_img from cs_nft_sell cns";
+        sql += " left join cs_nft_mst cnm on cnm.seq = cns.nft_seq"
         sql += " where 1=1";
-        sql += " and cmpny_cd = '"+ param.cmpnyCd +"'";
-        sql += " order by buy_amount asc";
+        sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
+        sql += " order by sell_price asc";
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -495,5 +496,5 @@ module.exports.QGetStatus = fnGetStatus
 module.exports.QGetUserTotBalance = fnGetUserTotBalance;
 module.exports.QGetUserTotTrans = fnGetUserTotTrans;
 
-module.exports.QgetNftMstList = fnGetNftMstList;
+module.exports.QgetNftList = fngetNftList;
 module.exports.QSetInsNftSell = fnSetInsNftSell;

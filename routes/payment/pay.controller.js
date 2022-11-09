@@ -175,7 +175,7 @@ exports.buypage = async (req, res, next) => {
                 }
 
                 //nftList
-                let nftList = await Query.QgetNftMstList(obj, conn);
+                let nftList = await Query.QgetNftList(obj, conn);
 
                 res.render("buy", {
                     'cmpnyInfo': cmpnyInfo[0],
