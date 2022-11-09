@@ -431,7 +431,7 @@ function fnSetIsBuy(param, conn) {
 function fnGetNftMstList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select seq, cmpny_cd, buy_amount, nft_id, create_dt from cs_nft_mst";
+        sql += "select seq, cmpny_cd, buy_amount, nft_id, nft_img, create_dt from cs_nft_mst";
         sql += " where 1=1";
         sql += " and cmpny_cd = '"+ param.cmpnyCd +"'";
 
