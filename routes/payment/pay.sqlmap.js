@@ -435,6 +435,7 @@ function fngetNftList(param, conn) {
         sql += " left join cs_nft_mst cnm on cnm.seq = cns.nft_seq"
         sql += " where 1=1";
         sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
+        sql += " and cns.sell_status = 'CMDT00000000000080'"
         sql += " order by sell_price asc";
 
         console.log(sql)
