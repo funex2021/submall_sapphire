@@ -434,6 +434,7 @@ function fngetNftList(param, conn) {
         sql += "select cns.nft_seq, cns.cmpny_cd, cns.sell_price, cnm.nft_id, cnm.nft_img from cs_nft_sell cns";
         sql += " left join cs_nft_mst cnm on cnm.seq = cns.nft_seq"
         sql += " where 1=1";
+        sql += " and cns.m_seq = '" + param.mSeq + "'";
         sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
         sql += " and cns.sell_status = 'CMDT00000000000080'"
         sql += " order by sell_price asc";
@@ -454,6 +455,24 @@ function fnSetInsNftSell(param, conn) {
         var sql = "";
         sql += "insert into "+param.cs_nft_sell+" (seq, coin_sell_seq, nft_seq) values";
         sql += "('"+param.seq+"','"+param.coin_sell_seq+"','"+param.nft_seq+"')";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetCompanyInfoByCmpnyCd(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select cmpny_cd, cmpny_id, cmpny_nm, m_seq from cs_company";
+        sql += " where 1=1";
+        sql += " and cmpny_cd = '" + param.cmpnyCd + "'";
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -499,3 +518,4 @@ module.exports.QGetUserTotTrans = fnGetUserTotTrans;
 
 module.exports.QgetNftList = fngetNftList;
 module.exports.QSetInsNftSell = fnSetInsNftSell;
+module.exports.QGetCompanyInfoByCmpnyCd = fnGetCompanyInfoByCmpnyCd;
