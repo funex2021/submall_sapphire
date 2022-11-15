@@ -175,8 +175,27 @@ app.get('/login', function (req, res, next) {
             console.log(e.message)
         }
     });
+});
 
+app.get('/signUp', function (req, res, next) {
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+    mydb.execute(async conn => {
+        try {
+            let domain = req.headers.host;
+            let obj = {}
+            obj.domain = domain;
+            config = await fnGetConfigInfo(obj, conn);
+            res.locals.config = config;
 
+            res.render("signUp", {
+                'config:': config
+            })
+            return;
+        } catch (e) {
+            console.log(e.message)
+        }
+    });
 });
 
 app.get('/logout', function (req, res) {

@@ -64,4 +64,7 @@ router.get('/logout', function (req, res) {
 router.post('/view', isAuthenticated, mem.mview);
 router.post('/ins', isAuthenticated, mem.mins);
 router.post('/coin', isAuthenticated, mem.coinInfo);
-module.exports = router
+
+router.post('/signUpProc', mem.signUpProc);
+
+module.exports = router;
