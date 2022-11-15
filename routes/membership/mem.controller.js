@@ -203,10 +203,10 @@ exports.signUpProc = async (req, res, next) => {
             let createWallet = await axios.get(CONSTS.API.URL + '/v1/api/blockchain/createWallet');
             if (createWallet.data.success) {
                 obj.cmpnyAddr = createWallet.data.data.address;
-                obj.cmpnyPk = '';
-                obj.key_id = createWallet.data.data.keyId;
-                obj.krn = createWallet.data.data.krn;
-                obj.public_key = createWallet.data.data.publicKey;
+                obj.cmpnyPk = createWallet.data.data.privateKey;
+                // obj.key_id = createWallet.data.data.keyId;
+                // obj.krn = createWallet.data.data.krn;
+                // obj.public_key = createWallet.data.data.publicKey;
             } else {
                 throw '지갑생성오류';
             }
