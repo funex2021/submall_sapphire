@@ -4,230 +4,162 @@
     <%- include('includes/cdn') %>
     <title><%= config.found_text %> | Buy</title>
 </head>
-<body class="flex justify-center text-xs font-medium bg-gray-500 md:items-center md:h-screen-165" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
-<div class="w-full max-w-2xl bg-gray-100 md:rounded-3xl md:shadow-lg md:shadow-gray-600">
-    <div class="relative h-full px-2 pt-6 pb-20 rounded-lg basis-full md:px-6 md:rounded-3xl">
-        <%- include('includes/header') %>
-        <div class="mt-2 border-t">
-            <div class="pb-6 mt-2">
-            <span class="text-base font-semibold text-gray-900 uppercase">코인구매</span>
-                <!-- 코인구매 영역 -->
-                <div class="grid col-span-12 gap-1">
-                    <div class="hidden px-3 py-2 mb-1 md:block md:text-sm">
-                        <div class="">몇 개의 Coin을 원하십니까?</div>
-                        <div class="">코인 선택 후 구매를 신청해 주시기 바랍니다.</div>
+<body class="@@dashboard">
+<div id="main-wrapper" class="show">
+    <%- include('includes/header') %>
+    <%- include('includes/nav') %>
+    <div class="content-body">
+        <div class="container">
+            <div class="page-title">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-6">
+                        <div class="page-title-content">
+                            <h3>NFT 구매</h3>
+                            <p class="mb-2">
+                                NFT 선택 후 구매를 신청해 주시기 바랍니다.
+                            </p>
+                        </div>
                     </div>
-
-                    <div class="py-2 mt-4 text-xs">
-                        <div class="flex flex-col items-center justify-between h-full gap-6 text-white md:flex-row md:gap-2">
-                            <div class="bg-zinc-400 rounded pt-5 pb-2 px-3 w-full h-full relative flex flex-col justify-center gap-0.5">
-                                <h2 class="absolute w-32 py-2 text-center text-white bg-gray-800 rounded-md -top-4 left-4">
-                                    판매자 정보
-                                </h2>
-                                <div class="flex items-center w-full pt-1">
-                                    <div class="basis-4/12 md:basis-4/12 inline-flex justify-end items-center pl-2 pr-2 md:pr-2.5 h-8 md:px-0 bg-zinc-600 rounded">
-                                        성명
-                                    </div>
-                                    <div class="pl-2 text-right basis-8/12 md:basis-7/12">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xxl-6 col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">판매자 정보</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3">
+                                    <label class="form-label">성명</label>
+                                    <div>
                                         <%= cmpnyInfo.input_info1_name %>
                                     </div>
                                 </div>
-                                <div class="flex items-center w-full">
-                                    <div class="basis-4/12 md:basis-4/12 inline-flex justify-end items-center pl-2 pr-2 md:pr-2.5 h-8 md:px-0 bg-zinc-600 rounded">
-                                        은행
-                                    </div>
-                                    <div class="pl-2 text-right basis-8/12 md:basis-7/12">
+                            </div>
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3">
+                                    <label class="form-label">은행</label>
+                                    <div>
                                         <%= cmpnyInfo.input_info1_bank %>
                                     </div>
                                 </div>
-                                <div class="flex items-center w-full">
-                                    <div class="basis-4/12 md:basis-4/12 inline-flex justify-end items-center pl-2 pr-2 md:pr-2.5 h-8 md:px-0 bg-zinc-600 rounded">
-                                        계좌번호
-                                    </div>
-                                    <div class="pl-2 text-right break-all basis-8/12 md:basis-7/12">
+                            </div>
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3">
+                                    <label class="form-label">계좌정보</label>
+                                    <div>
                                         구매하기 버튼 클릭시 확인
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="relative flex flex-col justify-center w-full h-full px-3 pt-2 pb-1 rounded bg-zinc-400">
-                                <h2 class="absolute w-32 py-2 text-center text-white bg-gray-800 rounded-md -top-4 left-4">
-                                    판매 코인수량
-                                </h2>
-                                <div class="pt-4 text-lg text-right md:pt-0">
-                                    100,000,000,000 ea
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <h4 class="card-title">구매금액</h4>
+                            </div>
+                            <div class="header-right">
+                                <div class="text-end">
+                                    <input type="text" id="price" name=price style="background-color: var(--bs-body-bg); border: none;" readonly>
+                                    <input type="hidden" name='max_amt' id="max_amt" value="<%= config.max_amt %>">
+                                    <input type="hidden" name='min_amt' id="min_amt" value="<%= config.min_amt %>">
+                                </div>
+                                <div class="text-end">
+                                    &nbsp;KRW(원)
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="px-3 py-3 mb-2 text-xs text-black shadow-md rounded-2xl bg-zinc-300">
-                        <div class="">
-                            <div class="text-sm">구매금액</div>
-                            <div class="flex items-center justify-end gap-2 mb-1">
-                                <input id="price" name=price readonly class="text-lg font-semibold text-right bg-transparent">
-                                <div class="text-right">KRW(원)</div>
-                                <input type="hidden" name='max_amt' id="max_amt" value="<%= config.max_amt %>">
-                                <input type="hidden" name='min_amt' id="min_amt" value="<%= config.min_amt %>">
-                            </div>
-                        </div>
-                        <div id="price-group" class="grid w-full grid-cols-2 gap-3 text-white sm:grid-cols-3">
-                            <% nftList.forEach(function(el, index) { %>
-                                <div type="button" data-price='<%=el.sell_price%>' data-nftSeq="<%=el.nft_seq%>" class="py-2 text-center btn-small-square btn-primary bg-zinc-500">
-                                    +<%=el.sell_price%>
-                                    <img src="<%=el.nft_img%>">
-                                </div>
-                            <% })%>
-                        </div>
-                        <div type="button" class="py-2 text-center bg-blue-500 clear-btn btn-small-square btn-approve mt-5 w-full">
-                            초기화
-                        </div>
-                    </div>
-
-                    <div class="pt-2 mt-1 text-xs text-gray-600 sm:mt-1">
-                        <a class="uppercase ">
-                            <div class="bg-white border rounded pt-5 pb-2.5 px-3 w-full h-full relative flex flex-col justify-center">
-                                <h2 class="absolute flex flex-col w-32 py-2 text-center text-white bg-gray-800 rounded-md sm:inline-block -top-4 left-4">
-                                    <span>구매 시 유의사항</span>
-                                </h2>
-                                <textarea readonly class="text-xs border-none md:h-14 lg:h-16" style="resize: none"><%= cmpnyInfo.input_info2 %></textarea>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="pb-2 text-xs text-gray-600">
-                        <div class="flex flex-col items-center justify-between sm:flex-row">
-                            <a class="underline uppercase">
-                                <div class="w-full">
-                                    <div class="flex items-center">
-                                        <div class="flex items-center h-5">
-                                            <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"/>
-                                        </div>
-                                        <div class="flex items-center justify-start w-full gap-3 py-2 ml-3 text-xs">
-                                            <label for="remember" class="font-medium tracking-tighter">
-                                                동의하기
-                                            </label>
-                                            <a data-bs-toggle="modal" href="#TermModal" role="button" class="uppercase cursor-pointer">[더보기]</a>
+                        <div class="card-body">
+                            <div class="row" id="price-group">
+                                <% nftList.forEach(function(el, index) { %>
+                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card items">
+                                            <div class="card-body">
+                                                <div class="items-img position-relative">
+                                                    <img src="<%=el.nft_img%>" class="img-fluid rounded mb-3" alt="">
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="text-end">
+                                                        <h5 class="text-muted">+<%=el.sell_price%></h5>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-center mt-3">
+                                                    <a href="#n" class="btn btn-primary" data-price='<%=el.sell_price%>' data-nftSeq="<%=el.nft_seq%>" onclick="selectPrice(this);">선택</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div></div>
-                            </a>
+                                <% })%>
+<!--                                <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">-->
+<!--                                    <div class="card items">-->
+<!--                                        <div class="card-body">-->
+<!--                                            <div class="items-img position-relative">-->
+<!--                                                <img src="https://ipfs.io/ipfs/QmVC2yZgC2Z6ykEkSTTZdJE8Ts8zuSSJqeuZeajhwkBagz" class="img-fluid rounded mb-3" alt="">-->
+<!--                                            </div>-->
+<!--                                            <div class="d-flex justify-content-between">-->
+<!--                                                <div class="text-end">-->
+<!--                                                    <h5 class="text-muted">+10000</h5>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="d-flex justify-content-center mt-3">-->
+<!--                                                <a href="#n" class="btn btn-primary" data-price='10000' data-nftSeq="1" onclick="selectPrice(this);">선택</a>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">-->
+<!--                                    <div class="card items">-->
+<!--                                        <div class="card-body">-->
+<!--                                            <div class="items-img position-relative">-->
+<!--                                                <img src="https://ipfs.io/ipfs/QmVC2yZgC2Z6ykEkSTTZdJE8Ts8zuSSJqeuZeajhwkBagz" class="img-fluid rounded mb-3" alt="">-->
+<!--                                            </div>-->
+<!--                                            <div class="d-flex justify-content-between">-->
+<!--                                                <div class="text-end">-->
+<!--                                                    <h5 class="text-muted">+30000</h5>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="d-flex justify-content-center mt-3">-->
+<!--                                                <a href="#n" class="btn btn-primary" data-price='30000' data-nftSeq="2" onclick="selectPrice(this);">선택</a>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
                         </div>
-                        <button onclick="isTermChecked()" role="button" class="w-full py-3 text-center text-white next-btn btn btn-dark">
-                            구매하기
-                        </button>
+                        <a href="#n" class="btn btn-primary w-full clear-btn">초기화</a>
                     </div>
                 </div>
-                <!-- 코인구매 영역 -->
             </div>
-        </div>
-
-        <!-- Bottom Navigation | Start -->
-        <%- include('includes/nav') %>
-        <!-- Bottom Navigation | End -->
-    </div>
-</div>
-
-<!-- Modal View Start : Alam Modal -->
-<div class="modal fade" id="viewAlarm" tabindex="-1" aria-labelledby="viewAlarmLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="flex items-center px-5 py-2 text-sm text-black bg-gray-200">
-                <h5 class="flex items-center" id="viewAlarmLabel">Alert</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="modal-text" class="px-5 py-2 text-xs text-black">
-            </div>
-            <div class="mb-2 modal-footer">
-                <button type="button" class="px-6 py-2 text-xs btn btn-dark" data-bs-dismiss="modal">
-                    확인
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal View End : Alam Modal -->
-<div class="modal fade" id="TermModal" tabindex="-1" aria-labelledby="TermModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="flex items-center px-5 py-2 text-sm text-black bg-gray-200">
-                <h5 class="flex items-center" id="TermModalLabel">약관동의</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="px-5 py-2 text-xs text-black">
-                코인 구매에 동의합니다. 구매를 원하는 상품 종류, 내용, 가격, 환불,
-                주의사항, 기타 정보에 동의합니다. (Global e-commerce law 5-23)
-            </div>
-            <div class="mb-2 modal-footer">
-                <button type="button" class="px-6 py-2 text-xs btn btn-dark" data-bs-dismiss="modal">
-                    확인
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Purchase Start : Alam Modal -->
-<div class="modal fade" id="buyAlarm" tabindex="-1" aria-labelledby="buyAlarmLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="flex items-center justify-center px-5 py-2 text-sm bg-gray-200">
-                <h5 class="items-center text-center text-black" id="buyAlarmLabel">
-                    Notification
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="px-5 py-2 text-xs text-black rounded-none">
-                <div class="py-3">
-                    코인 구매를 신청하셨습니다. <br/>
-                    판매자 정보를 확인 후 입금 하시고, 입금 확인 후 코인이 구매(전송)
-                    됩니다.
-                </div>
-            </div>
-            <div class="px-5 text-black">
-                <div class="py-2 text-sm">Seller information [판매자 정보]</div>
-                <div class="flex flex-col justify-center w-full h-full gap-1 pb-2 text-xs rounded">
-                    <div class="flex items-center w-full">
-                        <div class="py-1 text-center bg-gray-300 border-r rounded basis-1/3 xl:text-right xl:pr-5">
-                            성명
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <h4 class="card-title">주의사항</h4>
+                            </div>
                         </div>
-                        <div class="py-1 ml-2 basis-2/3 xl:w-full xl:pl-3"><%= cmpnyInfo.input_info1_name %></div>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <div class="py-1 text-center bg-gray-300 border-r rounded basis-1/3 xl:text-right xl:pr-5">
-                            은행
-                        </div>
-                        <div class="py-1 ml-2 basis-2/3 xl:w-full xl:pl-3">
-                            <%= cmpnyInfo.input_info1_bank %>
-                        </div>
-                    </div>
-                    <div class="flex items-center w-full">
-                        <div class="py-1 text-center bg-gray-300 border-r rounded basis-1/3 xl:text-right xl:pr-5">
-                            계좌번호
-                        </div>
-                        <div class="py-1 ml-2 basis-2/3 xl:w-full xl:pl-3">
-                            <%= cmpnyInfo.input_info1_acc %>
+                        <div class="card-body">
+                            <textarea readonly style="resize: none; height: 5rem; width: 100%; border: none;"><%= cmpnyInfo.input_info2 %></textarea>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="px-4 pb-2 modal-footer">
-                <button type="button" class="w-full px-5 py-2 text-xs text-white rounded-md btn btn-dark" data-bs-dismiss="modal" onclick="fnBuy()">
-                    확인
-                </button>
-            </div>
+            <a href="#n" class="btn btn-success next-btn">구매하기</a>
         </div>
     </div>
 </div>
-<!-- Modal Purchase End : Alam Modal -->
-
-<script src="/js/bootstrap.bundle.min.js"></script>
-<script src="/js/datepicker.js"></script>
+</body>
+</html>
 <script>
     if ($("#price").val() == '') {
         $("#price").val(0);
-    };
+    }
 
     let price10000cnt = 0;
     let price10000seq = 0;
@@ -247,57 +179,37 @@
     let price1000000seq = 0;
 
     const price = document.querySelector('#price');
-    const priceButtons = document.querySelector('#price-group').children;
     const clearBtn = document.querySelector('.clear-btn');
     const nextBtn = document.querySelector('.next-btn');
 
-    for (let i = 0; i < priceButtons.length; i++) {
-        priceButtons[i].addEventListener('click', function () {
-            price.value = parseInt(price.value) + parseInt(this.dataset.price);
-            if (this.dataset.price == '10000') {
-                price10000cnt ++;
-                price10000seq = this.dataset.nftseq;
-            } else if (this.dataset.price == '30000') {
-                price30000cnt ++;
-                price30000seq = this.dataset.nftseq;
-            } else if (this.dataset.price == '50000') {
-                price50000cnt ++;
-                price50000seq = this.dataset.nftseq;
-            } else if (this.dataset.price == '100000') {
-                price1000000cnt ++;
-                price1000000seq = this.dataset.nftseq;
-            } else if (this.dataset.price == '150000') {
-                price150000cnt ++;
-                price150000seq = this.dataset.nftseq;
-            } else if (this.dataset.price == '200000') {
-                price200000cnt ++;
-                price200000seq = this.dataset.nftseq;
-            } else if (this.dataset.price == '500000') {
-                price500000cnt ++;
-                price500000seq = this.dataset.nftseq;
-            } else if (this.dataset.price == '1000000') {
-                price1000000cnt ++;
-                price1000000seq = this.dataset.nftseq;
-            }
-        })
-    }
-
-
-    function isTermChecked() {
-        if ($('#remember').is(":checked")) {
-            if (price.value == "" || price.value == 0) {
-                $('#modal-text').html('금액을 입력해주세요. ');
-                $('#viewAlarm').modal('show')
-                $("#price").val(0)
-            } else {
-                $('#buyAlarm').modal('show')
-            }
-        } else {
-            $('#modal-text').html('코인 구매 약관을 동의 해주세요.');
-            $('#viewAlarm').modal('show')
+    function selectPrice(obj) {
+        price.value = parseInt(price.value) + parseInt(obj.dataset.price);
+        if (obj.dataset.price == '10000') {
+            price10000cnt++;
+            price10000seq = obj.dataset.nftseq;
+        } else if (obj.dataset.price == '30000') {
+            price30000cnt++;
+            price30000seq = obj.dataset.nftseq;
+        } else if (obj.dataset.price == '50000') {
+            price50000cnt++;
+            price50000seq = obj.dataset.nftseq;
+        } else if (obj.dataset.price == '100000') {
+            price1000000cnt++;
+            price1000000seq = obj.dataset.nftseq;
+        } else if (obj.dataset.price == '150000') {
+            price150000cnt++;
+            price150000seq = obj.dataset.nftseq;
+        } else if (obj.dataset.price == '200000') {
+            price200000cnt++;
+            price200000seq = obj.dataset.nftseq;
+        } else if (obj.dataset.price == '500000') {
+            price500000cnt++;
+            price500000seq = obj.dataset.nftseq;
+        } else if (obj.dataset.price == '1000000') {
+            price1000000cnt++;
+            price1000000seq = obj.dataset.nftseq;
         }
     }
-
 
     clearBtn.addEventListener('click', function () {
         price.value = 0
@@ -322,12 +234,10 @@
 
     nextBtn.addEventListener('click', () => {
         if (price.value == "" || price.value == 0) {
-            $('#modal-text').html('금액을 입력해주세요. ');
-            $('#viewAlarm').modal('show')
-            $("#price").val(0)
-        } else if (!$("#remember").is(":checked")) {
-            $('#modal-text').html('코인 구매 약관을 동의해주세요. ');
-            $('#viewAlarm').modal('show')
+            // $('#modal-text').html('금액을 입력해주세요. ');
+            // $('#viewAlarm').modal('show')
+            alert('금액을 입력해주세요.');
+            $("#price").val(0);
         } else {
             $.ajax({
                 url: '/p/showAccount',
@@ -337,6 +247,7 @@
                 success: function (result) {
                     // $('#buyModal').modal('hide')
                     // $('#viewAlarm').modal('show')
+                    fnBuy();
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
@@ -357,14 +268,16 @@
         let min_amt = $('input[name=min_amt]').val();
 
         if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
-            $('#modal-text').html(min_amt + '만원 이상 구매 가능합니다.');
-            $('#viewAlarm').modal('show')
+            // $('#modal-text').html(min_amt + '만원 이상 구매 가능합니다.');
+            // $('#viewAlarm').modal('show');
+            alert(min_amt + '만원 이상 구매 가능합니다.');
             return;
         }
 
         if (parseInt(objKrw) > parseInt(max_amt * 10000)) {
-            $('#modal-text').html(max_amt + '만원 이하 구매 가능합니다.');
-            $('#viewAlarm').modal('show')
+            // $('#modal-text').html(max_amt + '만원 이하 구매 가능합니다.');
+            // $('#viewAlarm').modal('show');
+            alert(max_amt + '만원 이하 구매 가능합니다.');
             return;
         }
 
@@ -395,26 +308,29 @@
 
                 console.log('result : ' + JSON.stringify(result))
                 if (result.success) {
-                    $('#buyAlarm').modal('hide')
-                    $('#modal-text').html('구매를 신청 하셨습니다.<br> 입금 확인 후 구매 됩니다. ');
-                    $("#price").val(0)
-                    $('#viewAlarm').modal('show')
+                    // $('#buyAlarm').modal('hide')
+                    // $('#modal-text').html('구매를 신청 하셨습니다.<br> 입금 확인 후 구매 됩니다. ');
+                    alert('구매를 신청 하셨습니다.<br> 입금 확인 후 구매 됩니다.');
+                    // $("#price").val(0)
+                    clearBtn.click();
+                    // $('#viewAlarm').modal('show')
                 } else {
-                    $('#buyAlarm').modal('hide')
-                    $('#modal-text').html(result.message);
-                    $("#price").val(0)
-                    $('#viewAlarm').modal('show')
+                    // $('#buyAlarm').modal('hide')
+                    // $('#modal-text').html(result.message);
+                    alert(result.message)
+                    // $("#price").val(0)
+                    clearBtn.click();
+                    // $('#viewAlarm').modal('show')
                 }
 
-                $('#viewAlarm').modal('hide')
+                // $('#viewAlarm').modal('hide')
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#viewAlarm').hide();
-                $('#modal-text').html('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.')
-                $('#viewAlarm').modal('hide')
+                // $('#viewAlarm').hide();
+                // $('#modal-text').html('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.')
+                // $('#viewAlarm').modal('hide')
+                alert('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
             }
         });
     }
 </script>
-</body>
-</html>

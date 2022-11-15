@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('includes/cdn') %>
+    <title><%=config.found_text%> | Login</title>
+  </head>
+  <body class="bg-red-500">
+    <main class="">
+      <div
+        class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0"
+      >
+        <div
+          class="w-full bg-white border rounded-lg shadow-xl shadow-red-900 md:mt-0 sm:max-w-screen-sm xl:p-0"
+        >
+          <div class="p-6 space-y-8 sm:p-8 lg:p-16">
+            <h2 class="text-2xl font-bold text-gray-900 lg:text-3xl">
+              Sign in to platform
+            </h2>
+            <form class="mt-8 space-y-6" id="login-form" action="#">
+              <div>
+                <label
+                  for="login-form-username"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Your ID</label
+                >
+                <input
+                  type="text" value="<%=userId%>"
+                  name="login-form-username"
+                  id="login-form-username"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                  placeholder="<%=config.login_text%>"
+                />
+              </div>
+              <div>
+                <label
+                  for="login-form-password"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Your password</label
+                >
+                <input
+                  type="password"
+                  name="login-form-password"
+                  id="login-form-password"
+                  placeholder="<%=config.pwd_text%>"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                />
+              </div>
+              <!-- <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input
+                    id="remember"
+                    aria-describedby="remember"
+                    name="remember"
+                    type="checkbox"
+                    class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-cyan-200"
+                    required=""
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="remember" class="font-medium text-gray-900"
+                    >Remember me</label
+                  >
+                </div>
+                <a
+                  href="#"
+                  class="ml-auto text-sm text-teal-500 hover:underline"
+                  >Lost Password?</a
+                >
+              </div> -->
+              <button
+                type="button"
+                class="w-full px-5 py-3 text-base font-medium text-center text-white rounded-lg bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 sm:w-auto"
+                onclick="fnLogin()"
+              >
+                Login to your account
+              </button>
+              <!-- <div class="text-sm font-medium text-gray-500">
+                Not registered?
+                <a href="" class="text-teal-500 hover:underline"
+                  >Create account</a
+                >
+              </div> -->
+            </form>
+            <p class="text-center error" style="display: none"></p>
+            <p class="adminInfo" style="display: none"></p>
+            <input type="hidden" name="amount" id="amount" />
+            <input type="hidden" name="is_captcha" id="is_captcha" value="<%=config.is_captcha%>"/>
+            <div class="g-recaptcha" data-sitekey="6LeJT5AdAAAAAJHV9inipwiPSnNhaAmR6S3gy3QU"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <% if (config.is_captcha == 'Y') { %>
+      <script src="https://www.google.com/recaptcha/api.js"></script>
+    <% } %>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/datepicker.js"></script>
+    <script>
+      $(function () {
+        // if ($('#alertMessage').val() != '') {
+        //   $('.pMessage').text($('#alertMessage').val());
+        //   $('.popupWrap').show();
+        // }
+
+        $(document).on('click', '.popClose', function () {
+          $(this).parents('#popupWrap').hide();
+        });
+
+        $('.idClear').click(function () {
+          $('#login-form-username').val('');
+        });
+
+        $('.pasWrdClear').click(function () {
+          $('#login-form-password').val('');
+        });
+
+        $("#login-form").keyup(function(e){if(e.keyCode == 13)  fnLogin(); });
+      });
+
+
+      function fnLogin() {
+        if ($('#login-form-username').val() == '') {
+          $('.error').text('아이디는 필수 입력값입니다.');
+          $('.error').show();
+          return;
+        }
+
+        if ($('#login-form-password').val() == '') {
+          $('.error').text('패스워드는 필수 입력값입니다.');
+          $('.error').show();
+          return;
+        }
+        if($("#is_captcha").val() == 'Y') {
+          //리캡챠
+          //사이트키는 div태그에 데이터로 넣어야함
+          var v = grecaptcha.getResponse();
+          if (v.length == 0) {
+            document.querySelector(
+              '.pMessage'
+            ).innerHTML = `'로봇이 아닙니다.' 체크박스를 클릭하세요.`;
+            $('.popupWrap').show();
+            $(document).on('click', '.popClose', function () {
+              $(this).parents('#popupWrap').hide();
+            });
+            return false;
+          }
+        }
+
+        var form = document.createElement('form');
+        form.setAttribute('charset', 'UTF-8');
+        form.setAttribute('method', 'post'); //Post 방식
+        form.setAttribute('action', '/m/signin'); //요청 보낼 주소
+
+        var hiddenField2 = document.createElement('input');
+        hiddenField2.setAttribute('type', 'hidden');
+        hiddenField2.setAttribute('name', 'memId');
+        hiddenField2.setAttribute('value', $('#login-form-username').val());
+        form.appendChild(hiddenField2);
+
+        var hiddenField3 = document.createElement('input');
+        hiddenField3.setAttribute('type', 'hidden');
+        hiddenField3.setAttribute('name', 'memPass');
+        hiddenField3.setAttribute('value', $('#login-form-password').val());
+        form.appendChild(hiddenField3);
+
+        var hiddenField4 = document.createElement('input');
+        hiddenField4.setAttribute('type', 'hidden');
+        hiddenField4.setAttribute('name', 'amount');
+        hiddenField4.setAttribute('value', $('#amount').val());
+        form.appendChild(hiddenField4);
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+    </script>
+  </body>
+</html>

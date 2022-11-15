@@ -1,19 +1,28 @@
-<div class="absolute bottom-0 right-0 flex items-center justify-center w-full mt-5">
-    <nav class="w-full h-full py-4 bg-gray-900 md:rounded-b-3xl border0">
-        <ul class="flex justify-center gap-20">
-            <li class="flex items-center justify-center duration-150 ease-out shadow btn-rounded btn-cancel hover:bg-red-500 hover:border-red-400">
+<div class="sidebar">
+    <div class="menu">
+        <ul>
+            <li>
                 <a href="/p/buyview">
-                    <i class="bx bx-home bx-sm"></i>
+                    <span><i class="ri-layout-grid-fill"></i></span>
+                    <span class="nav-text">Main</span>
                 </a>
             </li>
-            <li class="flex items-center justify-center duration-150 ease-out shadow btn-rounded btn-cancel hover:bg-red-500 hover:border-red-400">
+            <li class="">
+                <a href="/p/buy">
+                    <span><i class="ri-star-line"></i></span>
+                    <span class="nav-text">Buy</span></a>
+            </li>
+            <li class="">
                 <a href="/p/view">
-                    <i class="bx bxs-category bx-sm"></i>
-                </a>
+                    <span><i class="ri-wallet-line"></i></span>
+                    <span class="nav-text">Transaction</span></a>
             </li>
-            <li class="flex items-center justify-center duration-150 ease-out shadow btn-rounded btn-cancel hover:bg-red-500 hover:border-red-400">
-                <a href="/p/buy"><i class="bx bxs-shopping-bag-alt bx-sm"></i></a>
+            <li class=" logout">
+                <a href="/logout">
+                    <span><i class="ri-logout-circle-line"></i></span>
+                    <span class="nav-text">Signout</span>
+                </a>
             </li>
         </ul>
-    </nav>
+    </div>
 </div>
