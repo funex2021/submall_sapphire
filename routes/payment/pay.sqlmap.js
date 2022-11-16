@@ -431,8 +431,7 @@ function fnSetIsBuy(param, conn) {
 function fngetNftList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select cns.nft_seq, cns.cmpny_cd, cns.sell_price, cnm.nft_id, cnm.nft_img from cs_nft_sell cns";
-        sql += " left join cs_nft_mst cnm on cnm.seq = cns.nft_seq"
+        sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cns.nft_img from cs_nft_sell cns";
         sql += " where 1=1";
         sql += " and cns.m_seq = '" + param.mSeq + "'";
         sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
@@ -485,6 +484,23 @@ function fnGetCompanyInfoByCmpnyCd(param, conn) {
     });
 }
 
+function fnSetInsNftBuy(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "insert into cs_nft_buy (buy_seq, sell_seq, m_seq, buy_amount, coin_sell_seq) values";
+        sql += " ('"+param.buySeq+"','"+param.sellSeq+"','"+param.mSeq+"','"+param.buyAmount+"','"+param.coinSellSeq+"')";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
 
@@ -519,3 +535,4 @@ module.exports.QGetUserTotTrans = fnGetUserTotTrans;
 module.exports.QgetNftList = fngetNftList;
 module.exports.QSetInsNftSell = fnSetInsNftSell;
 module.exports.QGetCompanyInfoByCmpnyCd = fnGetCompanyInfoByCmpnyCd;
+module.exports.QSetInsNftBuy = fnSetInsNftBuy;

@@ -90,7 +90,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-center mt-3">
-                                                    <a href="#n" class="btn btn-primary" data-price='<%=el.sell_price%>' data-nftSeq="<%=el.nft_seq%>" onclick="selectPrice(this);">선택</a>
+                                                    <a href="#n" class="btn btn-primary" data-price='<%=el.sell_price%>' data-sellSeq="<%=el.sell_seq%>" onclick="selectPrice(this);">선택</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -186,28 +186,28 @@
         price.value = parseInt(price.value) + parseInt(obj.dataset.price);
         if (obj.dataset.price == '10000') {
             price10000cnt++;
-            price10000seq = obj.dataset.nftseq;
+            price10000seq = obj.dataset.sellseq;
         } else if (obj.dataset.price == '30000') {
             price30000cnt++;
-            price30000seq = obj.dataset.nftseq;
+            price30000seq = obj.dataset.sellseq;
         } else if (obj.dataset.price == '50000') {
             price50000cnt++;
-            price50000seq = obj.dataset.nftseq;
+            price50000seq = obj.dataset.sellseq;
         } else if (obj.dataset.price == '100000') {
             price1000000cnt++;
-            price1000000seq = obj.dataset.nftseq;
+            price1000000seq = obj.dataset.sellseq;
         } else if (obj.dataset.price == '150000') {
             price150000cnt++;
-            price150000seq = obj.dataset.nftseq;
+            price150000seq = obj.dataset.sellseq;
         } else if (obj.dataset.price == '200000') {
             price200000cnt++;
-            price200000seq = obj.dataset.nftseq;
+            price200000seq = obj.dataset.sellseq;
         } else if (obj.dataset.price == '500000') {
             price500000cnt++;
-            price500000seq = obj.dataset.nftseq;
+            price500000seq = obj.dataset.sellseq;
         } else if (obj.dataset.price == '1000000') {
             price1000000cnt++;
-            price1000000seq = obj.dataset.nftseq;
+            price1000000seq = obj.dataset.sellseq;
         }
     }
 

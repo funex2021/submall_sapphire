@@ -280,65 +280,57 @@ exports.buy = async (req, res, next) => {
                                 await Query.QSetIsBuy(obj, conn);
 
                                 //nft구매
-                                let nftSellObj = {};
-                                nftSellObj.coin_sell_seq = obj.seq;
-                                nftSellObj.cs_nft_sell = req.user.cs_nft_sell;
+                                let nftBuyObj = {};
+                                nftBuyObj.coinSellSeq = obj.seq;
+                                nftBuyObj.mSeq = req.user.mSeq;;
 
                                 if (price10000cnt > 0) {
-                                    for (let i = 0; i < price10000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price10000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price10000seq;
+                                    nftBuyObj.buyAmount = price10000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
                                 if (price30000cnt > 0) {
-                                    for (let i = 0; i < price30000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price30000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price30000seq;
+                                    nftBuyObj.buyAmount = price30000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
                                 if (price50000cnt > 0) {
-                                    for (let i = 0; i < price50000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price50000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price50000seq;
+                                    nftBuyObj.buyAmount = price50000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
                                 if (price100000cnt > 0) {
-                                    for (let i = 0; i < price100000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price100000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price100000seq;
+                                    nftBuyObj.buyAmount = price100000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
                                 if (price150000cnt > 0) {
-                                    for (let i = 0; i < price150000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price150000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price150000seq;
+                                    nftBuyObj.buyAmount = price150000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
                                 if (price200000cnt > 0) {
-                                    for (let i = 0; i > price200000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price200000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price200000seq;
+                                    nftBuyObj.buyAmount = price200000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
                                 if (price500000cnt > 0) {
-                                    for (let i = 0; i < price500000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price500000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price500000seq;
+                                    nftBuyObj.buyAmount = price500000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
                                 if (price1000000cnt > 0) {
-                                    for (let i = 0; i < price1000000cnt; i++) {
-                                        nftSellObj.seq = uuidv4();
-                                        nftSellObj.nft_seq = price1000000seq;
-                                        await Query.QSetInsNftSell(nftSellObj, conn);
-                                    }
+                                    nftBuyObj.buySeq = uuidv4();
+                                    nftBuyObj.sellSeq = price1000000seq;
+                                    nftBuyObj.buyAmount = price1000000cnt;
+                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
                                 }
 
                                 conn.commit();
