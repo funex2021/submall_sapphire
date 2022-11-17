@@ -120,6 +120,7 @@ exports.buypage = async (req, res, next) => {
             console.log(req.user)
             let userId = req.user.memId;
             let cmpnyCd = req.user.cmpnyCd;
+            let mSeq = req.user.mSeq;
             let cmpnyInfo = null;
             // added
             let {pageIndex, srtDt, endDt} = req.body;
@@ -134,6 +135,7 @@ exports.buypage = async (req, res, next) => {
             obj.srtDt = srtDt;
             obj.endDt = endDt;
             try {
+                obj.mSeq = mSeq;
                 obj.cmpnyCd = cmpnyCd;
                 obj.cs_coin_sell = req.user.cs_coin_sell;
                 obj.cs_coin_trans = req.user.cs_coin_trans;
@@ -176,7 +178,7 @@ exports.buypage = async (req, res, next) => {
 
                 //nftList
                 let cmpnyInfoByCd = await Query.QGetCompanyInfoByCmpnyCd(obj, conn);
-                obj.mSeq = cmpnyInfoByCd[0].m_seq;
+                obj.cmpnyMemnerSeq = cmpnyInfoByCd[0].m_seq;
                 let nftList = await Query.QgetNftList(obj, conn);
 
                 res.render("buy", {
@@ -212,7 +214,8 @@ exports.buy = async (req, res, next) => {
         price10000cnt, price10000seq, price30000cnt, price30000seq,
         price50000cnt, price50000seq, price100000cnt, price100000seq,
         price150000cnt, price150000seq, price200000cnt, price200000seq,
-        price500000cnt, price500000seq, price1000000cnt, price1000000seq
+        price500000cnt, price500000seq, price1000000cnt, price1000000seq,
+        bankSeq
     } = req.body;
 
     let obj = {}
@@ -283,6 +286,7 @@ exports.buy = async (req, res, next) => {
                                 let nftBuyObj = {};
                                 nftBuyObj.coinSellSeq = obj.seq;
                                 nftBuyObj.mSeq = req.user.mSeq;;
+                                nftBuyObj.bankSeq = bankSeq;
 
                                 if (price10000cnt > 0) {
                                     nftBuyObj.buySeq = uuidv4();
@@ -531,8 +535,24 @@ exports.showAccount = async (req, res, next) => {
             logObj.isSuccess = "01"
             await Query.QSetHistory(logObj, conn);
             await Query.QSetShowAccount(obj, conn);
+
+            // nft은행정보 조회
+            if (!req.user.bankSeq) {
+                // 은행정보 조회후 seq 등록
+                let nftBank = await Query.QGetNftBankInfoRandom(obj, conn);
+                obj.bankSeq = nftBank[0].seq;
+                obj.mSeq = req.user.mSeq;
+                await Query.QUptMember(obj, conn);
+
+                conn.commit();
+            } else {
+                obj.bankSeq = req.user.bankSeq;
+            }
+
+            let bankInfo = await Query.QGetNftBankInfo(obj, conn);
+
             conn.commit();
-            res.json(rtnUtil.successTrue("200", "", ""));
+            res.json(rtnUtil.successTrue("200", bankInfo[0]));
 
         } catch (e) {
             conn.rollback();

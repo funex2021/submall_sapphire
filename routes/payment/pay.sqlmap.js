@@ -433,7 +433,7 @@ function fngetNftList(param, conn) {
         var sql = "";
         sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cns.nft_img from cs_nft_sell cns";
         sql += " where 1=1";
-        sql += " and cns.m_seq = '" + param.mSeq + "'";
+        sql += " and cns.m_seq = '" + param.cmpnyMemnerSeq + "'";
         sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
         sql += " and cns.sell_status = 'CMDT00000000000080'"
         sql += " order by sell_price asc";
@@ -487,8 +487,67 @@ function fnGetCompanyInfoByCmpnyCd(param, conn) {
 function fnSetInsNftBuy(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "insert into cs_nft_buy (buy_seq, sell_seq, m_seq, buy_amount, coin_sell_seq) values";
-        sql += " ('"+param.buySeq+"','"+param.sellSeq+"','"+param.mSeq+"','"+param.buyAmount+"','"+param.coinSellSeq+"')";
+        sql += "insert into cs_nft_buy (buy_seq, sell_seq, m_seq, buy_amount, coin_sell_seq, bank_seq) values";
+        sql += " ('"+param.buySeq+"','"+param.sellSeq+"','"+param.mSeq+"','"+param.buyAmount+"','"+param.coinSellSeq+"','"+param.bankSeq+"')";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetNftBankInfoRandom(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select seq, bank_nm, bank_acc, acc_nm, use_yn, create_dt from cs_nft_bank";
+        sql += " where 1=1";
+        sql += " order by rand()";
+        sql += " limit 1";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnUptMember(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "update cs_member set";
+        sql += " update_dt = NOW()";
+        if (param.bankSeq != '' && param.bankSeq != null) {
+            sql += " ,bank_seq = '"+param.bankSeq+"'";
+        }
+        sql += " where 1=1";
+        sql += " and m_seq = '"+param.mSeq+"'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetNftBankInfo(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select seq, bank_nm, bank_acc, acc_nm, use_yn, create_dt from cs_nft_bank";
+        sql += " where 1=1";
+        sql += " and seq = '"+param.bankSeq+"'";
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -536,3 +595,6 @@ module.exports.QgetNftList = fngetNftList;
 module.exports.QSetInsNftSell = fnSetInsNftSell;
 module.exports.QGetCompanyInfoByCmpnyCd = fnGetCompanyInfoByCmpnyCd;
 module.exports.QSetInsNftBuy = fnSetInsNftBuy;
+module.exports.QGetNftBankInfoRandom = fnGetNftBankInfoRandom;
+module.exports.QUptMember = fnUptMember;
+module.exports.QGetNftBankInfo = fnGetNftBankInfo;
