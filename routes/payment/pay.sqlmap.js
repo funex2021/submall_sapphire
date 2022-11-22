@@ -487,8 +487,8 @@ function fnGetCompanyInfoByCmpnyCd(param, conn) {
 function fnSetInsNftBuy(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "insert into cs_nft_buy (buy_seq, sell_seq, m_seq, buy_amount, coin_sell_seq, bank_seq) values";
-        sql += " ('"+param.buySeq+"','"+param.sellSeq+"','"+param.mSeq+"','"+param.buyAmount+"','"+param.coinSellSeq+"','"+param.bankSeq+"')";
+        sql += "insert into cs_nft_buy (buy_seq, sell_seq, m_seq, buy_amount, coin_sell_seq, bank_seq, coin_addr) values";
+        sql += " ('"+param.buySeq+"','"+param.sellSeq+"','"+param.mSeq+"','"+param.buyAmount+"','"+param.coinSellSeq+"','"+param.bankSeq+"','"+param.coinAddr+"')";
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -595,37 +595,46 @@ function fnInsMemberBankLog(param, conn) {
     });
 }
 
+function fnGetMemberWalletLimit1(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select seq, m_seq, coin_typ, coin_addr, coin_pk from cs_wallet";
+        sql += " where 1=1";
+        sql += " and m_seq ='"+param.mSeq+"'";
+        sql += " limit 1";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
-
 module.exports.QGetConfigInfo = fnGetConfigInfo;
-
 module.exports.QSetHistory = fnSetHistory;
-
 module.exports.QGetCompanyInfo = fnGetCompanyInfo;
 module.exports.QSetCoinBuy = fnSetCoinBuy
-
 module.exports.QGetCoinSell = fnGetCoinSell
 module.exports.QGetBalance = fnGetBalance
-
 module.exports.QGetBuyReqSts = fnGetBuyReqSts;
 module.exports.QGetBuyMinCnt = fnGetBuyMinCnt;
 module.exports.QGetCoinBuyListTotal = fnGetCoinBuyListTotal
 module.exports.QGetCoinBuyList = fnGetCoinBuyList
 module.exports.QGetAllCoinBuyList = fnGetAllCoinBuyList
 module.exports.QGetAllCoinBuyListTotal = fnGetAllCoinBuyListTotal
-
 module.exports.QInsMeberBalance = fnInsMeberBalance
 module.exports.QUptMeberBalance = fsUptMeberBalance
 module.exports.QGetMseq = fnGetMseq
-
 module.exports.QGetBalanceCnt = fnGetBalanceCnt
-
 module.exports.QGetStatus = fnGetStatus
-
 module.exports.QGetUserTotBalance = fnGetUserTotBalance;
 module.exports.QGetUserTotTrans = fnGetUserTotTrans;
-
 module.exports.QgetNftList = fngetNftList;
 module.exports.QSetInsNftSell = fnSetInsNftSell;
 module.exports.QGetCompanyInfoByCmpnyCd = fnGetCompanyInfoByCmpnyCd;
@@ -635,3 +644,4 @@ module.exports.QUptMember = fnUptMember;
 module.exports.QGetNftBankInfo = fnGetNftBankInfo;
 module.exports.QGetNftSellCnt = fnGetNftSellCnt;
 module.exports.QInsMemberBankLog = fnInsMemberBankLog;
+module.exports.QGetMemberWalletLimit1 = fnGetMemberWalletLimit1;

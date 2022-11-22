@@ -281,6 +281,10 @@ exports.buy = async (req, res, next) => {
                                 nftBuyObj.mSeq = req.user.mSeq;;
                                 nftBuyObj.bankSeq = bankSeq;
 
+                                //지갑정보조회(limit1)
+                                let wallet = await Query.QGetMemberWalletLimit1(nftBuyObj, conn);
+                                nftBuyObj.coinAddr = wallet[0].coin_addr;
+
                                 if (price10000cnt > 0) {
                                     nftBuyObj.buySeq = uuidv4();
                                     nftBuyObj.sellSeq = price10000seq;
