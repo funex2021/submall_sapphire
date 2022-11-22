@@ -563,8 +563,7 @@ function fnGetNftBankInfo(param, conn) {
 function fnGetNftSellCnt(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select (sell_amount-ifnull(sum(cnb.buy_amount),0)) cnt from cs_nft_sell cns";
-        sql += " left join cs_nft_buy cnb on cnb.sell_seq = cns.sell_seq"
+        sql += "select cns.sell_amount - (select ifnull(sum(cnb.buy_amount), 0) from cs_nft_buy cnb where cnb.sell_seq = cns.sell_seq and cnb.buy_status in ('CMDT00000000000085', 'CMDT00000000000087')) cnt from cs_nft_sell cns";
         sql += " where 1=1";
         sql += " and cns.sell_seq ='"+param.sellSeq+"'";
 
