@@ -578,6 +578,23 @@ function fnGetNftSellCnt(param, conn) {
     });
 }
 
+function fnInsMemberBankLog(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "insert into cs_member_bank_log (m_seq, bank_seq) values";
+        sql += " ('"+param.mSeq+"','"+param.bankSeq+"')";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
 
@@ -617,3 +634,4 @@ module.exports.QGetNftBankInfoRandom = fnGetNftBankInfoRandom;
 module.exports.QUptMember = fnUptMember;
 module.exports.QGetNftBankInfo = fnGetNftBankInfo;
 module.exports.QGetNftSellCnt = fnGetNftSellCnt;
+module.exports.QInsMemberBankLog = fnInsMemberBankLog;

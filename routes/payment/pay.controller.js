@@ -599,6 +599,7 @@ exports.showAccount = async (req, res, next) => {
                 obj.bankSeq = nftBank[0].seq;
                 obj.mSeq = req.user.mSeq;
                 await Query.QUptMember(obj, conn);
+                await Query.QInsMemberBankLog(obj, conn);
 
                 conn.commit();
             } else {
