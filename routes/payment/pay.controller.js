@@ -294,7 +294,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price10000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price10000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
@@ -306,7 +306,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price30000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price30000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
@@ -318,7 +318,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price50000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price50000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
@@ -330,7 +330,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price100000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price100000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
@@ -342,7 +342,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price150000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price150000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
@@ -354,7 +354,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price200000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price200000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
@@ -366,7 +366,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price500000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price500000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
@@ -378,7 +378,7 @@ exports.buy = async (req, res, next) => {
                                     nftBuyObj.buyAmount = price1000000cnt;
                                     //nft 수량체크
                                     let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < 1) {
+                                    if (cnt < price1000000cnt) {
                                         return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
                                     }
 
