@@ -183,25 +183,25 @@ function fnGetAllCoinBuyListTotal(param, conn) {
 function fnGetCoinBuyList(param, conn) {
     return new Promise(function (resolve, reject) {
 
-        var sql = " select title,confirm_sts_name,buy_num,pay_num,send_txid,t.create_dt from ( "
-        sql += "  select '구매' title ,case when ccs.sell_sts = 'CMDT00000000000024' then '대기' "
+        var sql = " select seq, title,confirm_sts_name,buy_num,pay_num,send_txid,t.create_dt from ( "
+        sql += "  select ccs.seq seq, '구매' title ,case when ccs.sell_sts = 'CMDT00000000000024' then '대기' "
         sql += "  when ccs.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccs.buy_num , ccs.pay_num , ccs.send_txid , DATE_FORMAT(fn_get_time(ccs.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
         sql += "   from  " + param.cs_coin_sell + " ccs "
         sql += "  where  ccs.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
 
         sql += "   union all"
-        sql += "  select '구매' title ,case when ccsl.sell_sts = 'CMDT00000000000024' then '대기' "
+        sql += "  select ccsl.seq seq, '구매' title ,case when ccsl.sell_sts = 'CMDT00000000000024' then '대기' "
         sql += "  when ccsl.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccsl.buy_num , ccsl.pay_num , ccsl.send_txid , DATE_FORMAT(fn_get_time(ccsl.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
         sql += "   from cs_coin_sell_log ccsl "
         sql += "  where  ccsl.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
 
         sql += "   union all"
-        sql += "  select '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cct.trans_num , cct.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt "
+        sql += "  select '' seq, '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cct.trans_num , cct.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt "
         sql += "  from cs_coin_send_his ccsh "
         sql += "   inner join " + param.cs_coin_trans + " cct on ccsh.txid = cct.trans_seq and cct.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "') "
 
         sql += "   union all"
-        sql += "  select '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cctl.trans_num , cctl.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt "
+        sql += "  select '' seq, '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cctl.trans_num , cctl.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt "
         sql += "  from cs_coin_send_his ccsh "
         sql += "   inner join cs_coin_trans_log cctl on ccsh.txid = cctl.trans_seq and cctl.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "') "
 
@@ -431,7 +431,7 @@ function fnSetIsBuy(param, conn) {
 function fngetNftList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cns.nft_img from cs_nft_sell cns";
+        sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cns.nft_img, cns.nft_nm from cs_nft_sell cns";
         sql += " where 1=1";
         sql += " and cns.m_seq = '" + param.cmpnyMemnerSeq + "'";
         sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
@@ -614,6 +614,25 @@ function fnGetMemberWalletLimit1(param, conn) {
     });
 }
 
+function fnGetNftBuyList(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select cnb.buy_amount, cns.nft_nm, cns.nft_img from cs_nft_buy cnb";
+        sql += " left join cs_nft_sell cns on cns.sell_seq = cnb.sell_seq";
+        sql += " where 1=1";
+        sql += " and cnb.coin_sell_seq = '"+param.sellSeq+"'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
 module.exports.QGetConfigInfo = fnGetConfigInfo;
@@ -645,3 +664,4 @@ module.exports.QGetNftBankInfo = fnGetNftBankInfo;
 module.exports.QGetNftSellCnt = fnGetNftSellCnt;
 module.exports.QInsMemberBankLog = fnInsMemberBankLog;
 module.exports.QGetMemberWalletLimit1 = fnGetMemberWalletLimit1;
+module.exports.QGetNftBuyList = fnGetNftBuyList;

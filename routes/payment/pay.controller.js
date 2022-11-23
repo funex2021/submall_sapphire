@@ -26,7 +26,7 @@ exports.buyview = async (req, res, next) => {
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
 
-    mydb.execute(async conn => {
+    mydb.executeTx(async conn => {
         try {
             console.log(req.user)
             let userId = req.user.memId;
@@ -452,7 +452,7 @@ exports.withdraw = async (req, res, next) => {
         srtDt = moment().format('YYYY-MM-DD');
     }
 
-    mydb.execute(async conn => {
+    mydb.executeTx(async conn => {
         try {
             console.log(req.user)
             let userId = req.user.memId;
@@ -621,6 +621,29 @@ exports.showAccount = async (req, res, next) => {
             logObj.payResponse = e.message
             logObj.isSuccess = "00"
             await Query.QSetHistory(logObj, conn);
+            res.json(rtnUtil.successFalse("500", "", e.message, e));
+        }
+    });
+}
+
+exports.selectNftBuyList = async (req, res, next) => {
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    let {sellSeq} = req.body;
+
+    let obj = {};
+    obj.sellSeq = sellSeq;
+
+    mydb.executeTx(async conn => {
+        try {
+
+            let buyList = await Query.QGetNftBuyList(obj, conn);
+
+            res.json(rtnUtil.successTrue("200", buyList));
+
+        } catch (e) {
+            conn.rollback();
             res.json(rtnUtil.successFalse("500", "", e.message, e));
         }
     });

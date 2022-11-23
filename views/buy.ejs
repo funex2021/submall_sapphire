@@ -23,56 +23,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xxl-6 col-xl-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">판매자 정보</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3">
-                                    <label class="form-label">성명</label>
-                                    <div>
-                                        구매하기 버튼 클릭시 확인
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3">
-                                    <label class="form-label">은행</label>
-                                    <div>
-                                        구매하기 버튼 클릭시 확인
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xxl-6 col-xl-6 col-lg-6 mb-3">
-                                    <label class="form-label">계좌정보</label>
-                                    <div>
-                                        구매하기 버튼 클릭시 확인
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="header-left">
-                                <h4 class="card-title">구매금액</h4>
-                            </div>
-                            <div class="header-right">
-                                <div class="text-end">
-                                    <input type="text" id="price" name=price style="background-color: var(--bs-body-bg); border: none;" readonly>
-                                    <input type="hidden" name='max_amt' id="max_amt" value="<%= config.max_amt %>">
-                                    <input type="hidden" name='min_amt' id="min_amt" value="<%= config.min_amt %>">
-                                </div>
-                                <div class="text-end">
-                                    &nbsp;KRW(원)
-                                </div>
+                                <h4 class="card-title">상품</h4>
                             </div>
                         </div>
                         <div class="card-body">
@@ -84,73 +39,67 @@
                                                 <div class="items-img position-relative">
                                                     <img src="<%=el.nft_img%>" class="img-fluid rounded mb-3" alt="">
                                                 </div>
+                                                <h4 class="card-title"><%=el.nft_nm%></h4>
                                                 <div class="d-flex justify-content-between">
                                                     <div class="text-end">
-                                                        <h5 class="text-muted">+<%=el.sell_price%></h5>
+                                                        <h5 class="text-muted"><%=el.sell_price%> KRW</h5>
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-center mt-3">
-                                                    <a href="#n" class="btn btn-primary" data-price='<%=el.sell_price%>' data-sellSeq="<%=el.sell_seq%>" onclick="selectPrice(this);">선택</a>
+                                                    <a href="#n" class="btn btn-primary" data-price='<%=el.sell_price%>' data-sellSeq="<%=el.sell_seq%>" data-nftNm="<%=el.nft_nm%>" data-nftImg="<%=el.nft_img%>" onclick="selectPrice(this);">선택</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 <% })%>
-<!--                                <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">-->
-<!--                                    <div class="card items">-->
-<!--                                        <div class="card-body">-->
-<!--                                            <div class="items-img position-relative">-->
-<!--                                                <img src="https://ipfs.io/ipfs/QmVC2yZgC2Z6ykEkSTTZdJE8Ts8zuSSJqeuZeajhwkBagz" class="img-fluid rounded mb-3" alt="">-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-between">-->
-<!--                                                <div class="text-end">-->
-<!--                                                    <h5 class="text-muted">+10000</h5>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-center mt-3">-->
-<!--                                                <a href="#n" class="btn btn-primary" data-price='10000' data-nftSeq="1" onclick="selectPrice(this);">선택</a>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">-->
-<!--                                    <div class="card items">-->
-<!--                                        <div class="card-body">-->
-<!--                                            <div class="items-img position-relative">-->
-<!--                                                <img src="https://ipfs.io/ipfs/QmVC2yZgC2Z6ykEkSTTZdJE8Ts8zuSSJqeuZeajhwkBagz" class="img-fluid rounded mb-3" alt="">-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-between">-->
-<!--                                                <div class="text-end">-->
-<!--                                                    <h5 class="text-muted">+30000</h5>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-center mt-3">-->
-<!--                                                <a href="#n" class="btn btn-primary" data-price='30000' data-nftSeq="2" onclick="selectPrice(this);">선택</a>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
                             </div>
                         </div>
-                        <a href="#n" class="btn btn-primary w-full clear-btn">초기화</a>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-xxl-12">
                     <div class="card">
-                        <div class="card-header">
-                            <div class="header-left">
-                                <h4 class="card-title">주의사항</h4>
+                        <div class="card-header flex-row">
+                            <h4 class="card-title">선택한 상품 </h4>
+                            <div class="header-right">
+                                <div class="text-end">
+                                    <input type="text" id="price" name=price style="background-color: var(--bs-body-bg); border: none;" readonly>
+                                    <input type="hidden" name='max_amt' id="max_amt" value="<%= config.max_amt %>">
+                                    <input type="hidden" name='min_amt' id="min_amt" value="<%= config.min_amt %>">
+                                </div>
+                                <div class="text-end">
+                                    &nbsp;KRW(원)
+                                </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <textarea readonly style="resize: none; height: 5rem; width: 100%; border: none;"><%= cmpnyInfo.input_info2 %></textarea>
+
+                        <div class="card-body p-0 bs-0 bg-transparent">
+                            <div class="bid-table">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>상품명</th>
+                                            <th>수량</th>
+                                            <th>상품가격</th>
+                                            <th>삭제</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="selectBody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <a href="#n" class="btn btn-success next-btn">구매하기</a>
+            <div style="float:right;">
+                <a class="btn btn-primary clear-btn" href="#n">초기화</a>
+                <a href="#n" class="btn btn-success next-btn">구매하기</a>
+            </div>
         </div>
     </div>
 </div>
@@ -163,39 +112,47 @@
                     Notification
                 </h5>
             </div>
-            <div class="px-5 py-2 text-xs text-black rounded-none">
-                <div class="py-3">
-                    계좌 확인 하였습니다. <br/>
-                    판매자 정보를 확인 후 입금 하시고, 입금 확인 후 NFT가 구매(전송)
-                    됩니다. <br/>
-                    확인 버튼 누르시면 구매 신청이 완료됩니다.<br/>
-                    5분동안 입금 안할 시 자동 취소 됩니다.
-                </div>
-            </div>
-            <div class="px-5 text-black">
-                <div class="py-2 text-sm">판매자 정보</div>
-                <div class="flex flex-col justify-center w-full h-full gap-1 pb-2 text-xs rounded">
-                    <div class="flex items-center w-full">
-                        <input type="hidden" id="bank_seq">
-                        <div class="col-12 mb-3">
-                            <label class="form-label">성명</label>
-                            <p id="acc_nm">
+            <div class="card welcome-profile">
+                <div class="card-body"><img src="./images/avatar/1.jpg" alt="">
+                    <h4>안녕하세요. NFT를 구입해주셔서 감사합니다.</h4>
+                    <p>
+                        아래 판매자 정보를 확인 하신 후, NFT구매금액을 입금하시면
+                        시스템에서 입금 확인 후, 클레이튼 블록체인으로 NFT가 자동 전송됩니다.
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span class="verified"><i class="ri-check-line"></i></span>
+                                NFT 결제금액 :&nbsp;
+                                <div id="totalPrice">
 
-                            </p>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label class="form-label">은행</label>
-                            <p id="bank_nm">
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="verified"><i class="ri-shield-check-line"></i></span>
+                                NFT 판매자 성명 :&nbsp;
+                                <div id="acc_nm">
 
-                            </p>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label class="form-label">계좌번호</label>
-                            <p id="bank_acc">
+                                </div>
+                            </a>
+                            <a style="padding-top: 10px;">
+                                <span class="verified"><i class="ri-shield-check-line"></i></span>
+                                입금은행 :&nbsp;
+                                <div id="bank_nm">
 
-                            </p>
-                        </div>
-                    </div>
+                                </div>
+                            </a>
+                            <a style="padding-top: 10px;">
+                                <span class="not-verified"><i class="ri-shield-check-line"></i></span>
+                                계좌번호 :&nbsp;
+                                <div id="bank_acc">
+
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="px-4 pb-2 modal-footer">
@@ -235,30 +192,151 @@
 
     function selectPrice(obj) {
         price.value = parseInt(price.value) + parseInt(obj.dataset.price);
+        let html = "";
         if (obj.dataset.price == '10000') {
             price10000cnt++;
             price10000seq = obj.dataset.sellseq;
+            if ($("#10000product").length > 0) {
+                $("#10000productCnt").html(price10000cnt);
+                $("#10000productPrice").html(price10000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='10000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='10000productCnt'>"+price10000cnt+"</td>";
+                html += "<td id='10000productPrice'>"+price10000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         } else if (obj.dataset.price == '30000') {
             price30000cnt++;
             price30000seq = obj.dataset.sellseq;
+            if ($("#30000product").length > 0) {
+                $("#30000productCnt").html(price30000cnt);
+                $("#30000productPrice").html(price30000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='30000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='30000productCnt'>"+price30000cnt+"</td>";
+                html += "<td id='30000productPrice'>"+price30000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         } else if (obj.dataset.price == '50000') {
             price50000cnt++;
             price50000seq = obj.dataset.sellseq;
+            if ($("#50000product").length > 0) {
+                $("#50000productCnt").html(price50000cnt);
+                $("#50000productPrice").html(price50000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='50000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='50000productCnt'>"+price50000cnt+"</td>";
+                html += "<td id='50000productPrice'>"+price50000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         } else if (obj.dataset.price == '100000') {
             price1000000cnt++;
             price1000000seq = obj.dataset.sellseq;
+            if ($("#100000product").length > 0) {
+                $("#100000productCnt").html(price100000cnt);
+                $("#100000productPrice").html(price100000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='100000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='100000productCnt'>"+price100000cnt+"</td>";
+                html += "<td id='100000productPrice'>"+price100000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         } else if (obj.dataset.price == '150000') {
             price150000cnt++;
             price150000seq = obj.dataset.sellseq;
+            if ($("#150000product").length > 0) {
+                $("#150000productCnt").html(price150000cnt);
+                $("#150000productPrice").html(price150000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='150000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='150000productCnt'>"+price150000cnt+"</td>";
+                html += "<td id='150000productPrice'>"+price150000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         } else if (obj.dataset.price == '200000') {
             price200000cnt++;
             price200000seq = obj.dataset.sellseq;
+            if ($("#200000product").length > 0) {
+                $("#200000productCnt").html(price200000cnt);
+                $("#200000productPrice").html(price200000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='200000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='200000productCnt'>"+price200000cnt+"</td>";
+                html += "<td id='200000productPrice'>"+price200000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         } else if (obj.dataset.price == '500000') {
             price500000cnt++;
             price500000seq = obj.dataset.sellseq;
+            if ($("#500000product").length > 0) {
+                $("#500000productCnt").html(price500000cnt);
+                $("#500000productPrice").html(price500000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='500000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='500000productCnt'>"+price500000cnt+"</td>";
+                html += "<td id='500000productPrice'>"+price500000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         } else if (obj.dataset.price == '1000000') {
             price1000000cnt++;
             price1000000seq = obj.dataset.sellseq;
+            if ($("#1000000product").length > 0) {
+                $("#1000000productCnt").html(price1000000cnt);
+                $("#1000000productPrice").html(price1000000cnt * obj.dataset.price);
+            } else {
+                html += "<tr id='1000000product'>";
+                html += "<td>";
+                html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+                html += obj.dataset.nftnm;
+                html += "</td>";
+                html += "<td id='1000000productCnt'>"+price1000000cnt+"</td>";
+                html += "<td id='1000000productPrice'>"+price1000000cnt * obj.dataset.price+"</td>";
+                html += "<td><span><i class='ri-close-line me-3' onclick='removeProduct("+obj.dataset.price+");'></i></span></td>";
+                html += "</tr>";
+            }
+            $("#selectBody").append(html);
         }
     }
 
@@ -280,6 +358,7 @@
         price500000seq = 0;
         price1000000cnt = 0;
         price1000000seq = 0;
+        $("#selectBody").html("");
         // $('.modal-text').html('금액을 입력해주세요.');
     })
 
@@ -298,6 +377,7 @@
                 success: function (result) {
                     console.log(result)
                     if (result.success) {
+                        $("#totalPrice").html($("#price").val()+" KRW");
                         $("#acc_nm").html(result.data.acc_nm);
                         $("#bank_nm").html(result.data.bank_nm);
                         $("#bank_acc").html(result.data.bank_acc);
@@ -369,18 +449,12 @@
                 console.log('result : ' + JSON.stringify(result))
                 if (result.success) {
                     $('#buyAlarm').modal('hide');
-                    // $('#modal-text').html('구매를 신청 하셨습니다.<br> 입금 확인 후 구매 됩니다. ');
                     alert('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
-                    // $("#price").val(0)
                     clearBtn.click();
-                    // $('#viewAlarm').modal('show')
                 } else {
                     $('#buyAlarm').modal('hide')
-                    // $('#modal-text').html(result.message);
                     alert(result.message)
-                    // $("#price").val(0)
                     clearBtn.click();
-                    // $('#viewAlarm').modal('show')
                 }
 
                 // $('#viewAlarm').modal('hide')
@@ -392,5 +466,38 @@
                 alert('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
             }
         });
+    }
+
+    function removeProduct(price) {
+        let selectPrice = parseInt($("#"+price+"productPrice").html());
+        $("#price").val($("#price").val() - selectPrice);
+
+        if (price == '10000') {
+            price10000cnt = 0;
+            price10000seq = 0;
+        } else if (price == '30000') {
+            price30000cnt = 0;
+            price30000seq = 0;
+        }  else if (price == '50000') {
+            price50000cnt = 0;
+            price50000seq = 0;
+        } else if (price == '100000') {
+            price100000cnt = 0;
+            price100000seq = 0;
+        } else if (price == '150000') {
+            price150000cnt = 0;
+            price150000seq = 0;
+        } else if (price == '200000') {
+            price200000cnt = 0;
+            price200000seq = 0;
+        } else if (price == '500000') {
+            price500000cnt = 0;
+            price500000seq = 0;
+        } else if (price == '1000000') {
+            price1000000cnt = 0;
+            price1000000seq = 0;
+        }
+
+        $("#"+price+"product").remove();
     }
 </script>

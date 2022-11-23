@@ -49,11 +49,17 @@
                                                 let buy_num = 0;
                                                 if (el.buy_num) buy_num = el.buy_num;
                                             %>
+                                            <% let status = el.confirm_sts_name %>
                                             <tr>
-                                                <td><%= el.create_dt %></td>
-                                                <td><%= el.title %></td>
                                                 <td>
-                                                    <% let status = el.confirm_sts_name %>
+                                                    <% if (status == '완료') { %>
+                                                        <a data-toggle="collapse" href="#collapseExample<%=index%>" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');"><%= el.create_dt %></a>
+                                                    <% } else { %>
+                                                            <%= el.create_dt %>
+                                                    <% } %>
+                                                </td>
+                                                <td onclick="fnGetNftBuyInfo();"><%= el.title %></td>
+                                                <td>
                                                     <% switch (status) {
                                                     case '취소': %>
                                                     취소
@@ -68,6 +74,11 @@
                                                             break; } %>
                                                 </td>
                                                 <td><%= parseInt(buy_num).toLocaleString('ko-KR') %> Point</td>
+                                            </tr>
+                                            <tr class="collapse" id="collapseExample<%= index %>">
+                                                <td colspan="4" id="nftInfo<%= index %>">
+
+                                                </td>
                                             </tr>
                                         <% }) %>
                                         <% } else { %>
@@ -158,5 +169,43 @@
 
         document.body.appendChild(form);
         form.submit();
+    }
+
+    function fnGetNftBuyInfo(seq, index) {
+        let data = {
+            sellSeq: seq,
+        }
+
+        $.ajax({
+            url: '/p/selectNftBuyList',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                console.log(result)
+                if (result.success) {
+                    let list = result.data;
+                    if (list.length > 0) {
+                        let html = "";
+                        html += "<div style='display: flex; justify-content: flex-end; gap: 1rem;'>";
+                        list.forEach(function (el) {
+                            html += "<div style='flex-basis: min-content'>";
+                            html += "<img src='"+el.nft_img+"' style='width:150px;'>";
+                            html += "<p>"+el.nft_nm+" * "+el.buy_amount+"</p>";
+                            html += "</div>";
+                        });
+                        html += "</div>";
+                        $("#nftInfo"+index).html(html);
+                    }
+                } else {
+                    alert(result.message);
+                }
+                // $('#buyModal').modal('hide')
+                // $('#viewAlarm').modal('show')
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+            } //function끝
+        });
     }
 </script>
