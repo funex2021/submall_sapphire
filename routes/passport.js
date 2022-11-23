@@ -75,7 +75,7 @@ module.exports = (pool) => {
               user.cmpnyCd = memInfo[0].cmpny_cd; //req.user.cmpnyCd; 
               user.memNm =memInfo[0].mem_nm;
               user.coinAddr = memInfo[0].coin_addr;
-              user.bank_seq = memInfo[0].bank_seq;
+              user.bankSeq = memInfo[0].bank_seq;
               
               //ip check
               obj.cmpnyCd = memInfo[0].cmpny_cd;
