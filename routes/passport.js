@@ -62,8 +62,8 @@ module.exports = (pool) => {
           console.log('config : ' + JSON.stringify(config))
           obj.cmpnyNm = config.company_nm;
           
-          console.log(obj)
           let memInfo = await fnGetCompanyInfo(obj, conn);
+          console.log('memInfo', memInfo);
           let user = {};
           if(memInfo.length > 0) {
             let checkPass = await encUtil.decodingPasswordHash(Buffer.from(memPass, "base64").toString('utf8'),memInfo[0].salt);
