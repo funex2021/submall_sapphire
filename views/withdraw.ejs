@@ -39,7 +39,10 @@
                                             <th>날짜</th>
                                             <th>sales</th>
                                             <th>상태</th>
+                                            <th>트랜잭션ID</th>
+                                            <th>구매금액</th>
                                             <th>포인트</th>
+                                            <th>비고</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -48,6 +51,8 @@
                                             <%
                                                 let buy_num = 0;
                                                 if (el.buy_num) buy_num = el.buy_num;
+                                                let pay_num = 0;
+                                                if (el.pay_num) pay_num = el.pay_num;
                                             %>
                                             <% let status = el.confirm_sts_name %>
                                             <tr>
@@ -73,7 +78,17 @@
                                                         default:
                                                             break; } %>
                                                 </td>
-                                                <td><%= parseInt(buy_num).toLocaleString('ko-KR') %> Point</td>
+                                                <td>
+                                                    <a href="#n" onclick="window.open('https://baobab.scope.klaytn.com/tx/<%= el.send_txid%>', '_blank')"><%=el.send_txid%></a>
+                                                </td>
+                                                <td><%= parseInt(buy_num).toLocaleString('ko-KR') %> KRW</td>
+                                                <td><%= parseInt(pay_num).toLocaleString('ko-KR') %> Point</td>
+                                                <td>
+                                                    <% if (status == '대기') { %>
+                                                        <a href="#n" class="btn btn-primary mr-2" onclick="chkAcc('<%= parseInt(buy_num).toLocaleString('ko-KR') %>','<%=cmpnyInfo.nft_bank_nm%>','<%=cmpnyInfo.nft_bank_acc%>','<%=cmpnyInfo.nft_acc_nm%>');">계좌확인</a>
+                                                        <a href="#n" class="btn btn-primary mr-2" onclick="buyCancel('<%=el.seq%>');">취소</a>
+                                                    <% } %>
+                                                </td>
                                             </tr>
                                             <tr class="collapse" id="collapseExample<%= index %>">
                                                 <td colspan="4" id="nftInfo<%= index %>">
@@ -83,7 +98,7 @@
                                         <% }) %>
                                         <% } else { %>
                                             <tr>
-                                                <td colspan="4" style="text-align: center;">내역이 없습니다.</td>
+                                                <td colspan="7" style="text-align: center;">내역이 없습니다.</td>
                                             </tr>
                                         <% } %>
                                         </tbody>
@@ -100,6 +115,65 @@
     </div>
 </div>
 </body>
+<div class="modal fade" id="buyAlarm" tabindex="-1" aria-labelledby="buyAlarmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="flex items-center justify-center px-5 py-2 text-sm bg-gray-200">
+                <h5 class="items-center text-center text-black" id="buyAlarmLabel">
+                    Notification
+                </h5>
+            </div>
+            <div class="card welcome-profile">
+                <div class="card-body"><img src="./images/avatar/1.jpg" alt="">
+                    <h4>안녕하세요. NFT를 구입해주셔서 감사합니다.</h4>
+                    <p>
+                        아래 판매자 정보를 확인 하신 후, NFT구매금액을 입금하시면
+                        시스템에서 입금 확인 후, 클레이튼 블록체인으로 NFT가 자동 전송됩니다.
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span class="verified"><i class="ri-check-line"></i></span>
+                                NFT 결제금액 :&nbsp;
+                                <div id="totalPrice">
+
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="verified"><i class="ri-shield-check-line"></i></span>
+                                NFT 판매자 성명 :&nbsp;
+                                <div id="acc_nm">
+
+                                </div>
+                            </a>
+                            <a style="padding-top: 10px;">
+                                <span class="verified"><i class="ri-shield-check-line"></i></span>
+                                입금은행 :&nbsp;
+                                <div id="bank_nm">
+
+                                </div>
+                            </a>
+                            <a style="padding-top: 10px;">
+                                <span class="not-verified"><i class="ri-shield-check-line"></i></span>
+                                계좌번호 :&nbsp;
+                                <div id="bank_acc">
+
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="px-4 pb-2 modal-footer">
+                <button type="button" class="w-full px-5 py-2 text-xs text-white rounded-md btn btn-dark" data-bs-dismiss="modal">
+                    확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 </html>
 <script>
     $(function () {
@@ -207,5 +281,41 @@
                 alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
             } //function끝
         });
+    }
+
+    function chkAcc(price, bank_nm, bank_acc, acc_nm) {
+        $("#totalPrice").html(price);
+        $("#acc_nm").html(acc_nm);
+        $("#bank_nm").html(bank_nm);
+        $("#bank_acc").html(bank_acc);
+        $("#buyAlarm").modal('show');
+    }
+
+    function buyCancel(seq) {
+        if (confirm('취소하시겠습니까?')) {
+            let data = {
+                seq: seq
+            }
+
+            $.ajax({
+                url: '/p/buyCancel',
+                dataType: 'json',
+                type: 'POST',
+                data: data,
+                success: function (result) {
+                    console.log(result)
+                    if (result.success) {
+                        alert('취소되었습니다.')
+                    } else {
+                        alert(result.message);
+                    }
+                    // $('#buyModal').modal('hide')
+                    // $('#viewAlarm').modal('show')
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+                } //function끝
+            });
+        }
     }
 </script>

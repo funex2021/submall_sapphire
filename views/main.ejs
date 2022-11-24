@@ -15,7 +15,10 @@
                         <div class="stat-widget d-flex align-items-center">
                             <div class="widget-icon me-3 bg-primary"><span><i class="ri-file-copy-2-line"></i></span></div>
                             <div class="widget-content">
-                                <h3><%= coinObj %> Point</h3>
+                                <h3>
+
+                                    <%= parseInt(coinObj).toLocaleString('ko-KR') %> Point
+                                </h3>
                                 <p>사용 가능한 포인트</p>
                             </div>
                         </div>
@@ -24,20 +27,22 @@
                         <div class="stat-widget d-flex align-items-center">
                             <div class="widget-icon me-3 bg-success"><span><i class="ri-file-list-3-line"></i></span></div>
                             <div class="widget-content">
-                                <h3><%= totTrans %> Point</h3>
+                                <h3>
+                                    <%= parseInt(totTrans).toLocaleString('ko-KR') %> Point
+                                </h3>
                                 <p>사용 포인트</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="stat-widget d-flex align-items-center">
-                            <div class="widget-icon me-3 bg-warning"><span><i class="ri-file-paper-line"></i></span></div>
-                            <div class="widget-content">
-                                <h3><%= totBalance %> Point</h3>
-                                <p>구매 포인트</p>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="col-xl-3 col-sm-6">-->
+<!--                        <div class="stat-widget d-flex align-items-center">-->
+<!--                            <div class="widget-icon me-3 bg-warning"><span><i class="ri-file-paper-line"></i></span></div>-->
+<!--                            <div class="widget-content">-->
+<!--                                <h3><%= totBalance %> Point</h3>-->
+<!--                                <p>구매 포인트</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="row">
                     <div class="col-xxl-12 col-xl-12">
@@ -88,7 +93,8 @@
                                                 <%= el.title %>
                                             </td>
                                             <td>
-                                                <%= parseInt(buy_num).toLocaleString('ko-KR') %> Point
+                                                <a href="#n" onclick="window.open('https://baobab.scope.klaytn.com/tx/<%= el.send_txid%>', '_blank')"><%= el.send_txid%></a>
+<!--                                                <%= parseInt(buy_num).toLocaleString('ko-KR') %> Point-->
                                             </td>
                                         </tr>
                                     <% })} %>

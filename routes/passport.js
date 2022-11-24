@@ -52,7 +52,7 @@ module.exports = (pool) => {
       logObj.payRequest = memId;
       logObj.userIp = requestIp.getClientIp(req); 
     
-      mydb.execute( async conn =>  { 
+      mydb.executeTx( async conn =>  {
         try {
           let domain = req.headers.host;
           console.log('domain : ' + domain)

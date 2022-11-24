@@ -113,7 +113,7 @@ var isStatusCheckAjax = async function (req, res, next) {
         try {  
           let mem_status = await fnGetStatus(obj, conn);
           if(mem_status == 'CMDT00000000000029') {
-              res.json(rtnUtil.successFalse("670", "회원 정지 되었습니다. <br>관리자에게 문의 하세요.","",""));
+              res.json(rtnUtil.successFalse("670", "회원 정지 되었습니다. 관리자에게 문의 하세요.","",""));
               return;
             } else {
 
@@ -153,7 +153,7 @@ var isStatusCheckAjax = async function (req, res, next) {
                 // console.log('domain : ' + domain)
                 // obj.domain = domain;
                 //let config = await fnGetConfigInfo(obj, conn);
-                res.json(rtnUtil.successFalse("670", "회원 정지 되었습니다. <br>관리자에게 문의 하세요.","",""));
+                res.json(rtnUtil.successFalse("670", "회원 정지 되었습니다. 관리자에게 문의 하세요.","",""));
                 //res.render("login",{'alertMessage':'회원 정지 되었습니다.', 'config':config, 'userId':''})
                 return;
               } else {

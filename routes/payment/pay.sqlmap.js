@@ -2,8 +2,10 @@ function fnGetCompanyInfo(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " SELECT cm.m_seq, fn_get_name(cc.admin_grade) "
         sql += " , cc.input_info1_bank, cc.input_info1_acc, cc.input_info1_name, cc.input_info2 , cc.coin_rate, cc.seller_seq, cbw.balance "
+        sql += " , cnb.bank_nm nft_bank_nm, cnb.bank_acc nft_bank_acc, cnb.acc_nm nft_acc_nm";
         sql += " FROM cs_member cm inner join cs_company cc ON cm.cmpny_cd = cc.cmpny_cd AND cc.admin_grade = 'CMDT00000000000002'"
         sql += " inner join cs_balance_wallet cbw ON cbw.m_seq = cm.m_seq "
+        sql += " left join cs_nft_bank cnb on cnb.seq = cm.bank_seq";
         sql += " WHERE cm.mem_id = '" + param.userId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "' "
 
         console.log(sql)
@@ -97,10 +99,11 @@ function fsUptMeberBalance(param, conn) {
 function fnSetCoinBuy(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " INSERT INTO " + param.cs_coin_sell + " "
-        sql += " (seq, m_seq, buy_num, pay_num, seller_seq) "
+        sql += " (seq, m_seq, buy_num, pay_num, seller_seq, coin_rate) "
         sql += "  VALUES('" + param.seq + "', (select m_seq from cs_member cm where mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "'), '" + param.buyNum + "'"
         sql += " , (select '" + param.buyNum + "' / csc.coin_rate from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
-        sql += " , (select seller_seq from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "'))) "
+        sql += " , (select seller_seq from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
+        sql += " , (select csc.coin_rate from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "'))) "
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -633,6 +636,45 @@ function fnGetNftBuyList(param, conn) {
     });
 }
 
+function fnUptBuyStatus(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "update "+param.cs_coin_sell+" set";
+        sql += " update_dt = NOW()";
+        sql += " ,sell_sts = '"+param.sell_sts+"'";
+        sql += " where 1=1";
+        sql += " and seq = '"+param.seq+"'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnUptNftBuyStatus(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "update cs_nft_buy set";
+        sql += " buy_status = '"+param.buy_status+"'";
+        sql += " where 1=1";
+        sql += " and coin_sell_seq = '"+param.seq+"'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
 module.exports.QGetConfigInfo = fnGetConfigInfo;
@@ -665,3 +707,5 @@ module.exports.QGetNftSellCnt = fnGetNftSellCnt;
 module.exports.QInsMemberBankLog = fnInsMemberBankLog;
 module.exports.QGetMemberWalletLimit1 = fnGetMemberWalletLimit1;
 module.exports.QGetNftBuyList = fnGetNftBuyList;
+module.exports.QUptBuyStatus = fnUptBuyStatus;
+module.exports.QUptNftBuyStatus = fnUptNftBuyStatus;

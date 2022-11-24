@@ -26,5 +26,6 @@ router.post('/buy', isAuthenticated, payUtil.isStatusCheckAjax, pay.buy);
 
 router.post('/showAccount', isAuthenticated, pay.showAccount);
 router.post('/selectNftBuyList', isAuthenticated, pay.selectNftBuyList);
+router.post('/buyCancel', isAuthenticated, pay.buyCancel);
 
 module.exports = router

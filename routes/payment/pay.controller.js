@@ -69,12 +69,9 @@ exports.buyview = async (req, res, next) => {
 
                 let withdrawList = await Query.QGetAllCoinBuyList(obj, conn);
 
-
                 balance = await Query.QGetBalance(obj, conn);
-                console.log(req.user.companyName, "balance :", balance[0].balance)
 
                 let domain = req.headers.host;
-                console.log('domain : ' + domain)
                 obj.domain = domain;
                 let config = await Query.QGetConfigInfo(obj, conn);
                 let totBalance = await Query.QGetUserTotBalance(obj, conn);
@@ -262,17 +259,17 @@ exports.buy = async (req, res, next) => {
                         logObj.isSuccess = "00"
                         await Query.QSetHistory(logObj, conn);
                         console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 입금신청은 " + payTime + "분에 1번씩 가능합니다. " + payTime + "분 후 재 신청해주세요.")
-                        res.json(rtnUtil.successFalse("500", "입금신청은 " + payTime + "분에 1번씩 가능합니다. <br> " + payTime + "분 후 재 신청해주세요.", "", ""));
+                        res.json(rtnUtil.successFalse("500", "입금신청은 " + payTime + "분에 1번씩 가능합니다.  " + payTime + "분 후 재 신청해주세요.", "", ""));
                     } else {
                         let sellStsCtn = await Query.QGetBuyReqSts(obj, conn);
                         console.log(sellStsCtn)
                         if (parseInt(sellStsCtn) > 0) {
                             conn.rollback();
-                            logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 입금 확인 중에 있습니다. 완료 후 재 신청해주세요."
+                            logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 입금 확인 중에 있습니다. 구매중인 NFT를 확인하여 입금하거나 취소 후 재신청 해주세요."
                             logObj.isSuccess = "00"
                             await Query.QSetHistory(logObj, conn);
-                            console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 임급 확인 중에 있습니다. 완료 후 재 신청해주세요.")
-                            res.json(rtnUtil.successFalse("500", "입금 확인 중에 있습니다. <br> 완료 후 재 신청해주세요.", "", ""));
+                            console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 입금 확인 중에 있습니다. 구매중인 NFT를 확인하여 입금하거나 취소 후 재신청 해주세요.")
+                            res.json(rtnUtil.successFalse("500", "입금 확인 중에 있습니다.  완료 후 재 신청해주세요.", "", ""));
                         } else {
                             try {
                                 //nft구매
@@ -406,7 +403,7 @@ exports.buy = async (req, res, next) => {
                                 logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 오류 발생  "
                                 logObj.isSuccess = "00"
                                 await Query.QSetHistory(logObj, conn);
-                                res.json(rtnUtil.successFalse("500", "구매에 실패 하였습니다. <br>관리자에게 문의 하세요.", "", ""));
+                                res.json(rtnUtil.successFalse("500", "구매에 실패 하였습니다. 관리자에게 문의 하세요.", "", ""));
                             }
 
                         }
@@ -641,6 +638,35 @@ exports.selectNftBuyList = async (req, res, next) => {
             let buyList = await Query.QGetNftBuyList(obj, conn);
 
             res.json(rtnUtil.successTrue("200", buyList));
+
+        } catch (e) {
+            conn.rollback();
+            res.json(rtnUtil.successFalse("500", "", e.message, e));
+        }
+    });
+}
+
+exports.buyCancel = async (req, res, next) => {
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    let {seq} = req.body;
+
+    let obj = {};
+    obj.seq = seq;
+    obj.cs_coin_sell = req.user.cs_coin_sell;
+
+    mydb.executeTx(async conn => {
+        try {
+
+            obj.sell_sts = 'CMDT00000000000027';
+            await Query.QUptBuyStatus(obj, conn);
+            obj.buy_status = 'CMDT00000000000086';
+            await Query.QUptNftBuyStatus(obj, conn);
+
+            conn.commit();
+
+            res.json(rtnUtil.successTrue("200", ''));
 
         } catch (e) {
             conn.rollback();
