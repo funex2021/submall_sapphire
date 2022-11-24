@@ -7,10 +7,47 @@
 
                     </div>
                     <div class="header-right">
-                        <p>Welcome, <%= userId %>!</p>
+                        <div class="dropdown profile_log dropdown">
+                            <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
+                                <div class="user icon-menu active">
+                                    <span><img src="/images/profile.jpg" alt=""></span>
+                                </div>
+                            </div>
+                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                <div class="user-email">
+                                    <div class="user">
+                                        <span class="thumb">
+                                            <img src="/images/profile.jpg" alt="">
+                                        </span>
+                                        <div class="user-info">
+                                            <h5><%= userId %></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="fnCopy('<%=user.coinAddr%>')"">
+                                    <span>
+                                        <i class="ri-user-line"></i>
+                                    </span>
+                                    <%=user.coinAddr%>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function fnCopy(_data) {
+
+        alert('Copy 되었습니다.');
+
+        const t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = _data;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+    }
+</script>
