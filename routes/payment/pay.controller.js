@@ -458,7 +458,6 @@ exports.withdraw = async (req, res, next) => {
 
     mydb.executeTx(async conn => {
         try {
-            console.log(req.user)
             let userId = req.user.memId;
             let cmpnyCd = req.user.cmpnyCd;
             let cmpnyInfo = null;
@@ -468,6 +467,8 @@ exports.withdraw = async (req, res, next) => {
             obj.cmpnyCd = cmpnyCd;
             obj.cs_coin_sell = req.user.cs_coin_sell;
             obj.cs_coin_trans = req.user.cs_coin_trans;
+            obj.cs_coin_sell_detail = req.user.cs_coin_sell_detail;
+            obj.cs_coin_trans_detail = req.user.cs_coin_trans_detail;
             //은행정보 가져오기
             obj.userId = userId;
             obj.srtDt = srtDt;
@@ -638,6 +639,7 @@ exports.selectNftBuyList = async (req, res, next) => {
 
     let obj = {};
     obj.sellSeq = sellSeq;
+    obj.cs_coin_sell_detail = req.user.cs_coin_sell_detail;
 
     mydb.executeTx(async conn => {
         try {

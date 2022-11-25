@@ -34,6 +34,15 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table">
+                                        <colgroup>
+                                            <col width="15%">
+                                            <col width="15%">
+                                            <col width="5%">
+                                            <col width="20%">
+                                            <col width="15%">
+                                            <col width="10%">
+                                            <col width="30%">
+                                        </colgroup>
                                         <thead>
                                         <tr>
                                             <th>날짜</th>
@@ -58,7 +67,7 @@
                                             <tr>
                                                 <td>
                                                     <% if (status == '완료') { %>
-                                                        <a data-toggle="collapse" href="#collapseExample<%=index%>" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');"><%= el.create_dt %></a>
+                                                        <a data-toggle="collapse" href=".collapseExample<%=index%>" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');"><%= el.create_dt %></a>
                                                     <% } else { %>
                                                             <%= el.create_dt %>
                                                     <% } %>
@@ -79,7 +88,7 @@
                                                             break; } %>
                                                 </td>
                                                 <td>
-                                                    <a href="#n" onclick="window.open('https://baobab.scope.klaytn.com/tx/<%= el.send_txid%>', '_blank')"><%=el.send_txid%></a>
+
                                                 </td>
                                                 <td><%= parseInt(buy_num).toLocaleString('ko-KR') %> KRW</td>
                                                 <td><%= parseInt(pay_num).toLocaleString('ko-KR') %> Point</td>
@@ -90,11 +99,11 @@
                                                     <% } %>
                                                 </td>
                                             </tr>
-                                            <tr class="collapse" id="collapseExample<%= index %>">
-                                                <td colspan="7" id="nftInfo<%= index %>">
+                                            <% for(let i=0; i<el.nftCnt; i++) { %>
+                                                <tr class="collapse collapseExample<%= index %> collapseExample<%= index %>-<%=i%>">
 
-                                                </td>
-                                            </tr>
+                                                </tr>
+                                            <% } %>
                                         <% }) %>
                                         <% } else { %>
                                             <tr>
@@ -260,16 +269,26 @@
                 if (result.success) {
                     let list = result.data;
                     if (list.length > 0) {
-                        let html = "";
-                        html += "<div style='display: flex; justify-content: flex-end; gap: 1rem;'>";
-                        list.forEach(function (el) {
-                            html += "<div style='flex-basis: min-content'>";
-                            html += "<img src='"+el.nft_img+"' style='width:150px;'>";
-                            html += "<p>"+el.nft_nm+" * "+el.buy_amount+"</p>";
-                            html += "</div>";
+                        list.forEach(function (el, i) {
+                            let html = "";
+                            html += "<td id='nftImg'>";
+                            html += "<img src='"+el.nft_img+"' style='width: 70%;'>"
+                            html += "</td>";
+                            html += "<td id='nftNm'>";
+                            html += el.nft_nm;
+                            html += "</td>";
+                            html += "<td id='buyAmount'>";
+                            html += el.buy_amount;
+                            html += "</td>";
+                            html += "<td id='txId' colspan='4'>";
+                            // html += el.send_txid;
+                            html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
+                            html += "</td>";
+
+                            console.log(index)
+                            console.log(i)
+                            $(".collapseExample"+index+"-"+i).html(html);
                         });
-                        html += "</div>";
-                        $("#nftInfo"+index).html(html);
                     }
                 } else {
                     alert(result.message);

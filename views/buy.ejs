@@ -58,22 +58,46 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xxl-12">
+                <div class="col-xxl-6 col-xl-6 col-lg-6">
                     <div class="card">
                         <div class="card-header flex-row">
-                            <h4 class="card-title">선택한 상품 </h4>
+                            <h4 class="card-title">구매 상품 </h4>
                             <div class="header-right">
                                 <div class="text-end">
-                                    <input type="text" id="price" name=price style="background-color: var(--bs-body-bg); border: none;" readonly>
+<!--                                    <input type="text" id="price" name=price style="background-color: var(&#45;&#45;bs-body-bg); border: none;" readonly>-->
                                     <input type="hidden" name='max_amt' id="max_amt" value="<%= config.max_amt %>">
                                     <input type="hidden" name='min_amt' id="min_amt" value="<%= config.min_amt %>">
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 col-xl-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-body bs-0 p-0 top-creators-content  bg-transparent">
+                            <div class="d-flex justify-content-between creator-widget active  align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="top-creators-user-img me-3"></div>
+                                    <div class="top-creators-info">
+                                        <h5 class="mb-0">구매금액</h5>
+                                        <p class="mb-2" id="totalCnt">
+                                            0 Items
+                                        </p>
+                                    </div>
+                                </div>
                                 <div class="text-end">
-                                    &nbsp;KRW(원)
+                                    <h5 class="text-primary">
+                                        <input type="text" id="price" name=price style="border: none;" readonly> KRW(원)
+                                    </h5>
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xxl-12">
+                    <div class="card">
                         <div class="card-body p-0 bs-0 bg-transparent">
                             <div class="bid-table">
                                 <div class="table-responsive">
@@ -169,6 +193,7 @@
         $("#price").val(0);
     }
 
+    let totalCnt = 0;
     let price10000cnt = 0;
     let price10000seq = 0;
     let price30000cnt = 0;
@@ -338,6 +363,9 @@
             }
             $("#selectBody").append(html);
         }
+
+        totalCnt = price10000cnt + price30000cnt + price50000cnt + price100000cnt + price150000cnt + price200000cnt + price500000cnt + price1000000cnt;
+        $("#totalCnt").html(totalCnt + ' Items');
     }
 
     clearBtn.addEventListener('click', function () {
@@ -359,6 +387,8 @@
         price1000000cnt = 0;
         price1000000seq = 0;
         $("#selectBody").html("");
+        totalCnt = 0;
+        $("#totalCnt").html('0 Items');
         // $('.modal-text').html('금액을 입력해주세요.');
     })
 
@@ -470,6 +500,7 @@
 
     function removeProduct(price) {
         let selectPrice = parseInt($("#"+price+"productPrice").html());
+        let selectCnt = parseInt($("#"+price+"productCnt").html());
         $("#price").val($("#price").val() - selectPrice);
 
         if (price == '10000') {
@@ -498,6 +529,7 @@
             price1000000seq = 0;
         }
 
+        $("#totalCnt").html(totalCnt - parseInt(selectCnt) + " Items");
         $("#"+price+"product").remove();
     }
 </script>
