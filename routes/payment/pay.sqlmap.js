@@ -675,6 +675,44 @@ function fnUptNftBuyStatus(param, conn) {
     });
 }
 
+function fnGetFaqList(obj, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select seq, title, content, DATE_FORMAT(create_dt, '%Y-%m-%d') create_dt from cs_faq";
+        sql += " where 1=1";
+        sql += " order by create_dt desc";
+        sql += " limit 0,5";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetNoticeList(obj, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select seq, title, content, DATE_FORMAT(create_dt, '%Y-%m-%d') create_dt from cs_notice";
+        sql += " where 1=1";
+        sql += " order by create_dt desc";
+        sql += " limit 0,5";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
 module.exports.QGetConfigInfo = fnGetConfigInfo;
@@ -709,3 +747,5 @@ module.exports.QGetMemberWalletLimit1 = fnGetMemberWalletLimit1;
 module.exports.QGetNftBuyList = fnGetNftBuyList;
 module.exports.QUptBuyStatus = fnUptBuyStatus;
 module.exports.QUptNftBuyStatus = fnUptNftBuyStatus;
+module.exports.QGetFaqList = fnGetFaqList;
+module.exports.QGetNoticeList = fnGetNoticeList;

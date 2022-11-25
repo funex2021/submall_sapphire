@@ -4,7 +4,7 @@
     <%- include('includes/cdn') %>
     <title><%= config.found_text %> | Main</title>
 </head>
-<body class="@@dashboard">
+<body class="dashboard" id="mainBody">
     <div id="main-wrapper" class="show">
         <%- include('includes/header') %>
         <%- include('includes/nav') %>
@@ -44,6 +44,20 @@
 <!--                        </div>-->
 <!--                    </div>-->
                 </div>
+                <div id="row">
+                    <div class="col-xxl-12 col-xl-12">
+                        <div class="card welcome-profile">
+                            <div class="card-body"><img src="./images/avatar/1.jpg" alt="">
+                                <h4>NFT몰 서브몰에서의 NFT 구매시 체크사항!</h4>
+                                <p style="color: red;">NFT몰의 크리에이터가 민팅한 실제 블록체인 NFT 컬렉션입니다.</p>
+                                <p>회원은 실제 블록체인 NFT 구매 진행이 이루어지며, 결제 처리 완료 시, 디지털 작품의 소유권을 증명할 수 있는 NFT가 전자 지갑주소로 전송됩니다.</p>
+                                <p style="color: red">단, 블록체인 네트워크 상태에 따라 전송시간이 소요될 수 있습니다.</p>
+                                <p>NFT 구매에 있어서 이용약관 및 거래약관은 NFT몰의 약관을 따릅니다.</p>
+                                <p style="color: red">포인트는 NFT몰과 관련이 없으며, 포인트와 관련된 사항이나 회원정보수정은 크리에이터의 서브몰에 문의하세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-xxl-12 col-xl-12">
                         <div class="card m-0">
@@ -55,51 +69,81 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Transaction</h4>
-                            <small>
-                                <a href="/p/view">More</a>
-                            </small>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive table-icon">
-                                <table class="table">
-                                    <tbody>
-                                    <% if (withdrawList.length > 0) {
-                                        withdrawList.forEach(function(el, pageIndex) { %>
-                                        <%
-                                            let buy_num = 0;
-                                            if (el.buy_num) buy_num = el.buy_num;
-                                        %>
+                    <div class="col-xxl-6 col-xl-6 col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">공지사항</h4>
+                                <small>
+                                    <a href="javascript:void(0);">More</a>
+                                </small>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive api-table">
+                                    <table class="table">
+                                        <thead>
                                         <tr>
-                                            <% let status = el.confirm_sts_name %>
-                                            <% switch (status) {
-                                                case '취소': %>
-                                            <td>취소</td>
-                                            <% break;
-                                            case '대기': %>
-                                            <td>대기</td>
-                                            <% break;
-                                            case '완료': %>
-                                            <td>승인</td>
-                                            <% break;
-                                                default:
-                                                    break; } %>
-                                            <td>
-                                                <%= el.create_dt %>
-                                            </td>
-                                            <td>
-                                                <%= el.title %>
-                                            </td>
-                                            <td>
-                                                <a href="#n" onclick="window.open('https://baobab.scope.klaytn.com/tx/<%= el.send_txid%>', '_blank')"><%= el.send_txid%></a>
-<!--                                                <%= parseInt(buy_num).toLocaleString('ko-KR') %> Point-->
-                                            </td>
+                                            <th>제목</th>
+                                            <th>등록일</th>
                                         </tr>
-                                    <% })} %>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <% noticeList.forEach(function (el, index) { %>
+                                            <tr>
+                                                <td>
+                                                    <a data-toggle="collapse" href="#noticeList<%=index%>"><%= el.title %></a>
+                                                </td>
+                                                <td>
+                                                    <%=el.create_dt%>
+                                                </td>
+                                            </tr>
+                                            <tr class="collapse" id="noticeList<%= index %>">
+                                                <td colspan="2">
+                                                    <%=el.content%>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-6 col-xl-6 col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">FAQ</h4>
+                                <small>
+                                    <a href="javascript:void(0);">More</a>
+                                </small>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive api-table">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>제목</th>
+                                            <th>등록일</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% faqList.forEach(function (el, index) { %>
+                                            <tr>
+                                                <td>
+                                                    <a data-toggle="collapse" href="#faqList<%=index%>"><%= el.title %></a>
+                                                </td>
+                                                <td>
+                                                    <%=el.create_dt%>
+                                                </td>
+                                            </tr>
+                                            <tr class="collapse" id="faqList<%= index %>">
+                                                <td colspan="2">
+                                                    <%=el.content%>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

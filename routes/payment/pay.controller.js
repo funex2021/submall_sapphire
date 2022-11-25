@@ -82,6 +82,11 @@ exports.buyview = async (req, res, next) => {
                     totTrans = totTrans[0].trans_num;
                 }
 
+                //faqList
+                let faqList = await Query.QGetFaqList(obj, conn);
+                //noticeList
+                let noticeList = await Query.QGetNoticeList(obj, conn);
+
                 res.render("main", {
                     'cmpnyInfo': cmpnyInfo[0],
                     'coinObj': balance[0].balance,
@@ -92,6 +97,8 @@ exports.buyview = async (req, res, next) => {
                     "totBalance": totBalance,
                     "totTrans": totTrans,
                     "pagination": pagination,
+                    "faqList": faqList,
+                    "noticeList": noticeList,
                 })
             } catch (e) {
                 console.log(e)

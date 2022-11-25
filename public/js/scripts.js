@@ -5,7 +5,6 @@ jQuery(window).on("load", function () {
 
 
 jQuery(document).ready(function () {
-
     $(function () {
         for (var nk = window.location,
                  o = $(".menu a, .settings-menu a").filter(function () {
@@ -23,7 +22,25 @@ jQuery(document).ready(function () {
         }
 
     });
-
-
-
 });
+
+$(function () {
+    let onpageLoad = localStorage.getItem("theme") || "";
+    let element = document.body;
+    element.classList.add(onpageLoad);
+    document.getElementById("theme").textContent =
+        localStorage.getItem("theme") || "light";
+})
+
+function themeToggle() {
+    let element = document.body;
+    console.log(element)
+    element.classList.toggle("dark-theme");
+
+    let theme = localStorage.getItem("theme");
+    if (theme && theme === "dark-theme") {
+        localStorage.setItem("theme", "");
+    } else {
+        localStorage.setItem("theme", "dark-theme");
+    }
+}
