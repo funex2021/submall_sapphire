@@ -187,6 +187,24 @@
         </div>
     </div>
 </div>
+<!-- Modal View Start : Alam Modal -->
+<div class="modal fade" id="viewAlarm" tabindex="-1" aria-labelledby="viewAlarmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="flex items-center px-5 py-2 text-sm text-black bg-gray-200">
+                <h5 class="flex items-center" id="viewAlarmLabel">Alert</h5>
+            </div>
+            <div id="modal-text" class="px-5 py-2 text-xs text-black">
+            </div>
+            <div class="mb-2 modal-footer">
+                <button type="button" class="px-6 py-2 text-xs btn btn-dark" data-bs-dismiss="modal">
+                    확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal View End : Alam Modal -->
 </html>
 <script>
     if ($("#price").val() == '') {
@@ -394,9 +412,9 @@
 
     nextBtn.addEventListener('click', () => {
         if (price.value == "" || price.value == 0) {
-            // $('#modal-text').html('금액을 입력해주세요. ');
-            // $('#viewAlarm').modal('show')
-            alert('금액을 입력해주세요.');
+            $('#modal-text').html('금액을 입력해주세요. ');
+            $('#viewAlarm').modal('show')
+            // alert('금액을 입력해주세요.');
             $("#price").val(0);
         } else {
             $.ajax({
@@ -414,13 +432,15 @@
                         $("#bank_seq").val(result.data.seq);
                         $('#buyAlarm').modal('show');
                     } else {
-                        alert('계좌 확인 시 오류가 발생했습니다.');
+                        $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
+                        $('#viewAlarm').modal('show')
+                        // alert('계좌 확인 시 오류가 발생했습니다.');
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    // $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
-                    // $('#viewAlarm').modal('show')
-                    alert('계좌 확인 시 오류가 발생했습니다.');
+                    $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
+                    $('#viewAlarm').modal('show')
+                    // alert('계좌 확인 시 오류가 발생했습니다.');
                 } //function끝
             });
         }
@@ -437,16 +457,16 @@
         let min_amt = $('input[name=min_amt]').val();
 
         if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
-            // $('#modal-text').html(min_amt + '만원 이상 구매 가능합니다.');
-            // $('#viewAlarm').modal('show');
-            alert(min_amt + '만원 이상 구매 가능합니다.');
+            $('#modal-text').html(min_amt + '만원 이상 구매 가능합니다.');
+            $('#viewAlarm').modal('show');
+            // alert(min_amt + '만원 이상 구매 가능합니다.');
             return;
         }
 
         if (parseInt(objKrw) > parseInt(max_amt * 10000)) {
-            // $('#modal-text').html(max_amt + '만원 이하 구매 가능합니다.');
-            // $('#viewAlarm').modal('show');
-            alert(max_amt + '만원 이하 구매 가능합니다.');
+            $('#modal-text').html(max_amt + '만원 이하 구매 가능합니다.');
+            $('#viewAlarm').modal('show');
+            // alert(max_amt + '만원 이하 구매 가능합니다.');
             return;
         }
 
@@ -479,21 +499,21 @@
                 console.log('result : ' + JSON.stringify(result))
                 if (result.success) {
                     $('#buyAlarm').modal('hide');
-                    alert('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
+                    $('#modal-text').html('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
+                    $('#viewAlarm').modal('show')
                     clearBtn.click();
                 } else {
                     $('#buyAlarm').modal('hide')
-                    alert(result.message)
+                    $('#modal-text').html(result.message);
+                    $('#viewAlarm').modal('show')
                     clearBtn.click();
                 }
 
                 // $('#viewAlarm').modal('hide')
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                // $('#viewAlarm').hide();
-                // $('#modal-text').html('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.')
-                // $('#viewAlarm').modal('hide')
-                alert('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
+                $('#modal-text').html('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
+                $('#viewAlarm').modal('show');
             }
         });
     }
