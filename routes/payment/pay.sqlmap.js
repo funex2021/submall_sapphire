@@ -101,7 +101,7 @@ function fnSetCoinBuy(param, conn) {
         var sql = " INSERT INTO " + param.cs_coin_sell + " "
         sql += " (seq, m_seq, buy_num, pay_num, seller_seq, coin_rate) "
         sql += "  VALUES('" + param.seq + "', (select m_seq from cs_member cm where mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "'), '" + param.buyNum + "'"
-        sql += " , (select '" + param.buyNum + "' * csc.coin_rate/100 from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
+        sql += " , (select floor('" + param.buyNum + "' * (csc.coin_rate/100)) from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
         sql += " , (select seller_seq from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
         sql += " , (select csc.coin_rate from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "'))) "
 
