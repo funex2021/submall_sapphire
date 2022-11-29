@@ -70,7 +70,7 @@
                                                             <%= el.create_dt %>
                                                     <% } %>
                                                 </td>
-                                                <td onclick="fnGetNftBuyInfo();"><%= el.title %></td>
+                                                <td><%= el.title %></td>
                                                 <td>
                                                     <% switch (status) {
                                                     case '취소': %>
@@ -261,7 +261,6 @@
             type: 'POST',
             data: data,
             success: function (result) {
-                console.log(result)
                 if (result.success) {
                     let list = result.data;
                     if (list.length > 0) {
@@ -281,8 +280,6 @@
                             html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
                             html += "</td>";
 
-                            console.log(index)
-                            console.log(i)
                             $(".collapseExample"+index+"-"+i).html(html);
                         });
                     }
