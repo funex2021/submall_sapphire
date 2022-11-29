@@ -90,7 +90,7 @@
                                                 <td>
                                                     <% if (status == '대기') { %>
                                                         <a href="#n" class="btn btn-primary mr-2" onclick="chkAcc('<%= parseInt(buy_num).toLocaleString('ko-KR') %>','<%=cmpnyInfo.nft_bank_nm%>','<%=cmpnyInfo.nft_bank_acc%>','<%=cmpnyInfo.nft_acc_nm%>');">계좌확인</a>
-                                                        <a href="#n" class="btn btn-primary mr-2" onclick="buyCancel('<%=el.seq%>');">취소</a>
+                                                        <a href="#n" class="btn btn-primary mr-2" onclick="buyCancelView('<%=el.seq%>');">취소</a>
                                                     <% } %>
                                                 </td>
                                             </tr>
@@ -306,31 +306,36 @@
         $("#buyAlarm").modal('show');
     }
 
-    function buyCancel(seq) {
-        if (confirm('취소하시겠습니까?')) {
-            let data = {
-                seq: seq
-            }
+    function buyCancelView(seq) {
+        fnViewConfirmAlarm('구매취소', '취소하시겠습니까?', 'buyCancelProc(\"'+seq+'\")');
+    }
 
-            $.ajax({
-                url: '/p/buyCancel',
-                dataType: 'json',
-                type: 'POST',
-                data: data,
-                success: function (result) {
-                    console.log(result)
-                    if (result.success) {
-                        alert('취소되었습니다.')
-                    } else {
-                        alert(result.message);
-                    }
-                    // $('#buyModal').modal('hide')
-                    // $('#viewAlarm').modal('show')
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
-                } //function끝
-            });
+    function buyCancelProc(seq) {
+        let data = {
+            seq: seq
         }
+
+        $.ajax({
+            url: '/p/buyCancel',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                $("#viewConfirmAlarm").modal('hide');
+                if (result.success) {
+                    fnViewRefreshAlarm('취소되었습니다.');
+                } else {
+                    $("#modal-text").html(result.message);
+                    $("#viewAlarm").modal('show');
+                }
+                // $('#buyModal').modal('hide')
+                // $('#viewAlarm').modal('show')
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#viewConfirmAlarm").modal('hide');
+                $("#modal-text").html('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+                $("#viewAlarm").modal('show');
+            } //function끝
+        });
     }
 </script>

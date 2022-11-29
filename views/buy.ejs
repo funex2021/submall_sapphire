@@ -138,7 +138,7 @@
             </div>
             <div class="card welcome-profile">
                 <div class="card-body">
-                    <h4>안녕하세요. NFT를 구입해주셔서 감사합니다.</h4>
+                    <h4>선택하신 상품들과 결제 금액을 확인해주세요. 구매를 진행하시겠습니까? </h4>
                     <p>
                         아래 판매자 정보를 확인 하신 후, NFT구매금액을 입금하시면
                         시스템에서 입금 확인 후, 클레이튼 블록체인으로 NFT가 자동 전송됩니다.
@@ -291,8 +291,8 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '100000') {
-            price1000000cnt++;
-            price1000000seq = obj.dataset.sellseq;
+            price100000cnt++;
+            price100000seq = obj.dataset.sellseq;
             if ($("#100000product").length > 0) {
                 $("#100000productCnt").html(price100000cnt);
                 $("#100000productPrice").html(price100000cnt * obj.dataset.price);
@@ -514,6 +514,7 @@
                 console.log('result : ' + JSON.stringify(result))
                 if (result.success) {
                     $('#buyAlarm').modal('hide');
+                    $("#viewAlarmLabel").html('구매신청완료')
                     $('#modal-text').html('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
                     $('#viewAlarm').modal('show')
                     clearBtn.click();
