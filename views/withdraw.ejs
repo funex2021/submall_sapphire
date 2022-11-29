@@ -4,7 +4,7 @@
     <%- include('includes/cdn') %>
     <title><%= config.found_text %> | History</title>
 </head>
-<body class="@@dashboard">
+<body class="@@dashboard ">
 <div id="main-wrapper" class="show">
     <%- include('includes/header') %>
     <%- include('includes/nav') %>
@@ -35,20 +35,18 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <colgroup>
-                                            <col width="15%">
-                                            <col width="15%">
-                                            <col width="5%">
-                                            <col width="20%">
-                                            <col width="15%">
-                                            <col width="10%">
                                             <col width="30%">
+                                            <col width="10%">
+                                            <col width="10%">
+                                            <col width="*">
+                                            <col width="*">
+                                            <col width="*">
                                         </colgroup>
                                         <thead>
                                         <tr>
                                             <th>날짜</th>
                                             <th>sales</th>
                                             <th>상태</th>
-                                            <th>트랜잭션ID</th>
                                             <th>구매금액</th>
                                             <th>포인트</th>
                                             <th>비고</th>
@@ -87,9 +85,6 @@
                                                         default:
                                                             break; } %>
                                                 </td>
-                                                <td>
-
-                                                </td>
                                                 <td><%= parseInt(buy_num).toLocaleString('ko-KR') %> KRW</td>
                                                 <td><%= parseInt(pay_num).toLocaleString('ko-KR') %> Point</td>
                                                 <td>
@@ -107,7 +102,7 @@
                                         <% }) %>
                                         <% } else { %>
                                             <tr>
-                                                <td colspan="7" style="text-align: center;">내역이 없습니다.</td>
+                                                <td colspan="6" style="text-align: center;">내역이 없습니다.</td>
                                             </tr>
                                         <% } %>
                                         </tbody>
@@ -183,6 +178,7 @@
         </div>
     </div>
 </div>
+<%- include('includes/modal') %>
 </html>
 <script>
     $(function () {

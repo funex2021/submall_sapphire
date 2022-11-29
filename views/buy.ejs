@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="text-end">
                                     <h5 class="text-primary">
-                                        <input type="text" id="price" name=price style="border: none;" readonly> KRW(원)
+                                        <input type="text" class="text-primary" id="price" name=price style="border: none; background-color: inherit;" readonly> KRW(원)
                                     </h5>
                                 </div>
                             </div>
@@ -133,11 +133,11 @@
         <div class="modal-content">
             <div class="flex items-center justify-center px-5 py-2 text-sm bg-gray-200">
                 <h5 class="items-center text-center text-black" id="buyAlarmLabel">
-                    Notification
+                    Buy
                 </h5>
             </div>
             <div class="card welcome-profile">
-                <div class="card-body"><img src="./images/avatar/1.jpg" alt="">
+                <div class="card-body">
                     <h4>안녕하세요. NFT를 구입해주셔서 감사합니다.</h4>
                     <p>
                         아래 판매자 정보를 확인 하신 후, NFT구매금액을 입금하시면
@@ -145,13 +145,27 @@
                     </p>
                     <ul>
                         <li>
-                            <a href="javascript:void(0);">
+                            <a>
                                 <span class="verified"><i class="ri-check-line"></i></span>
                                 NFT 결제금액 :&nbsp;
                                 <div id="totalPrice">
 
                                 </div>
                             </a>
+                        </li>
+                        <li>
+                            <table>
+                                <colgroup>
+                                    <col width="300px;">
+                                    <col width="300px;">
+                                </colgroup>
+                                <thead>
+                                    <th>상품</th>
+                                    <th>수량</th>
+                                </thead>
+                                <tbody id="selectNft">
+                                </tbody>
+                            </table>
                         </li>
                         <li>
                             <a>
@@ -187,24 +201,7 @@
         </div>
     </div>
 </div>
-<!-- Modal View Start : Alam Modal -->
-<div class="modal fade" id="viewAlarm" tabindex="-1" aria-labelledby="viewAlarmLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="flex items-center px-5 py-2 text-sm text-black bg-gray-200">
-                <h5 class="flex items-center" id="viewAlarmLabel">Alert</h5>
-            </div>
-            <div id="modal-text" class="px-5 py-2 text-xs text-black">
-            </div>
-            <div class="mb-2 modal-footer">
-                <button type="button" class="px-6 py-2 text-xs btn btn-dark" data-bs-dismiss="modal">
-                    확인
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal View End : Alam Modal -->
+<%- include('includes/modal') %>
 </html>
 <script>
     if ($("#price").val() == '') {
@@ -412,7 +409,7 @@
 
     nextBtn.addEventListener('click', () => {
         if (price.value == "" || price.value == 0) {
-            $('#modal-text').html('금액을 입력해주세요. ');
+            $('#modal-text').html('NFT상품을 선택해주세요.');
             $('#viewAlarm').modal('show')
             // alert('금액을 입력해주세요.');
             $("#price").val(0);
@@ -430,6 +427,21 @@
                         $("#bank_nm").html(result.data.bank_nm);
                         $("#bank_acc").html(result.data.bank_acc);
                         $("#bank_seq").val(result.data.seq);
+
+                        let trLen = $("#selectBody > tr").length;
+                        $("#selectNft").html("");
+                        let html = "";
+                        for (let i=0; i<trLen; i++) {
+                            html += "<tr>"
+                            html += "<td>"
+                            html += $("#selectBody > tr:eq("+i+") > td:eq(0)").text();
+                            html += "</td>"
+                            html += "<td>"
+                            html += $("#selectBody > tr:eq("+i+") > td:eq(1)").text();
+                            html += "</td>"
+                            html += "</tr>"
+                        }
+                        $("#selectNft").append(html);
                         $('#buyAlarm').modal('show');
                     } else {
                         $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');

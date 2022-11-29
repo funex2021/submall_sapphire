@@ -2256,7 +2256,7 @@ progress {
 }
 
 .table > :not(:first-child) {
-    border-top: 2px solid currentColor;
+    border-top: 1px solid currentColor;
 }
 
 .caption-top {

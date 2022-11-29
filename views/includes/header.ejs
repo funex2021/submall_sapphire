@@ -45,7 +45,8 @@
 <script>
     function fnCopy(_data) {
 
-        alert('Copy 되었습니다.');
+        $('#modal-text').html('복사되었습니다.');
+        $('#viewAlarm').modal('show');
 
         const t = document.createElement("textarea");
         document.body.appendChild(t);
