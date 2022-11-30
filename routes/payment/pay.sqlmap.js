@@ -189,14 +189,14 @@ function fnGetCoinBuyList(param, conn) {
         var sql = " select seq, title,confirm_sts_name,buy_num,pay_num,send_txid,t.create_dt, nftCnt from ( "
         sql += "  select ccs.seq seq, '구매' title ,case when ccs.sell_sts = 'CMDT00000000000024' then '대기' "
         sql += "  when ccs.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccs.buy_num , ccs.pay_num , ccs.send_txid , DATE_FORMAT(fn_get_time(ccs.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
-        sql += " ,(select count(1) from "+param.cs_coin_sell_detail+" ccsd where ccsd.sell_seq = ccs.seq) nftCnt"
+        sql += " ,(select ifnull(sum(cnb.buy_amount), 0) from cs_nft_buy cnb where cnb.coin_sell_seq = ccs.seq) nftCnt"
         sql += "   from  " + param.cs_coin_sell + " ccs "
         sql += "  where  ccs.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
 
         sql += "   union all"
         sql += "  select ccsl.seq seq, '구매' title ,case when ccsl.sell_sts = 'CMDT00000000000024' then '대기' "
         sql += "  when ccsl.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccsl.buy_num , ccsl.pay_num , ccsl.send_txid , DATE_FORMAT(fn_get_time(ccsl.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
-        sql += " ,(select count(1) from cs_coin_sell_detail_log ccsd where ccsd.sell_seq = ccsl.seq) nftCnt"
+        sql += " ,(select ifnull(sum(cnb.buy_amount), 0) from cs_nft_buy cnb where cnb.coin_sell_seq = ccsl.seq) nftCnt"
         sql += "   from cs_coin_sell_log ccsl "
         sql += "  where  ccsl.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
 

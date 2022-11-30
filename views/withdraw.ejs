@@ -65,7 +65,7 @@
                                             <tr>
                                                 <td>
                                                     <% if (status == '완료') { %>
-                                                        <a data-toggle="collapse" href=".collapseExample<%=index%>" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');"><%= el.create_dt %></a>
+                                                        <a aria-expanded="false" data-toggle="collapse" href=".collapseExample<%=index%>" onclick="fnGetNftBuyInfo(this, '<%=el.seq%>','<%=index%>');"><%= el.create_dt %></a>
                                                     <% } else { %>
                                                             <%= el.create_dt %>
                                                     <% } %>
@@ -96,7 +96,18 @@
                                             </tr>
                                             <% for(let i=0; i<el.nftCnt; i++) { %>
                                                 <tr class="collapse collapseExample<%= index %> collapseExample<%= index %>-<%=i%>">
+                                                    <td>
+                                                        전송중입니다.
+                                                    </td>
+                                                    <td>
+                                                        전송중입니다.
+                                                    </td>
+                                                    <td>
+                                                        전송중입니다.
+                                                    </td>
+                                                    <td colspan="3">
 
+                                                    </td>
                                                 </tr>
                                             <% } %>
                                         <% }) %>
@@ -250,50 +261,54 @@
         form.submit();
     }
 
-    function fnGetNftBuyInfo(seq, index) {
-        let data = {
-            sellSeq: seq,
-        }
+    function fnGetNftBuyInfo(obj, seq, index) {
+        let areaExpanded = JSON.parse($(obj).attr('aria-expanded'));
+        if (!areaExpanded) {
+            let data = {
+                sellSeq: seq,
+            }
 
-        $.ajax({
-            url: '/p/selectNftBuyList',
-            dataType: 'json',
-            type: 'POST',
-            data: data,
-            success: function (result) {
-                console.log(result)
-                if (result.success) {
-                    let list = result.data;
-                    if (list.length > 0) {
-                        list.forEach(function (el, i) {
-                            let html = "";
-                            html += "<td id='nftImg'>";
-                            html += "<img loading='lazy' src='"+el.nft_img+"' style='width: 30%;'>"
-                            html += "</td>";
-                            html += "<td id='nftNm'>";
-                            html += el.nft_nm;
-                            html += "</td>";
-                            html += "<td id='buyAmount'>";
-                            html += el.buy_amount;
-                            html += "</td>";
-                            html += "<td id='txId' colspan='4'>";
-                            // html += el.send_txid;
-                            html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
-                            html += "</td>";
+            $.ajax({
+                url: '/p/selectNftBuyList',
+                dataType: 'json',
+                type: 'POST',
+                data: data,
+                success: function (result) {
+                    console.log(result)
+                    if (result.success) {
+                        let list = result.data;
+                        if (list.length > 0) {
+                            $(".collapseExample"+index).html("");
+                            list.forEach(function (el, i) {
+                                let html = "";
+                                html += "<td id='nftImg'>";
+                                html += "<img loading='lazy' src='"+el.nft_img+"' style='width: 30%;'>"
+                                html += "</td>";
+                                html += "<td id='nftNm'>";
+                                html += el.nft_nm;
+                                html += "</td>";
+                                html += "<td id='buyAmount'>";
+                                html += el.buy_amount;
+                                html += "</td>";
+                                html += "<td id='txId' colspan='3'>";
+                                // html += el.send_txid;
+                                html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
+                                html += "</td>";
 
-                            $(".collapseExample"+index+"-"+i).html(html);
-                        });
+                                $(".collapseExample"+index+"-"+i).html(html);
+                            });
+                        }
+                    } else {
+                        alert(result.message);
                     }
-                } else {
-                    alert(result.message);
-                }
-                // $('#buyModal').modal('hide')
-                // $('#viewAlarm').modal('show')
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
-            } //function끝
-        });
+                    // $('#buyModal').modal('hide')
+                    // $('#viewAlarm').modal('show')
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+                } //function끝
+            });
+        }
     }
 
     function chkAcc(price, bank_nm, bank_acc, acc_nm) {
