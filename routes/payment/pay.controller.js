@@ -86,6 +86,10 @@ exports.buyview = async (req, res, next) => {
                 let faqList = await Query.QGetFaqList(obj, conn);
                 //noticeList
                 let noticeList = await Query.QGetNoticeList(obj, conn);
+                //subNotice
+                obj.pageIndex = 1;
+                obj.rowsPerPage = 5;
+                let subNoticeList = await Query.QGetSubNoticeList(obj, conn);
 
                 res.render("main", {
                     'cmpnyInfo': cmpnyInfo[0],
@@ -99,6 +103,7 @@ exports.buyview = async (req, res, next) => {
                     "pagination": pagination,
                     "faqList": faqList,
                     "noticeList": noticeList,
+                    "subNoticeList": subNoticeList,
                 })
             } catch (e) {
                 console.log(e)
