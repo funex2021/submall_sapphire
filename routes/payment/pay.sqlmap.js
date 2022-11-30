@@ -733,7 +733,9 @@ function fnGetSubNoticeList(param, conn) {
         var sql = "";
         sql += "select seq, title, content, DATE_FORMAT(create_dt, '%Y-%m-%d') create_dt from cs_notice_sub";
         sql += " where 1=1";
+        sql += " and cmpny_cd = '"+param.cmpnyCd+"'";
         sql += " and use_yn = 'Y'"
+        sql += " and DATE_FORMAT(create_dt, '%Y-%m-%d') between DATE_FORMAT('" + param.srtDt + "', '%Y-%m-%d') and DATE_FORMAT('" + param.endDt + "', '%Y-%m-%d') ";
         sql += " order by create_dt desc";
         sql += " limit " + (param.pageIndex - 1) * 10 + "," + param.rowsPerPage;
 
@@ -744,6 +746,27 @@ function fnGetSubNoticeList(param, conn) {
                 reject(err)
             }
             resolve(ret);
+        });
+    });
+}
+
+function fnGetSubNoticeListCnt(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select count(1) cnt from cs_notice_sub";
+        sql += " where 1=1";
+        sql += " and cmpny_cd = '"+param.cmpnyCd+"'";
+        sql += " and use_yn = 'Y'"
+        sql += " and DATE_FORMAT(create_dt, '%Y-%m-%d') between DATE_FORMAT('" + param.srtDt + "', '%Y-%m-%d') and DATE_FORMAT('" + param.endDt + "', '%Y-%m-%d') ";
+        sql += " order by create_dt desc";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret[0].cnt);
         });
     });
 }
@@ -785,3 +808,4 @@ module.exports.QUptNftBuyStatus = fnUptNftBuyStatus;
 module.exports.QGetFaqList = fnGetFaqList;
 module.exports.QGetNoticeList = fnGetNoticeList;
 module.exports.QGetSubNoticeList = fnGetSubNoticeList;
+module.exports.QGetSubNoticeListCnt = fnGetSubNoticeListCnt;

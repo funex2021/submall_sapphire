@@ -688,3 +688,64 @@ exports.buyCancel = async (req, res, next) => {
         }
     });
 }
+
+exports.notice = async (req, res, next) => {
+    let userId = req.user.memId;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+    let {pageIndex, srtDt, endDt} = req.body;
+
+    if (srtDt == undefined || srtDt == '' || srtDt == null) {
+        // endDt = moment().add(7, 'hours').format("YYYY-MM-DD")
+        // srtDt = moment().add(7, 'hours').format("YYYY-MM-DD")
+        endDt = moment().format('YYYY-MM-DD');
+        srtDt = moment().format('YYYY-MM-DD');
+    }
+
+    mydb.executeTx(async conn => {
+        try {
+            let obj = {};
+            obj.cmpnyCd = req.user.cmpnyCd;
+            obj.endDt = endDt;
+            obj.srtDt = srtDt;
+
+            let domain = req.headers.host;
+            console.log('domain : ' + domain)
+            obj.domain = domain;
+            let config = await Query.QGetConfigInfo(obj, conn);
+
+            let totalPageCount = await Query.QGetSubNoticeListCnt(obj, conn);
+            if (pageIndex == "" || pageIndex == null) {
+                pageIndex = 1;
+            };
+
+            let pagination = await pagingUtil.getPagination(pageIndex, totalPageCount)
+            obj.pageIndex = pageIndex;
+            obj.rowsPerPage = pagination.rowsPerPage;
+            pagination.totalItems = totalPageCount;
+
+            let noticeList = await Query.QGetSubNoticeList(obj, conn);
+
+            res.render("notice", {
+                'userId': userId,
+                'config': config,
+                'srtDt': srtDt,
+                'endDt': endDt,
+                'pagination': pagination,
+                'noticeList': noticeList,
+            })
+
+        } catch (e) {
+            res.render("notice", {
+                'userId': userId,
+                'config': "",
+                'srtDt': srtDt,
+                'endDt': endDt,
+                'pagination': "",
+                'noticeList': "",
+            })
+        }
+    });
+
+}

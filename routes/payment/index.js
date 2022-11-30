@@ -28,4 +28,7 @@ router.post('/showAccount', isAuthenticated, pay.showAccount);
 router.post('/selectNftBuyList', isAuthenticated, pay.selectNftBuyList);
 router.post('/buyCancel', isAuthenticated, pay.buyCancel);
 
+router.get('/notice', isAuthenticated, pay.notice);
+router.post('/notice', isAuthenticated, pay.notice);
+
 module.exports = router
