@@ -59,6 +59,11 @@
 <!-- Modal View End : Alam Modal -->
 
 <script>
+    function fnViewAlarm(content) {
+        $("#viewAlarm").modal('show');
+        $("#modal-text").html(content);
+    }
+
     function fnViewConfirmAlarm(title, content, callback, data) {
         $("#viewConfirmAlarmLabel").html(title);
         $("#viewConfirmText").html(content)

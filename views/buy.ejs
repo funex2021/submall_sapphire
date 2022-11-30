@@ -162,6 +162,7 @@
                                 <thead>
                                     <th>상품</th>
                                     <th>수량</th>
+                                    <th>금액</th>
                                 </thead>
                                 <tbody id="selectNft">
                                 </tbody>
@@ -237,6 +238,7 @@
         price.value = parseInt(price.value) + parseInt(obj.dataset.price);
         let html = "";
         if (obj.dataset.price == '10000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price10000cnt++;
             price10000seq = obj.dataset.sellseq;
             if ($("#10000product").length > 0) {
@@ -255,6 +257,7 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '30000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price30000cnt++;
             price30000seq = obj.dataset.sellseq;
             if ($("#30000product").length > 0) {
@@ -273,6 +276,7 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '50000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price50000cnt++;
             price50000seq = obj.dataset.sellseq;
             if ($("#50000product").length > 0) {
@@ -291,6 +295,7 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '100000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price100000cnt++;
             price100000seq = obj.dataset.sellseq;
             if ($("#100000product").length > 0) {
@@ -309,6 +314,7 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '150000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price150000cnt++;
             price150000seq = obj.dataset.sellseq;
             if ($("#150000product").length > 0) {
@@ -327,6 +333,7 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '200000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price200000cnt++;
             price200000seq = obj.dataset.sellseq;
             if ($("#200000product").length > 0) {
@@ -345,6 +352,7 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '500000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price500000cnt++;
             price500000seq = obj.dataset.sellseq;
             if ($("#500000product").length > 0) {
@@ -363,6 +371,7 @@
             }
             $("#selectBody").append(html);
         } else if (obj.dataset.price == '1000000') {
+            fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
             price1000000cnt++;
             price1000000seq = obj.dataset.sellseq;
             if ($("#1000000product").length > 0) {
@@ -441,6 +450,9 @@
                             html += "</td>"
                             html += "<td>"
                             html += $("#selectBody > tr:eq("+i+") > td:eq(1)").text();
+                            html += "</td>"
+                            html += "<td>"
+                            html += $("#selectBody > tr:eq("+i+") > td:eq(2)").text();
                             html += "</td>"
                             html += "</tr>"
                         }

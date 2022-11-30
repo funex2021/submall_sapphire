@@ -261,13 +261,14 @@
             type: 'POST',
             data: data,
             success: function (result) {
+                console.log(result)
                 if (result.success) {
                     let list = result.data;
                     if (list.length > 0) {
                         list.forEach(function (el, i) {
                             let html = "";
                             html += "<td id='nftImg'>";
-                            html += "<img src='"+el.nft_img+"' style='width: 30%;'>"
+                            html += "<img loading='lazy' src='"+el.nft_img+"' style='width: 30%;'>"
                             html += "</td>";
                             html += "<td id='nftNm'>";
                             html += el.nft_nm;
