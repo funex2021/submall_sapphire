@@ -274,11 +274,9 @@
                 type: 'POST',
                 data: data,
                 success: function (result) {
-                    console.log(result)
                     if (result.success) {
                         let list = result.data;
                         if (list.length > 0) {
-                            $(".collapseExample"+index).html("");
                             list.forEach(function (el, i) {
                                 let html = "";
                                 html += "<td id='nftImg'>";
@@ -295,6 +293,7 @@
                                 html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
                                 html += "</td>";
 
+                                $(".collapseExample"+index+"-"+i).html("");
                                 $(".collapseExample"+index+"-"+i).html(html);
                             });
                         }
