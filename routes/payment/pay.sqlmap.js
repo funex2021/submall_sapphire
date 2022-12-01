@@ -772,6 +772,24 @@ function fnGetSubNoticeListCnt(param, conn) {
     });
 }
 
+function fngetNftSellInfo(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select sell_seq, nft_seq, sell_amount, sell_price, sell_status from cs_nft_sell";
+        sql += " where 1=1";
+        sql += " and sell_seq = '"+param.sellSeq+"'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
 module.exports.QGetConfigInfo = fnGetConfigInfo;
@@ -810,3 +828,4 @@ module.exports.QGetFaqList = fnGetFaqList;
 module.exports.QGetNoticeList = fnGetNoticeList;
 module.exports.QGetSubNoticeList = fnGetSubNoticeList;
 module.exports.QGetSubNoticeListCnt = fnGetSubNoticeListCnt;
+module.exports.QgetNftSellInfo = fngetNftSellInfo;

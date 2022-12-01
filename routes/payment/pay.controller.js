@@ -220,13 +220,10 @@ exports.buypage = async (req, res, next) => {
 
 exports.buy = async (req, res, next) => {
 
-    let {
-        price10000cnt, price10000seq, price30000cnt, price30000seq,
-        price50000cnt, price50000seq, price100000cnt, price100000seq,
-        price150000cnt, price150000seq, price200000cnt, price200000seq,
-        price500000cnt, price500000seq, price1000000cnt, price1000000seq,
-        bankSeq
-    } = req.body;
+    let {selectSellSeqArr, selectBuyAmountArr, selectSellPriceArr, bankSeq} = req.body;
+    selectSellSeqArr = JSON.parse(selectSellSeqArr);
+    selectBuyAmountArr = JSON.parse(selectBuyAmountArr);
+    selectSellPriceArr = JSON.parse(selectSellPriceArr);
 
     let obj = {}
     obj.seq = uuidv4();
@@ -295,120 +292,53 @@ exports.buy = async (req, res, next) => {
                                 let wallet = await Query.QGetMemberWalletLimit1(nftBuyObj, conn);
                                 nftBuyObj.coinAddr = wallet[0].coin_addr;
 
-                                if (price10000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price10000seq;
-                                    nftBuyObj.buyAmount = price10000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price10000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
+                                let totalPrice = 0;
+                                let selectTotalPrice = 0;
 
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
-                                }
-                                if (price30000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price30000seq;
-                                    nftBuyObj.buyAmount = price30000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price30000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
-
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
-                                }
-                                if (price50000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price50000seq;
-                                    nftBuyObj.buyAmount = price50000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price50000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
-
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
-                                }
-                                if (price100000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price100000seq;
-                                    nftBuyObj.buyAmount = price100000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price100000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
-
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
-                                }
-                                if (price150000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price150000seq;
-                                    nftBuyObj.buyAmount = price150000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price150000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
-
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
-                                }
-                                if (price200000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price200000seq;
-                                    nftBuyObj.buyAmount = price200000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price200000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
-
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
-                                }
-                                if (price500000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price500000seq;
-                                    nftBuyObj.buyAmount = price500000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price500000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
-
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
-                                }
-                                if (price1000000cnt > 0) {
-                                    nftBuyObj.buySeq = uuidv4();
-                                    nftBuyObj.sellSeq = price1000000seq;
-                                    nftBuyObj.buyAmount = price1000000cnt;
-                                    //nft 수량체크
-                                    let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
-                                    if (cnt < price1000000cnt) {
-                                        conn.rollback();
-                                        return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
-                                    }
-
-                                    await Query.QSetInsNftBuy(nftBuyObj, conn);
+                                for (let j=0; j<selectSellPriceArr.length; j++) {
+                                    selectTotalPrice = selectTotalPrice + parseInt(selectSellPriceArr[j]);
                                 }
 
-                                console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 구매 요청 ")
-                                logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 구매 요청 "
-                                logObj.isSuccess = "01"
-                                await Query.QSetHistory(logObj, conn);
-                                await Query.QSetCoinBuy(obj, conn);
-                                await Query.QSetIsBuy(obj, conn);
+                                if (selectSellSeqArr.length > 0) {
+                                    for (let i=0; i<selectSellSeqArr.length; i++) {
+                                        nftBuyObj.buySeq = uuidv4();
+                                        nftBuyObj.sellSeq = selectSellSeqArr[i];
+                                        nftBuyObj.buyAmount = selectBuyAmountArr[i];
+                                        console.log(nftBuyObj)
+                                        //nft 수량체크
+                                        let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
+                                        if (cnt < selectBuyAmountArr[i]) {
+                                            conn.rollback();
+                                            return res.json(rtnUtil.successFalse("500", "구매 수량이 부족합니다. 관리자에게 문의 하세요.", "", ""));
+                                        }
 
-                                conn.commit();
-                                res.json(rtnUtil.successTrue("200", "", ""));
+                                        //nft 판매 정보 조회 후 총금액 저장
+                                        let nftSellInfo = await Query.QgetNftSellInfo(nftBuyObj, conn);
+                                        totalPrice = totalPrice + (nftSellInfo[0].sell_price * selectBuyAmountArr[i]);
+
+                                        await Query.QSetInsNftBuy(nftBuyObj, conn);
+                                    }
+
+                                    if (parseInt(totalPrice) == selectTotalPrice) {
+                                        console.log('구매금액이 같음.');
+                                        console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 구매 요청 ")
+                                        logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 구매 요청 "
+                                        logObj.isSuccess = "01"
+                                        await Query.QSetHistory(logObj, conn);
+                                        await Query.QSetCoinBuy(obj, conn);
+                                        await Query.QSetIsBuy(obj, conn);
+
+                                        conn.commit();
+                                        res.json(rtnUtil.successTrue("200", "", ""));
+                                    } else {
+                                        conn.rollback();
+                                        return res.json(rtnUtil.successFalse("500", "결제금액이 상이 합니다. 다시 구매해 주세요.", "", ""));
+                                    }
+                                } else {
+                                    conn.rollback();
+                                    return res.json(rtnUtil.successFalse("500", "구매가 실패했습니다. 관리자에게 문의해주세요.", "", ""));
+                                }
+
                             } catch (e) {
                                 conn.rollback();
                                 console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 오류 발생  ")
