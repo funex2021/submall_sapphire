@@ -439,7 +439,8 @@ function fngetNftList(param, conn) {
         sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cns.nft_img, cns.nft_nm from cs_nft_sell cns";
         sql += " where 1=1";
         sql += " and cns.m_seq = '" + param.cmpnyMemnerSeq + "'";
-        sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
+        // sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
+        sql += " and cns.collection_seq = '"+ param.collection_seq +"'";
         sql += " and cns.sell_status = 'CMDT00000000000080'"
         sql += " order by sell_price asc";
 
@@ -474,7 +475,7 @@ function fnSetInsNftSell(param, conn) {
 function fnGetCompanyInfoByCmpnyCd(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select cmpny_cd, cmpny_id, cmpny_nm, m_seq from cs_company";
+        sql += "select cmpny_cd, cmpny_id, cmpny_nm, m_seq, collection_seq from cs_company";
         sql += " where 1=1";
         sql += " and cmpny_cd = '" + param.cmpnyCd + "'";
 
