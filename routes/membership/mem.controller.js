@@ -5,6 +5,7 @@ const rtnUtil = require(path.join(process.cwd(), '/routes/services/rtnUtil'))
 const logUtil = require(path.join(process.cwd(), '/routes/services/logUtil'))
 const encryption = require(path.join(process.cwd(), '/routes/services/encUtil'));
 const CONSTS = require(path.join(process.cwd(), '/routes/services/const'));
+const smsUtil = require(path.join(process.cwd(), "/routes/services/smsUtil"));
 const axios = require('axios')
 
 const {v4: uuidv4} = require('uuid');
@@ -279,6 +280,12 @@ exports.sendCertNum = async (req, res, next) => {
 
             let certNum = await Query.QInsCertNum(obj, conn);
             obj.seq = certNum.insertId;
+
+            let data = {};
+            data.recipients = hp;
+            data.message = '인증번호는 ['+str+'] 입니다.';
+
+            let sms = await smsUtil.fnSmsApiCall(data);
 
             conn.commit();
 
