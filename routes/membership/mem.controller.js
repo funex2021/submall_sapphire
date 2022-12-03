@@ -179,7 +179,7 @@ exports.coinInfo = async (req, res, next) => {
 }
 
 exports.signUpProc = async (req, res, next) => {
-    let {id, password} = req.body;
+    let {id, email, password, name, acc_nm, bank_nm, bank_acc, hp, seq} = req.body;
 
     let obj = {};
     obj.memId = id;
@@ -211,14 +211,22 @@ exports.signUpProc = async (req, res, next) => {
                 throw '지갑생성오류';
             }
 
+            //인증번호 체크
+            obj.seq = seq;
+            let cert = await Query.QGetCertNum(obj, conn);
+            if (cert.auth_yn == 'N') {
+                res.json(rtnUtil.successFalse("500", "인증되지 않았습니다. 다시한번 인증해 주세요.","",""));
+                return;
+            }
+
             obj.mSeq = uuidv4();
             let passInfo = await encryption.createPasswordHash(password);
             obj.memPass = passInfo.password;
             obj.salt = passInfo.salt;
 
-            obj.memNm = '';
-            obj.memHp = '';
-            obj.memEmail = '';
+            obj.memNm = name;
+            obj.memHp = hp;
+            obj.memEmail = email;
             obj.nation = '82';
             obj.nftStatus = 'CMDT00000000000076';
             await Query.QSetMember(obj, conn);
@@ -227,9 +235,9 @@ exports.signUpProc = async (req, res, next) => {
             let wallet = await Query.QSetWallet(obj, conn);
             obj.walletSeq = wallet.insertId;
 
-            obj.bankInfo = '';
-            obj.bankAcc = '';
-            obj.accNm = '';
+            obj.bankInfo = bank_nm;
+            obj.bankAcc = bank_acc;
+            obj.accNm = acc_nm;
             await Query.QSetBank(obj, conn);
 
             await Query.QSetBalance(obj, conn);
@@ -246,6 +254,70 @@ exports.signUpProc = async (req, res, next) => {
             res.json(rtnUtil.successTrue("회원가입되었습니다."));
         } catch (e) {
             res.json(rtnUtil.successFalse("500", "회원가입이 실패했습니다.","",""));
+        }
+    });
+}
+
+exports.sendCertNum = async (req, res, next) => {
+    let {hp} = req.body;
+
+    let obj = {};
+    obj.hp = hp;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let str = '';
+            for (let i = 0; i < 6; i++) {
+                str += Math.floor(Math.random() * 10)
+            }
+
+            obj.auth_code = str;
+            obj.auth_yn = 'N';
+
+            let certNum = await Query.QInsCertNum(obj, conn);
+            obj.seq = certNum.insertId;
+
+            conn.commit();
+
+            res.json(rtnUtil.successTrue("전송되었습니다.", obj));
+        } catch (e) {
+            console.log(e)
+            res.json(rtnUtil.successFalse("500", "안증번호 전송이 실패했습니다.","",""));
+        }
+    });
+}
+
+exports.checkCertNum = async (req, res, next) => {
+    let {seq, cert_num} = req.body;
+
+    let obj = {};
+    obj.seq = seq;
+    obj.cert_num = cert_num;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            //인증번호확인
+            let cert = await Query.QGetCertNum(obj, conn);
+            if (cert.auth_code == cert_num) {
+                obj.auth_yn = 'Y';
+                await Query.QUptCertYn(obj, conn);
+
+                conn.commit();
+
+                res.json(rtnUtil.successTrue("인증되었습니다.", obj));
+            } else {
+                res.json(rtnUtil.successFalse("500", "안증번호 확인이 실패했습니다.","",""));
+                return;
+            }
+        } catch (e) {
+            console.log(e)
+            res.json(rtnUtil.successFalse("500", "안증번호 전송이 실패했습니다.","",""));
         }
     });
 }

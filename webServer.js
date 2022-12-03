@@ -92,8 +92,10 @@ app.use(function (req, res, next) {
 */
 function fnGetConfigInfo(param, conn) {
     return new Promise(function (resolve, reject) {
-        var sql = " SELECT max_amt, min_amt, is_captcha, is_pause, site_url, login_text, pwd_text, found_text, company_nm, suspension_min, is_auto_suspension_view "
-        sql += " FROM cs_pay_config "
+        var sql = " SELECT cpc.max_amt, cpc.min_amt, cpc.is_captcha, cpc.is_pause, cpc.site_url, cpc.login_text, cpc.pwd_text, cpc.found_text, cpc.company_nm, cpc.suspension_min, cpc.is_auto_suspension_view "
+        sql += " , cc.sign_yn"
+        sql += " FROM cs_pay_config cpc"
+        sql += " left join cs_company cc on cpc.cmpny_cd = cc.cmpny_cd"
         sql += " WHERE site_url LIKE '%" + param.domain + "%'"
 
         console.log(sql)

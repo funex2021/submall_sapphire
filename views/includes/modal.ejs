@@ -58,6 +58,25 @@
 </div>
 <!-- Modal View End : Alam Modal -->
 
+<!-- Modal View Start : Alam Modal -->
+<div class="modal fade" id="viewLocationAlarm" tabindex="-1" aria-labelledby="viewLocationAlarmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="flex items-center px-5 py-2 text-sm bg-gray-200">
+                <h5 class="flex items-center" id="viewLocationAlarmLabel">Alert</h5>
+            </div>
+            <div id="viewLocationText" class="px-5 py-2 text-xs">
+            </div>
+            <div class="mb-2 modal-footer">
+                <button type="button" class="px-6 py-2 text-xs btn btn-dark" id="locationId" onclick="">
+                    확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal View End : Alam Modal -->
+
 <script>
     function fnViewAlarm(content) {
         $("#viewAlarm").modal('show');
@@ -74,5 +93,11 @@
     function fnViewRefreshAlarm(content) {
         $("#viewRefreshText").html(content);
         $("#viewRefreshAlarm").modal('show');
+    }
+
+    function fnViewLocationAlarm(content, loc) {
+        $("#viewLocationText").html(content);
+        $("#viewLocationAlarm").modal('show');
+        $("#locationId").attr('onclick', 'javascript:location.href="'+loc+'"');
     }
 </script>

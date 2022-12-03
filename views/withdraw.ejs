@@ -39,7 +39,9 @@
                                             <col width="10%">
                                             <col width="10%">
                                             <col width="*">
-                                            <col width="*">
+                                            <% if (cmpnyInfo.point_view_yn == 'Y') { %>
+                                                <col width="*">
+                                            <% } %>
                                             <col width="*">
                                         </colgroup>
                                         <thead>
@@ -48,7 +50,9 @@
                                             <th>sales</th>
                                             <th>상태</th>
                                             <th>구매금액</th>
-                                            <th>포인트</th>
+                                            <% if (cmpnyInfo.point_view_yn == 'Y') { %>
+                                                <th>포인트</th>
+                                            <% } %>
                                             <th>비고</th>
                                         </tr>
                                         </thead>
@@ -86,7 +90,9 @@
                                                             break; } %>
                                                 </td>
                                                 <td><%= parseInt(buy_num).toLocaleString('ko-KR') %> KRW</td>
-                                                <td><%= parseInt(pay_num).toLocaleString('ko-KR') %> Point</td>
+                                                <% if (cmpnyInfo.point_view_yn == 'Y') { %>
+                                                    <td><%= parseInt(pay_num).toLocaleString('ko-KR') %> Point</td>
+                                                <% } %>
                                                 <td>
                                                     <% if (status == '대기') { %>
                                                         <a href="#n" class="btn btn-primary mr-2" onclick="chkAcc('<%= parseInt(buy_num).toLocaleString('ko-KR') %>','<%=cmpnyInfo.nft_bank_nm%>','<%=cmpnyInfo.nft_bank_acc%>','<%=cmpnyInfo.nft_acc_nm%>');">계좌확인</a>
@@ -105,15 +111,25 @@
                                                     <td>
                                                         전송중입니다.
                                                     </td>
-                                                    <td colspan="3">
+                                                    <% if (cmpnyInfo.point_view_yn == 'Y') { %>
+                                                        <td colspan="3">
 
-                                                    </td>
+                                                        </td>
+                                                    <% } else { %>
+                                                        <td colspan="2">
+
+                                                        </td>
+                                                    <% } %>
                                                 </tr>
                                             <% } %>
                                         <% }) %>
                                         <% } else { %>
                                             <tr>
-                                                <td colspan="6" style="text-align: center;">내역이 없습니다.</td>
+                                                <% if (cmpnyInfo.point_view_yn == 'Y') { %>
+                                                    <td colspan="6" style="text-align: center;">내역이 없습니다.</td>
+                                                <% } else { %>
+                                                   <td colspan="5" style="text-align: center;">내역이 없습니다.</td>
+                                                <% } %>
                                             </tr>
                                         <% } %>
                                         </tbody>

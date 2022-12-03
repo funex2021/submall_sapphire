@@ -289,6 +289,60 @@ function fnGetMemberInfo(param ,conn) {
     });
 }
 
+function fnInsCertNum(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "insert into cs_nft_sms (mem_hp, auth_code, auth_yn) values";
+        sql += " ('"+param.hp+"','"+param.auth_code+"','"+param.auth_yn+"')"
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetCertNum(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "select seq, mem_hp, auth_code, auth_yn from cs_nft_sms";
+        sql += " where 1=1";
+        sql += " and seq ='"+param.seq+"'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret[0]);
+        });
+    });
+}
+
+function fnUptCertYn(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "update cs_nft_sms set";
+        sql += " auth_yn = '"+param.auth_yn+"'";
+        sql += " where 1=1";
+        sql += " and seq ='"+param.seq+"'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret[0]);
+        });
+    });
+}
+
 module.exports.QGetMemTotal = fnGetMemTotal;
 module.exports.QGetMemberList = fnGetMemList;
 module.exports.QSetMember = fnSetMember;
@@ -306,3 +360,6 @@ module.exports.QSetNftCollection = fnSetNftCollection;
 module.exports.QSetNftKcy = fnSetNftKcy;
 module.exports.QSetCreater = fnSetCreater;
 module.exports.QGetMemberInfo = fnGetMemberInfo;
+module.exports.QInsCertNum = fnInsCertNum;
+module.exports.QGetCertNum = fnGetCertNum;
+module.exports.QUptCertYn = fnUptCertYn;

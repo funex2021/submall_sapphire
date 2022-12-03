@@ -11,29 +11,32 @@
         <div class="content-body">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="stat-widget d-flex align-items-center">
-                            <div class="widget-icon me-3 bg-primary"><span><i class="ri-file-copy-2-line"></i></span></div>
-                            <div class="widget-content">
-                                <h3>
+                    <% if (cmpnyInfo.point_view_yn == 'Y') { %>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="stat-widget d-flex align-items-center">
+                                <div class="widget-icon me-3 bg-primary"><span><i class="ri-file-copy-2-line"></i></span></div>
+                                <div class="widget-content">
+                                    <h3>
 
-                                    <%= parseInt(coinObj).toLocaleString('ko-KR') %> Point
-                                </h3>
-                                <p>사용 가능한 포인트</p>
+                                        <%= parseInt(coinObj).toLocaleString('ko-KR') %> Point
+                                    </h3>
+                                    <p>사용 가능한 포인트</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                        <div class="stat-widget d-flex align-items-center">
-                            <div class="widget-icon me-3 bg-success"><span><i class="ri-file-list-3-line"></i></span></div>
-                            <div class="widget-content">
-                                <h3>
-                                    <%= parseInt(totTrans).toLocaleString('ko-KR') %> Point
-                                </h3>
-                                <p>사용 포인트</p>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="stat-widget d-flex align-items-center">
+                                <div class="widget-icon me-3 bg-success"><span><i class="ri-file-list-3-line"></i></span></div>
+                                <div class="widget-content">
+                                    <h3>
+                                        <%= parseInt(totTrans).toLocaleString('ko-KR') %> Point
+                                    </h3>
+                                    <p>사용 포인트</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <% } %>
+
 <!--                    <div class="col-xl-3 col-sm-6">-->
 <!--                        <div class="stat-widget d-flex align-items-center">-->
 <!--                            <div class="widget-icon me-3 bg-warning"><span><i class="ri-file-paper-line"></i></span></div>-->
@@ -48,12 +51,14 @@
                     <div class="col-xxl-12 col-xl-12">
                         <div class="card welcome-profile">
                             <div class="card-body">
-                                <h4>NFT몰 서브몰에서의 NFT 구매시 체크사항!</h4>
+                                <h4>NFT몰 입점몰에서의 NFT 구매시 체크사항!</h4>
                                 <p style="color: red;">NFT몰의 크리에이터가 민팅한 실제 블록체인 NFT 컬렉션입니다.</p>
                                 <p>회원은 실제 블록체인 NFT 구매 진행이 이루어지며, 결제 처리 완료 시, 디지털 작품의 소유권을 증명할 수 있는 NFT가 전자 지갑주소로 전송됩니다.</p>
                                 <p style="color: red">단, 블록체인 네트워크 상태에 따라 전송시간이 소요될 수 있습니다.</p>
                                 <p>NFT 구매에 있어서 이용약관 및 거래약관은 NFT몰의 약관을 따릅니다.</p>
-                                <p style="color: red">포인트는 NFT몰과 관련이 없으며, 포인트와 관련된 사항이나 회원정보수정은 크리에이터에게 문의하세요.</p>
+                                <% if (cmpnyInfo.point_view_yn == 'Y') { %>
+                                    <p style="color: red">포인트는 NFT몰과 관련이 없으며, 포인트와 관련된 사항이나 회원정보수정은 크리에이터에게 문의하세요.</p>
+                                <% } %>
                             </div>
                         </div>
                     </div>

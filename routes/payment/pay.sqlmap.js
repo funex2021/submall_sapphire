@@ -1,7 +1,7 @@
 function fnGetCompanyInfo(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " SELECT cm.m_seq, fn_get_name(cc.admin_grade) "
-        sql += " , cc.input_info1_bank, cc.input_info1_acc, cc.input_info1_name, cc.input_info2 , cc.coin_rate, cc.seller_seq, cbw.balance "
+        sql += " , cc.input_info1_bank, cc.input_info1_acc, cc.input_info1_name, cc.input_info2 , cc.coin_rate, cc.seller_seq, cbw.balance, cc.point_view_yn, sign_yn "
         sql += " , cnb.bank_nm nft_bank_nm, cnb.bank_acc nft_bank_acc, cnb.acc_nm nft_acc_nm";
         sql += " FROM cs_member cm inner join cs_company cc ON cm.cmpny_cd = cc.cmpny_cd AND cc.admin_grade = 'CMDT00000000000002'"
         sql += " inner join cs_balance_wallet cbw ON cbw.m_seq = cm.m_seq "

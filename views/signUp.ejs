@@ -9,7 +9,7 @@
     <div class="container h-100">
         <div class="row justify-content-center h-100 align-items-center">
             <div class="col-xl-5 col-md-6">
-                <div class="mini-logo text-center my-4"><a href="/"><img src="https://enftx-html.vercel.app/images/logo.png" alt=""></a>
+                <div class="mini-logo text-center my-4"><a href="/"><img src="/images/logo-dark.png" alt=""></a>
                     <h4 class="card-title mt-5">Sign Up</h4>
                 </div>
                 <div class="auth-form card">
@@ -21,8 +21,47 @@
                                     <input type="text" class="form-control" id="id" value="">
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <label class="form-label">Password</label>
+                                    <label class="form-label">이메일</label>
+                                    <input type="text" class="form-control" id="email" value="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">비밀번호</label>
                                     <input type="password" class="form-control" id="password" value="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">비밀번호 재확인</label>
+                                    <input type="password" class="form-control" id="chkPassword" value="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">이름</label>
+                                    <input type="text" class="form-control" id="name" value="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">예금주</label>
+                                    <input type="text" class="form-control" id="acc_nm" value="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">은행명</label>
+                                    <input type="text" class="form-control" id="bank_nm" value="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">계좌번호</label>
+                                    <input type="text" class="form-control" id="bank_acc" onkeyup="numCheck(this);" value="">
+                                </div>
+                                <div class="col-9 mb-3">
+                                    <label class="form-label">핸드폰번호</label>
+                                    <input type="text" class="form-control" id="hp" value="">
+                                </div>
+                                <div class="col-3" style="margin-top: 2rem;">
+                                    <a href="#n" class="btn btn-primary mr-2" onclick="sendCertNum();">전송</a>
+                                </div>
+                                <div class="col-9 mb-3">
+                                    <label class="form-label">인증번호</label>
+                                    <input type="text" class="form-control" id="cert_num" value="">
+                                    <input type="hidden" id="seq">
+                                </div>
+                                <div class="col-3" style="margin-top: 2rem;">
+                                    <a href="#n" class="btn btn-primary mr-2" onclick="checkCertNum();">확인</a>
                                 </div>
                             </div>
                             <div class="mt-3 d-grid gap-2">
@@ -41,22 +80,85 @@
     </div>
 </div>
 </body>
+<%- include('includes/modal') %>
 </html>
 <script>
     function signUp() {
         if ($("#id").val() == '') {
-            alert('아이디를 입력해 주세요.');
+            fnViewAlarm('아이디를 입력해 주세요.');
+            return;
+        }
+        if ($("#email").val() == '') {
+            fnViewAlarm('이메일을 입력해 주세요.');
+            return;
+        } else {
+            let filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if (!filter.test($("#email").val())) {
+                fnViewAlarm('이메일 형식을 확인해 주세요.');
+                return;
+            }
+        }
+
+
+        if ($("#password").val() == '') {
+            fnViewAlarm('비밀번호를 입력해 주세요.');
+            return;
+        } else {
+            if (!passChk()) {
+                return;
+            }
+        }
+
+        if ($("#chkPassword").val() == '') {
+            fnViewAlarm('비밀번호를 입력해 주세요.');
             return;
         }
 
-        if ($("#password").val() == '') {
-            alert('비밀번호를 입력해 주세요.');
+        if ($("#password").val() != $("#chkPassword").val()) {
+            fnViewAlarm('비밀번호를 확인해 주세요.');
+            return;
+        }
+
+        if ($("#name").val() == '') {
+            fnViewAlarm('이름를 입력해 주세요.');
+            return;
+        }
+
+        if ($("#acc_nm").val() == '') {
+            fnViewAlarm('예금주를 입력해 주세요.');
+            return;
+        }
+
+        if ($("#bank_nm").val() == '') {
+            fnViewAlarm('은행명를 입력해 주세요.');
+            return;
+        }
+
+        if ($("#bank_acc").val() == '') {
+            fnViewAlarm('계좌번호를 입력해 주세요.');
+            return;
+        }
+
+        if ($("#hp").val() == '' || $("#cert_num").val() == '') {
+            fnViewAlarm('핸드폰 인증을 진행해 주세요.');
+            return;
+        }
+
+        if ($("#seq").val() == '') {
+            fnViewAlarm('핸드폰 인증을 진행해 주세요.');
             return;
         }
 
         let data = {
             id: $("#id").val(),
-            password: $("#password").val()
+            email : $("#email").val(),
+            password: $("#password").val(),
+            name: $("#name").val(),
+            acc_nm: $("#acc_nm").val(),
+            bank_nm: $("#bank_nm").val(),
+            bank_acc: $("#bank_acc").val(),
+            hp: $("#hp").val(),
+            seq: $("#seq").val(),
         }
 
         $.ajax({
@@ -66,15 +168,96 @@
             data: data,
             success: function (result) {
                 if (result.success) {
-                    alert(result.message);
-                    location.href = '/login';
+                    fnViewLocationAlarm(result.message, '/login');
                 } else {
-                    alert(result.message);
+                    fnViewAlarm(result.message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                fnViewAlarm('회원가입시 문제가 발생하였습니다.');
+            } //function끝
+        });
+    }
+
+    function sendCertNum() {
+        if ($("#hp").val() == '') {
+            fnViewAlarm('핸드폰번호를 입력해 주세요.');
+            return;
+        }
+
+        let data = {
+            hp: $("#hp").val()
+        }
+
+        $.ajax({
+            url: '/m/sendCertNum',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    fnViewAlarm(result.message);
+                    $("#hp").attr('readonly', true);
+                    $("#seq").val(result.data.seq);
+                } else {
+                    fnViewAlarm(result.message);
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert('회원가입시 문제가 발생하였습니다.');
             } //function끝
         });
+    }
+
+    function checkCertNum() {
+        if ($("#cert_num").val() == '') {
+            fnViewAlarm('인증번호를 입력해 주세요.');
+            return;
+        }
+
+        let data = {
+            seq: $("#seq").val(),
+            cert_num: $("#cert_num").val(),
+        }
+
+        $.ajax({
+            url: '/m/checkCertNum',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    fnViewAlarm(result.message);
+                    $("#cert_num").attr('readonly', true);
+                } else {
+                    fnViewAlarm(result.message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('회원가입시 문제가 발생하였습니다.');
+            } //function끝
+        });
+    }
+
+    function numCheck(obj) {
+        var num = obj.value;
+        obj.value = num.replace(/[^0-9]/g, "");
+        obj.focus();
+    }
+
+    function passChk() {
+        var pattern1 = /[0-9]/;
+        var pattern2 = /[a-zA-Z]/;
+        var pw = $("#password").val();
+        var pattern3 = /[~!@\#$%<>^&*]/;
+
+        if (!pattern1.test(pw) || !pattern2.test(pw) || !pattern3.test(pw) || pw.length<8 || pw.length>50){
+            console.log(1)
+            fnViewAlarm("영문+숫자+특수기호 8자리 이상으로 구성하여야 합니다.");
+            return false;
+        } else {
+            console.log(2)
+            return true;
+        }
     }
 </script>

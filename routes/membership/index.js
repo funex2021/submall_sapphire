@@ -66,5 +66,7 @@ router.post('/ins', isAuthenticated, mem.mins);
 router.post('/coin', isAuthenticated, mem.coinInfo);
 
 router.post('/signUpProc', mem.signUpProc);
+router.post('/sendCertNum', mem.sendCertNum);
+router.post('/checkCertNum', mem.checkCertNum);
 
 module.exports = router;
