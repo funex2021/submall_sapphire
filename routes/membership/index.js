@@ -27,8 +27,7 @@ router.post("/signin", (req, res, next) => {
             console.log(authError);
             return next(authError);
         }
-        console.log(user)
-        console.log(info)
+
         if (info) {
             req.flash("alertMessage", info.message);
             return res.redirect("/login");
@@ -40,7 +39,10 @@ router.post("/signin", (req, res, next) => {
                 return res.redirect("/login");
             }
 
-            console.log('req.session.amount : ' + req.session.amount)
+            if (user.authYn == 'N') {
+                return res.redirect(307, "/m/authSignUp");
+            }
+
             if (req.session.amount != null && req.session.amount != undefined) {
                 return res.redirect("/p/buyview")
             } else {
@@ -68,5 +70,7 @@ router.post('/coin', isAuthenticated, mem.coinInfo);
 router.post('/signUpProc', mem.signUpProc);
 router.post('/sendCertNum', mem.sendCertNum);
 router.post('/checkCertNum', mem.checkCertNum);
+router.post('/authSignUp', mem.authSignUp);
+router.post('/authProc', mem.authProc);
 
 module.exports = router;

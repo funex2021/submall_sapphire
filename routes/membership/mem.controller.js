@@ -190,6 +190,12 @@ exports.signUpProc = async (req, res, next) => {
 
     mydb.executeTx(async conn => {
         try {
+            //인증번호 seq없을시 미인증
+            if (!seq) {
+                res.json(rtnUtil.successFalse("500", "인증되지 않았습니다. 다시한번 인증해 주세요.","",""));
+                return;
+            }
+
             let domain = req.headers.host;
             obj.domain = domain;
             let config = await Query.QGetConfig(obj, conn);
@@ -230,6 +236,7 @@ exports.signUpProc = async (req, res, next) => {
             obj.memEmail = email;
             obj.nation = '82';
             obj.nftStatus = 'CMDT00000000000076';
+            obj.authYn = 'Y';
             await Query.QSetMember(obj, conn);
 
             obj.coinTyp = 'CMDT00000000000078';
@@ -325,6 +332,70 @@ exports.checkCertNum = async (req, res, next) => {
         } catch (e) {
             console.log(e)
             res.json(rtnUtil.successFalse("500", "안증번호 전송이 실패했습니다.","",""));
+        }
+    });
+}
+
+
+exports.authSignUp = async (req, res, next) => {
+    let obj = {};
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+
+            let domain = req.headers.host;
+            obj.domain = domain;
+            let config = await Query.QGetConfig(obj, conn);
+
+            //해당 회원 조회
+            obj.memId = req.body.memId;
+            obj.cmpnyCd = config.cmpny_cd;
+            let userInfo = await Query.QGetMemberInfo(obj, conn);
+
+            res.render("authSignUp", {
+                'config': config,
+                'userInfo': userInfo[0],
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    });
+}
+
+exports.authProc = async (req, res, next) => {
+    let {m_seq, seq} = req.body;
+    let obj = {};
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+
+            if (!seq) {
+                res.json(rtnUtil.successFalse("500", "인증되지 않았습니다. 다시한번 인증해 주세요.","",""));
+                return;
+            }
+
+            let domain = req.headers.host;
+            obj.domain = domain;
+            let config = await Query.QGetConfig(obj, conn);
+
+            obj.cmpnyCd = config.cmpny_cd;
+            obj.mSeq = m_seq;
+            obj.authYn = 'Y';
+
+            await Query.QUptMember(obj, conn);
+
+            conn.commit();
+
+            res.json(rtnUtil.successTrue("인증되었습니다."));
+        } catch (e) {
+            console.log(e);
+            res.json(rtnUtil.successFalse("500", "안증번호이 실패했습니다.","",""));
         }
     });
 }

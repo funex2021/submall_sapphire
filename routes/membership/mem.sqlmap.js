@@ -58,9 +58,9 @@ function fnGetMemList(param, conn) {
 function fnSetMember(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " INSERT INTO cs_member"
-        sql += " (m_seq, cmpny_cd, mem_id, mem_pass, salt, mem_nm, mem_hp, mem_email, nation, nft_status) "
+        sql += " (m_seq, cmpny_cd, mem_id, mem_pass, salt, mem_nm, mem_hp, mem_email, nation, nft_status, auth_yn) "
         sql += " VALUES('" + param.mSeq + "', '" + param.cmpnyCd + "', '" + param.memId + "', '" + param.memPass + "', '" + param.salt + "' "
-        sql += " , '" + param.memNm + "' , '" + param.memHp + "', '" + param.memEmail + "', (select cmm_dtl_cd from tb_comm_cd_dtl where cmm_dtl_desc ='" + param.nation + "'),'"+param.nftStatus+"')"
+        sql += " , '" + param.memNm + "' , '" + param.memHp + "', '" + param.memEmail + "', (select cmm_dtl_cd from tb_comm_cd_dtl where cmm_dtl_desc ='" + param.nation + "'),'"+param.nftStatus+"','"+param.authYn+"')"
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -114,7 +114,18 @@ function fnUptMember(param, conn) {
         if (!param.memPass == "") {
             sql += " , mem_pass = '" + param.memPass + "', salt = '" + param.salt + "' "
         }
-        sql += " ,mem_nm ='" + param.memNm + "', mem_hp ='" + param.memHp + "', nation='" + param.nation + "'"
+        if (!param.memNm == "") {
+            sql += " ,mem_nm = '"+param.memNm+"'";
+        }
+        if (!param.memHp == "") {
+            sql += " ,mem_hp = '"+param.memHp+"'";
+        }
+        if (!param.nation == "") {
+            sql += " ,nation = '"+param.nation+"'";
+        }
+        if (!param.authYn == "") {
+            sql += " ,auth_yn = '"+param.authYn+"'";
+        }
         sql += " where m_seq = '" + param.mSeq + "'";
         sql += " and cmpny_cd = '" + param.cmpnyCd + "'";
 
@@ -182,8 +193,10 @@ function fnGetCoinBuyList(param, conn) {
 
 function fnGetConfig(param, conn) {
     return new Promise(function (resolve, reject) {
-        var sql = " SELECT cmpny_cd, max_amt, min_amt, is_captcha, is_pause, site_url, login_text, pwd_text, found_text, company_nm, suspension_min, is_auto_suspension_view "
-        sql += " FROM cs_pay_config "
+        var sql = " SELECT cpc.max_amt, cpc.min_amt, cpc.is_captcha, cpc.is_pause, cpc.site_url, cpc.login_text, cpc.pwd_text, cpc.found_text, cpc.company_nm, cpc.suspension_min, cpc.is_auto_suspension_view "
+        sql += " , cc.sign_yn, cc.cmpny_cd"
+        sql += " FROM cs_pay_config cpc"
+        sql += " left join cs_company cc on cpc.cmpny_cd = cc.cmpny_cd"
         sql += " WHERE site_url LIKE '%" + param.domain + "%'"
 
         console.log(sql)
@@ -267,7 +280,7 @@ function fnSetCreater(param, conn) {
 
 function fnGetMemberInfo(param ,conn) {
     return new Promise(function (resolve, reject) {
-        var sql = " SELECT cm.mem_id user_id, cm.mem_nm user_name, cm.mem_email user_email, cm.mem_hp user_phone "
+        var sql = " SELECT cm.m_seq user_seq, cm.mem_id user_id, cm.mem_nm user_name, cm.mem_email user_email, cm.mem_hp user_phone "
         sql += " , fn_get_name(cm.nation) user_nation_name , DATE_FORMAT(fn_get_time(cm.create_dt), '%Y-%m-%d') create_date "
         sql += " , cb.bank_info user_bank, cb.bank_acc user_num,cb.acc_nm user_holder, concat(cb.bank_info,' ',cb.bank_acc,' ',cb.acc_nm) banks "
         sql += " FROM cs_member cm "

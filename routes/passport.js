@@ -76,6 +76,7 @@ module.exports = (pool) => {
                         user.memNm = memInfo[0].mem_nm;
                         user.coinAddr = memInfo[0].coin_addr;
                         user.bankSeq = memInfo[0].bank_seq;
+                        user.authYn = memInfo[0].auth_yn;
 
                         //ip check
                         obj.cmpnyCd = memInfo[0].cmpny_cd;
@@ -156,7 +157,7 @@ module.exports = (pool) => {
         return new Promise(function (resolve, reject) {
             var sql = " SELECT cm.m_seq , cm.mem_id, cm.cmpny_cd, cm.mem_pass, cm.salt, cm.mem_nm, cm.mem_hp "
             sql += " , cm.mem_email, nation, fn_get_name(cm.nation) nation_name , DATE_FORMAT(cm.create_dt, '%Y-%m-%d %H:%i:%s') create_dt "
-            sql += " , cm.bank_seq";
+            sql += " , cm.bank_seq , cm.auth_yn";
             sql += " ,cw.coin_addr, cw.coin_pk "
             sql += " FROM cs_member cm left join cs_wallet cw ON cw.m_seq = cm.m_seq"
             // sql += " FROM cs_member cm"
