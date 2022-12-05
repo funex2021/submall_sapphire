@@ -39,10 +39,6 @@ router.post("/signin", (req, res, next) => {
                 return res.redirect("/login");
             }
 
-            if (user.authYn == 'N') {
-                return res.redirect(307, "/m/authSignUp");
-            }
-
             if (req.session.amount != null && req.session.amount != undefined) {
                 return res.redirect("/p/buyview")
             } else {
@@ -71,6 +67,7 @@ router.post('/signUpProc', mem.signUpProc);
 router.post('/sendCertNum', mem.sendCertNum);
 router.post('/checkCertNum', mem.checkCertNum);
 router.post('/authSignUp', mem.authSignUp);
+router.get('/authSignUp', mem.authSignUp);
 router.post('/authProc', mem.authProc);
 
 module.exports = router;

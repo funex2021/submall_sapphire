@@ -345,13 +345,12 @@ exports.authSignUp = async (req, res, next) => {
 
     mydb.executeTx(async conn => {
         try {
-
             let domain = req.headers.host;
             obj.domain = domain;
             let config = await Query.QGetConfig(obj, conn);
 
             //해당 회원 조회
-            obj.memId = req.body.memId;
+            obj.memId = req.user.memId;
             obj.cmpnyCd = config.cmpny_cd;
             let userInfo = await Query.QGetMemberInfo(obj, conn);
 

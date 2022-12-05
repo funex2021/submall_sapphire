@@ -16,19 +16,27 @@ var isAuthenticated = function (req, res, next) {
     }
 };
 
-router.get('/view', isAuthenticated, payUtil.isStatusCheck, pay.withdraw);
-router.post('/view', isAuthenticated, payUtil.isStatusCheck, pay.withdraw);
-router.post('/addView', isAuthenticated, pay.addWithdraw);
+var isAuthYn = function (req, res, next) {
+    if (req.user.authYn == 'Y') {
+        return next();
+    } else {
+        res.redirect("/m/authSignUp");
+    }
+};
 
-router.get('/buyview', isAuthenticated, payUtil.isStatusCheck, pay.buyview);
-router.get('/buy', isAuthenticated, payUtil.isStatusCheck, pay.buypage);
-router.post('/buy', isAuthenticated, payUtil.isStatusCheckAjax, pay.buy);
+router.get('/view', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.withdraw);
+router.post('/view', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.withdraw);
+router.post('/addView', isAuthenticated, isAuthYn, pay.addWithdraw);
 
-router.post('/showAccount', isAuthenticated, pay.showAccount);
-router.post('/selectNftBuyList', isAuthenticated, pay.selectNftBuyList);
-router.post('/buyCancel', isAuthenticated, pay.buyCancel);
+router.get('/buyview', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buyview);
+router.get('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buypage);
+router.post('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheckAjax, pay.buy);
 
-router.get('/notice', isAuthenticated, pay.notice);
-router.post('/notice', isAuthenticated, pay.notice);
+router.post('/showAccount', isAuthenticated, isAuthYn, pay.showAccount);
+router.post('/selectNftBuyList', isAuthenticated, isAuthYn, pay.selectNftBuyList);
+router.post('/buyCancel', isAuthenticated, isAuthYn, pay.buyCancel);
+
+router.get('/notice', isAuthenticated, isAuthYn, pay.notice);
+router.post('/notice', isAuthenticated, isAuthYn, pay.notice);
 
 module.exports = router
