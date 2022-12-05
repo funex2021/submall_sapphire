@@ -629,12 +629,12 @@ function fnGetNftBuyList(param, conn) {
         // sql += " where 1=1";
         // sql += " and cnb.coin_sell_seq = '"+param.sellSeq+"'";
 
-        sql += "select cnm.nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount from "+param.cs_coin_sell_detail+" ccsd";
+        sql += "select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount from "+param.cs_coin_sell_detail+" ccsd";
         sql += " left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq";
         sql += " where 1=1";
         sql += " and ccsd.sell_seq ='"+param.sellSeq+"'";
         sql += " union all";
-        sql += " select cnm.nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount from cs_coin_sell_detail_log ccsd";
+        sql += " select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount from cs_coin_sell_detail_log ccsd";
         sql += " left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq";
         sql += " where 1=1";
         sql += " and ccsd.sell_seq ='"+param.sellSeq+"'";
