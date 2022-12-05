@@ -150,6 +150,10 @@ app.use('/p', require('./routes/payment'))
 app.get('/login', function (req, res, next) {
     //let domain = req.headers.host;
 
+    if (req.isAuthenticated()) {
+        return res.redirect("/p/buyview");
+    }
+
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
     mydb.execute(async conn => {
