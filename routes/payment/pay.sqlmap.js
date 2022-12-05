@@ -436,7 +436,8 @@ function fnSetIsBuy(param, conn) {
 function fngetNftList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cns.nft_img, cns.nft_nm from cs_nft_sell cns";
+        sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cnm.file_path nft_img, cns.nft_nm from cs_nft_sell cns";
+        sql += " left join cs_nft_mst cnm on cnm.seq = cns.nft_seq";
         sql += " where 1=1";
         sql += " and cns.m_seq = '" + param.cmpnyMemnerSeq + "'";
         // sql += " and cns.cmpny_cd = '"+ param.cmpnyCd +"'";
