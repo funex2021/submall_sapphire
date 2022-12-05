@@ -21,6 +21,7 @@ const PropertiesReader = require('properties-reader');
 const properties = PropertiesReader('pay.properties');
 const payTime = properties.get('com.pay.time');
 const stoptime = properties.get('com.pay.stoptime');
+const nftMallUrl = properties.get('com.nft.mall');
 
 exports.buyview = async (req, res, next) => {
     let pool = req.app.get('pool');
@@ -202,6 +203,7 @@ exports.buypage = async (req, res, next) => {
                     "totTrans": totTrans,
                     "pagination": pagination,
                     "nftList": nftList,
+                    "nftMallUrl": nftMallUrl,
                 })
             } catch (e) {
                 console.log(e)
@@ -581,6 +583,9 @@ exports.selectNftBuyList = async (req, res, next) => {
         try {
 
             let buyList = await Query.QGetNftBuyList(obj, conn);
+            for (let i=0; i<buyList.length; i++) {
+                buyList[i].nftMallUrl = nftMallUrl;
+            }
 
             res.json(rtnUtil.successTrue("200", buyList));
 
