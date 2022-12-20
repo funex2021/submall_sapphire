@@ -391,7 +391,7 @@ exports.authProc = async (req, res, next) => {
 
             conn.commit();
 
-            res.json(rtnUtil.successTrue("인증되었습니다."));
+            res.json(rtnUtil.successTrue("회원가입 되었습니다."));
         } catch (e) {
             console.log(e);
             res.json(rtnUtil.successFalse("500", "안증번호이 실패했습니다.","",""));
