@@ -42,11 +42,50 @@
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label class="form-label">은행명</label>
-                                    <input type="text" class="form-control" id="bank_nm" value="">
+                                    <select class="form-control" id="bank_code">
+                                        <option value="">선택</option>
+                                        <option value="002">산업은행</option>
+                                        <option value="003">기압은행</option>
+                                        <option value="004">국민은행</option>
+                                        <option value="007">수협은행</option>
+                                        <option value="011">NH농협은행</option>
+                                        <option value="012">농협중앙회</option>
+                                        <option value="020">우리은행</option>
+                                        <option value="023">SC제일은행</option>
+                                        <option value="027">한국씨티</option>
+                                        <option value="031">대구은행</option>
+                                        <option value="032">부산은행</option>
+                                        <option value="034">광주은행</option>
+                                        <option value="035">제주은행</option>
+                                        <option value="037">전북은행</option>
+                                        <option value="039">경남은행</option>
+                                        <option value="045">새마을금고</option>
+                                        <option value="048">신협</option>
+                                        <option value="064">산림조합</option>
+                                        <option value="071">우체국</option>
+                                        <option value="081">하나은행</option>
+                                        <option value="088">신한은행</option>
+                                        <option value="089">케이뱅크</option>
+                                        <option value="090">카카오뱅크</option>
+                                        <option value="092">토스뱅크</option>
+                                    </select>
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-9 mb-3">
                                     <label class="form-label">계좌번호</label>
                                     <input type="text" class="form-control" id="bank_acc" onkeyup="numCheck(this);" value="">
+                                    평생계좌, 가상계좌 등 본의명의 실계좌가 아닐경우 1원인증이 어렵습니다.
+                                </div>
+                                <div class="col-3" style="margin-top: 2rem;">
+                                    <a href="#n" class="btn btn-primary mr-2" id="bankAuthBtn" onclick="sendAccAuth();">전송</a>
+                                </div>
+                                <div class="col-9 mb-3">
+                                    <label class="form-label">계좌인증</label>
+                                    <input type="text" class="form-control" id="verifyVal" value="">
+                                    <input type="hidden" id="accSeq" value="">
+                                    전송된 인증 문구를 입력해 주세요.
+                                </div>
+                                <div class="col-3" style="margin-top: 2rem;">
+                                    <a href="#n" class="btn btn-primary mr-2" id="accAuthBtn" onclick="accAuth();">인증</a>
                                 </div>
                                 <div class="col-9 mb-3">
                                     <label class="form-label">핸드폰번호</label>
@@ -83,6 +122,7 @@
 <%- include('includes/modal') %>
 </html>
 <script>
+    let accConfirm = false;
     function signUp() {
         if ($("#id").val() == '') {
             fnViewAlarm('아이디를 입력해 주세요.');
@@ -129,13 +169,18 @@
             return;
         }
 
-        if ($("#bank_nm").val() == '') {
-            fnViewAlarm('은행명를 입력해 주세요.');
+        if ($("#bank_code").val() == '') {
+            fnViewAlarm('은행명를 선택해 주세요.');
             return;
         }
 
         if ($("#bank_acc").val() == '') {
             fnViewAlarm('계좌번호를 입력해 주세요.');
+            return;
+        }
+
+        if (!accConfirm) {
+            fnViewAlarm('계좌인증을 진행해 주세요.');
             return;
         }
 
@@ -149,13 +194,16 @@
             return;
         }
 
+        wrapWindowByMaskShow();
+
         let data = {
             id: $("#id").val(),
             email : $("#email").val(),
             password: $("#password").val(),
             name: $("#name").val(),
             acc_nm: $("#acc_nm").val(),
-            bank_nm: $("#bank_nm").val(),
+            bank_nm: $("#bank_code option:checked").text(),
+            bank_code: $("#bank_code").val(),
             bank_acc: $("#bank_acc").val(),
             hp: $("#hp").val(),
             seq: $("#seq").val(),
@@ -167,6 +215,7 @@
             type: 'POST',
             data: data,
             success: function (result) {
+                wrapWindowByMaskHide();
                 if (result.success) {
                     fnViewLocationAlarm(result.message, '/login');
                 } else {
@@ -174,6 +223,7 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
                 fnViewAlarm('회원가입시 문제가 발생하였습니다.');
             } //function끝
         });
@@ -252,12 +302,103 @@
         var pattern3 = /[~!@\#$%<>^&*]/;
 
         if (!pattern1.test(pw) || !pattern2.test(pw) || !pattern3.test(pw) || pw.length<8 || pw.length>50){
-            console.log(1)
             fnViewAlarm("영문+숫자+특수기호 8자리 이상으로 구성하여야 합니다.");
             return false;
         } else {
-            console.log(2)
             return true;
         }
+    }
+
+    function sendAccAuth() {
+        if ($("#acc_nm").val() == '') {
+            fnViewAlarm("예금주명을 입력해 주세요.");
+            return;
+        }
+        if ($("#bank_nm").val() == '') {
+            fnViewAlarm("은행명을 선택해 주세요.");
+            return;
+        }
+
+        if ($("#bank_acc").val() == '') {
+            fnViewAlarm("계좌번호를 입력해 주세요.");
+            return;
+        }
+
+        let data = {
+            bank_code: $("#bank_code").val(),
+            bank_acc: $("#bank_acc").val(),
+            acc_nm: $("#acc_nm").val(),
+        }
+
+        wrapWindowByMaskShow();
+
+        $.ajax({
+            url: '/m/sendAccAuth',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    fnViewAlarm(result.message);
+                    $("#acc_nm").attr('readonly', true);
+                    $("#bank_acc").attr('readonly', true);
+                    $("#bank_code").attr('readonly', true);
+                    $("#bankAuthBtn").attr('onclick', '');
+                    $("#accSeq").val(result.data);
+                } else {
+                    if (result.code == '400') {
+                        fnViewAlarm(result.message);
+                        $("#acc_nm").attr('readonly', true);
+                        $("#bank_acc").attr('readonly', true);
+                        $("#bank_code").attr('readonly', true);
+                        $("#bankAuthBtn").attr('onclick', '');
+                        $("#accSeq").val(result.data.seq);
+                    } else {
+                        fnViewAlarm(result.message);
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
+                fnViewAlarm('계좌인증시 문제가 발생하였습니다.');
+            } //function끝
+        });
+    }
+
+    function accAuth() {
+        let data = {
+            seq: $("#accSeq").val(),
+            verifyVal: $("#verifyVal").val(),
+        }
+
+        wrapWindowByMaskShow();
+
+        $.ajax({
+            url: '/m/accAuth',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    $("#verifyVal").attr('readonly', true);
+                    $("#accAuthBtn").attr('onclick', '');
+                    accConfirm = true;
+                    fnViewAlarm(result.message);
+                } else {
+                    if (result.code == '501') {
+                        fnViewAlarm(result.message);
+                        $("#verifyVal").val("");
+                        $("#bankAuthBtn").attr('onclick', 'sendAccAuth();');
+                    }
+                    fnViewAlarm(result.message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
+                fnViewAlarm('계좌인증시 문제가 발생하였습니다.');
+            } //function끝
+        });
     }
 </script>

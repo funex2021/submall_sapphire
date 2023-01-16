@@ -16,7 +16,6 @@ router.post("/signin", (req, res, next) => {
 
     let {amount} = req.body;
 
-    console.log('req.amount : ' + amount);
     if (amount != undefined) {
         req.session.amount = amount;
     }
@@ -69,5 +68,7 @@ router.post('/checkCertNum', mem.checkCertNum);
 router.post('/authSignUp', mem.authSignUp);
 router.get('/authSignUp', mem.authSignUp);
 router.post('/authProc', mem.authProc);
+router.post('/sendAccAuth', mem.sendAccAuth);
+router.post('/accAuth', mem.accAuth);
 
 module.exports = router;

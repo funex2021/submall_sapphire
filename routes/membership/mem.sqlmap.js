@@ -93,8 +93,8 @@ function fnSetWallet(param, conn) {
 function fnSetBank(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " INSERT INTO cs_bank"
-        sql += " (m_seq, bank_info, bank_acc, acc_nm) "
-        sql += " VALUES('" + param.mSeq + "', '" + param.bankInfo + "', '" + param.bankAcc + "', '" + param.accNm + "')  "
+        sql += " (m_seq, bank_info, bank_acc, acc_nm, bank_cd) "
+        sql += " VALUES('" + param.mSeq + "', '" + param.bankInfo + "', '" + param.bankAcc + "', '" + param.accNm + "','" + param.bank_code + "')"
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -356,6 +356,106 @@ function fnUptCertYn(param, conn) {
     });
 }
 
+function fnInsBankAuth(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "insert into cs_bank_auth (bank_code, bank_acc, acc_nm, verifyTrDt, verifyTrNo) values";
+        sql += " ('" + param.bankCode + "','" + param.acctNo + "','" + param.custNm + "','" + param.verifyTrDt +"','" + param.verifyTrNo+ "')";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetBankAuth(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "select seq, bank_code, bank_acc, acc_nm, verifyTrDt, verifyTrNo, auth_yn, create_dt from cs_bank_auth";
+        sql += " where 1=1";
+        sql += " and auth_yn = 'N'";
+        sql += " and use_yn = 'Y'";
+        sql += " and bank_code = '" + param.bank_code + "'";
+        sql += " and bank_acc = '" + param.bank_acc + "'";
+        sql += " and acc_nm = '" + param.acc_nm + "'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetBankAuthInfo(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "select seq, bank_code, bank_acc, acc_nm, verifyTrDt, verifyTrNo, auth_yn, create_dt from cs_bank_auth";
+        sql += " where 1=1";
+        sql += " and seq = '" + param.seq + "'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnDelBankAuth(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "delete from cs_bank_auth"
+        sql += " where 1=1";
+        sql += " and seq = '" + param.seq + "'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function QUptBankAuth(param, conn) {
+    return new Promise(function (resolve, reject) {
+        let sql = "";
+        sql += "update cs_bank_auth set"
+        sql += " update_dt = NOW()";
+        if (param.auth_yn != '' && param.auth_yn != null) {
+            sql += " ,auth_yn = '" + param.auth_yn + "'";
+        }
+        if (param.use_yn != '' && param.use_yn != null) {
+            sql += " ,use_yn = '" + param.use_yn + "'";
+        }
+        sql += " where 1=1";
+        sql += " and seq = '" + param.seq + "'";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QGetMemTotal = fnGetMemTotal;
 module.exports.QGetMemberList = fnGetMemList;
 module.exports.QSetMember = fnSetMember;
@@ -376,3 +476,8 @@ module.exports.QGetMemberInfo = fnGetMemberInfo;
 module.exports.QInsCertNum = fnInsCertNum;
 module.exports.QGetCertNum = fnGetCertNum;
 module.exports.QUptCertYn = fnUptCertYn;
+module.exports.QInsBankAuth = fnInsBankAuth;
+module.exports.QGetBankAuth = fnGetBankAuth;
+module.exports.QGetBankAuthInfo = fnGetBankAuthInfo;
+module.exports.QDelBankAuth = fnDelBankAuth;
+module.exports.QUptBankAuth = QUptBankAuth;

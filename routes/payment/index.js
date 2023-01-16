@@ -11,7 +11,6 @@ var isAuthenticated = function (req, res, next) {
         return next();
     } else {
         console.log("isAuthenticated login")
-        console.log(requestIp.getClientIp(req))
         res.redirect('/login');
     }
 };

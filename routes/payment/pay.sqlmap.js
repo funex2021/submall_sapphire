@@ -37,7 +37,6 @@ function fnInsMeberBalance(param, conn) {
 
 function fnGetMseq(param, conn) {
     return new Promise(function (resolve, reject) {
-        console.log(param);
         var sql = " select m_seq from cs_member cm where mem_id = '" + param.userId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "' "
 
 

@@ -69,11 +69,8 @@ app.use(function (req, res, next) {
     }
 
     let domain = req.headers.host;
-    console.log('domain : ' + domain)
     let obj = {}
     obj.domain = domain;
-    // config = await fnGetConfigInfo(obj, conn).is_pause;
-    // console.log('config.is_pause : ' + config.is_pause)
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
     mydb.execute(async conn => {
@@ -113,14 +110,12 @@ let config = {};
 app.get('/', function (req, res, next) {
     //res.redirect(307, '/p/view');
     let userId = req.query.userId;
-    console.log(userId)
     req.session.amount = req.query.amount;
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
     mydb.execute(async conn => {
         try {
             let domain = req.headers.host;
-            console.log('domain : ' + domain)
             let obj = {}
             obj.domain = domain;
             config = await fnGetConfigInfo(obj, conn);
@@ -156,10 +151,9 @@ app.get('/login', function (req, res, next) {
 
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
-    mydb.execute(async conn => {
+    mydb.executeTx(async conn => {
         try {
             let domain = req.headers.host;
-            console.log('domain : ' + domain)
             let obj = {}
             obj.domain = domain;
             config = await fnGetConfigInfo(obj, conn);

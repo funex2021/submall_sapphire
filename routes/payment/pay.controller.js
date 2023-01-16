@@ -29,7 +29,6 @@ exports.buyview = async (req, res, next) => {
 
     mydb.executeTx(async conn => {
         try {
-            console.log(req.user)
             let userId = req.user.memId;
             let cmpnyCd = req.user.cmpnyCd;
             let cmpnyInfo = null;
@@ -125,9 +124,8 @@ exports.buypage = async (req, res, next) => {
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
 
-    mydb.execute(async conn => {
+    mydb.executeTx(async conn => {
         try {
-            console.log(req.user)
             let userId = req.user.memId;
             let cmpnyCd = req.user.cmpnyCd;
             let mSeq = req.user.mSeq;
@@ -172,10 +170,8 @@ exports.buypage = async (req, res, next) => {
 
 
                 balance = await Query.QGetBalance(obj, conn);
-                console.log(req.user.companyName, "balance :", balance[0].balance)
 
                 let domain = req.headers.host;
-                console.log('domain : ' + domain)
                 obj.domain = domain;
                 let config = await Query.QGetConfigInfo(obj, conn);
                 let totBalance = await Query.QGetUserTotBalance(obj, conn);
@@ -252,7 +248,6 @@ exports.buy = async (req, res, next) => {
 
             let status = await Query.QGetStatus(obj, conn);
 
-            console.log(status);
             if (status == 'CMDT00000000000030') {
 
                 let now = moment();//.format("HH:mm:ss");

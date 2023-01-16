@@ -55,15 +55,12 @@ module.exports = (pool) => {
         mydb.executeTx(async conn => {
             try {
                 let domain = req.headers.host;
-                console.log('domain : ' + domain)
                 obj.domain = domain;
                 let config = await fnGetConfigInfo(obj, conn);
 
-                console.log('config : ' + JSON.stringify(config))
                 obj.cmpnyNm = config.company_nm;
 
                 let memInfo = await fnGetCompanyInfo(obj, conn);
-                console.log('memInfo', memInfo);
                 let user = {};
                 if (memInfo.length > 0) {
                     let checkPass = await encUtil.decodingPasswordHash(Buffer.from(memPass, "base64").toString('utf8'), memInfo[0].salt);
