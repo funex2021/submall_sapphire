@@ -59,6 +59,10 @@ module.exports = (pool) => {
                 let config = await fnGetConfigInfo(obj, conn);
 
                 obj.cmpnyNm = config.company_nm;
+                if (memId == config.company_nm) {
+                    //nft몰 companyCd 가져오기
+                    obj.cmpnyNm = 'nft';
+                }
 
                 let memInfo = await fnGetCompanyInfo(obj, conn);
                 let user = {};
