@@ -16,6 +16,7 @@ router.post("/signin", (req, res, next) => {
 
     let {amount} = req.body;
 
+    console.log('req.amount : ' + amount);
     if (amount != undefined) {
         req.session.amount = amount;
     }
@@ -48,11 +49,11 @@ router.post("/signin", (req, res, next) => {
     })(req, res, next);
 });
 
-
 router.post("/passSignin", (req, res, next) => {
 
     let {amount} = req.body;
 
+    console.log('req.amount : ' + amount);
     if (amount != undefined) {
         req.session.amount = amount;
     }

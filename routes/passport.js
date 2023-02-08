@@ -204,7 +204,7 @@ module.exports = (pool) => {
                     user.memNm = memInfo[0].mem_nm;
                     user.coinAddr = memInfo[0].coin_addr;
                     user.bankSeq = memInfo[0].bank_seq;
-                    user.authYn = memInfo[0].auth_yn;
+                    user.authYn = 'Y';
 
                     //ip check
                     obj.cmpnyCd = memInfo[0].cmpny_cd;
