@@ -22,6 +22,13 @@
                     <span><i class="ri-heart-line"></i></span>
                     <span class="nav-text">Notice</span></a>
             </li>
+            <% if (user.adminYn == 'Y') { %>
+                <li class="">
+                    <a href="/p/mynft">
+                        <span><i class="ri-window-line"></i></span>
+                        <span class="nav-text">Sell</span></a>
+                </li>
+            <% } %>
             <li class=" logout">
                 <a href="/logout">
                     <span><i class="ri-logout-circle-line"></i></span>

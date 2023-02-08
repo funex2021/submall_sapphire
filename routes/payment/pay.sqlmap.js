@@ -335,7 +335,7 @@ function fnSetHistory(param, conn) {
 */
 function fnGetConfigInfo(param, conn) {
     return new Promise(function (resolve, reject) {
-        var sql = " SELECT max_amt, min_amt, is_captcha, is_pause, site_url, login_text, pwd_text, found_text, company_nm, suspension_min, is_auto_suspension_view  "
+        var sql = " SELECT max_amt, min_amt, is_captcha, is_pause, site_url, login_text, pwd_text, found_text, cmpny_cd, company_nm, suspension_min, is_auto_suspension_view  "
         sql += " FROM cs_pay_config "
         sql += " WHERE site_url = '" + param.domain + "'"
 
@@ -790,6 +790,28 @@ function fngetNftSellInfo(param, conn) {
     });
 }
 
+function fnGetNftListByAirdrop(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += "select cns.sell_seq, cns.nft_seq, cns.sell_amount, cns.sell_price, cns.sell_status, cnm.file_path nft_img from cs_nft_sell cns";
+        sql += " left join cs_nft_mst cnm on cnm.seq = cns.nft_seq";
+        sql += " where 1=1";
+        sql += " and cns.airdrop_yn = '" + param.airdrop_yn + "'";
+        sql += " and cns.cmpny_cd = '" + param.cmpnyCd + "'";
+        sql += " and cns.sell_status = '" + param.sell_status + "'";
+        sql += " order by cns.create_dt desc";
+
+        console.log('fnGetNftListByAirdrop : ', sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;
 module.exports.QGetConfigInfo = fnGetConfigInfo;
@@ -829,3 +851,4 @@ module.exports.QGetNoticeList = fnGetNoticeList;
 module.exports.QGetSubNoticeList = fnGetSubNoticeList;
 module.exports.QGetSubNoticeListCnt = fnGetSubNoticeListCnt;
 module.exports.QgetNftSellInfo = fngetNftSellInfo;
+module.exports.QGetNftListByAirdrop = fnGetNftListByAirdrop;

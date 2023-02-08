@@ -5,6 +5,7 @@ const Query = require('./pay.sqlmap'); // 여기
 const rtnUtil = require(path.join(process.cwd(), '/routes/services/rtnUtil'))
 const logUtil = require(path.join(process.cwd(), '/routes/services/logUtil'))
 const pagingUtil = require(path.join(process.cwd(), '/routes/services/pagingUtil'));
+const apiUtil = require(path.join(process.cwd(), '/routes/services/apiUtil'));
 
 const CONSTS = require(path.join(process.cwd(), '/routes/services/const'))
 
@@ -675,6 +676,59 @@ exports.notice = async (req, res, next) => {
                 'endDt': endDt,
                 'pagination': "",
                 'noticeList': "",
+            })
+        }
+    });
+}
+
+exports.mynft = async (req, res, next) => {
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+    let {pageIndex, srtDt, endDt} = req.body;
+    let userId = req.user.memId;
+
+    if (srtDt == undefined || srtDt == '' || srtDt == null) {
+        endDt = moment().format('YYYY-MM-DD');
+        srtDt = moment().format('YYYY-MM-DD');
+    }
+    let obj = {}
+    obj.srtDt = srtDt;
+    obj.endDt = endDt;
+
+    let search = {}
+    search.srtDt = srtDt;
+    search.endDt = endDt;
+
+    mydb.executeTx(async conn => {
+        try {
+            let data = {};
+            // data.address = req.user.coinAddr;
+
+            // let apiRes = await apiUtil.fnApiCall("/getNFTByAddress", data);
+            // let nftList = apiRes.data;
+
+
+            let domain = req.headers.host;
+            obj.domain = domain;
+            let config = await Query.QGetConfigInfo(obj, conn);
+
+            obj.cmpnyCd = config.cmpny_cd;
+            obj.airdrop_yn = 'Y';
+            obj.sell_status= 'CMDT00000000000080';
+            let nftList = await Query.QGetNftListByAirdrop(obj, conn);
+
+            console.log('nftList::', nftList)
+
+            res.render("sellRequest", {
+                "config": config,
+                "nftMallUrl": nftMallUrl,
+                "nftList": nftList,
+                "userId": userId,
+            })
+
+        } catch (e) {
+            res.render("sellRequest", {
+
             })
         }
     });

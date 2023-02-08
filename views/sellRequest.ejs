@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <%- include('includes/cdn') %>
+    <title><%= config.found_text %> | Buy</title>
+</head>
+<body class="@@dashboard">
+<div id="main-wrapper" class="show">
+    <%- include('includes/header') %>
+    <%- include('includes/nav') %>
+    <div class="content-body">
+        <div class="container">
+            <div class="page-title">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-6">
+                        <div class="page-title-content">
+                            <h3>회원판매요청 리스트</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="header-left">
+                                <h4 class="card-title">상품</h4>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="price-group">
+                                <% nftList.forEach(function(el, index) { %>
+                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card items">
+                                            <div class="card-body">
+                                                <div class="items-img position-relative">
+                                                    <img src="<%=nftMallUrl%><%=el.nft_img%>" class="img-fluid rounded mb-3" alt="" style="width: 300px; height: 300px;">
+                                                </div>
+                                                <h4 class="card-title"><%=el.nft_nm%></h4>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="text-end">
+                                                        <h5 class="text-muted"><%=el.sell_price%> KRW</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% })%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<%- include('includes/modal') %>
+</html>
+<script>
+    if ($("#price").val() == '') {
+        $("#price").val(0);
+    }
+
+    let totalCnt = 0;
+    let selectSellSeqArr = [];
+    let selectBuyAmountArr = [];
+    let selectSellPriceArr = [];
+    const price = document.querySelector('#price');
+    const clearBtn = document.querySelector('.clear-btn');
+    const nextBtn = document.querySelector('.next-btn');
+
+    function selectPrice(obj) {
+        price.value = parseInt(price.value) + parseInt(obj.dataset.price);
+        let html = "";
+        fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
+        let selectRrice = obj.dataset.price;
+        if ($("#"+selectRrice+"product").length > 0) {
+            $("#"+selectRrice+"productPrice").html((parseInt($("#"+selectRrice+"productCnt").html()) + 1) * obj.dataset.price);
+            $("#"+selectRrice+"productCnt").html(parseInt($("#"+selectRrice+"productCnt").html()) + 1);
+        } else {
+            html += "<tr id='"+selectRrice+"product'>";
+            html += "<td>";
+            html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
+            html += obj.dataset.nftnm;
+            html += "</td>";
+            html += "<td id='"+selectRrice+"productCnt'>1</td>";
+            html += "<td id='"+selectRrice+"productPrice'>"+ 1 * obj.dataset.price+"</td>";
+            html += "<td><span><i class='ri-delete-bin-line me-3' onclick='removeProduct(\""+obj.dataset.sellseq+"\",\""+obj.dataset.price+"\");'></i></span></td>";
+            html += "</tr>";
+        }
+        totalCnt ++;
+        $("#selectBody").append(html);
+
+        if (selectSellSeqArr.includes(obj.dataset.sellseq)) {
+            selectSellSeqArr.findIndex((element, index, array) => {
+                if (element == obj.dataset.sellseq) {
+                    selectBuyAmountArr[index] = selectBuyAmountArr[index] +1;
+                    selectSellPriceArr[index] = String(parseInt(selectSellPriceArr[index]) + parseInt(obj.dataset.price));
+                }
+            });
+        } else {
+            selectSellSeqArr.push(obj.dataset.sellseq);
+            selectBuyAmountArr.push(1);
+            selectSellPriceArr.push(obj.dataset.price);
+        }
+
+        $("#totalCnt").html(totalCnt + ' Items');
+    }
+
+    clearBtn.addEventListener('click', function () {
+        price.value = 0
+        $("#selectBody").html("");
+        totalCnt = 0;
+        $("#totalCnt").html('0 Items');
+        // $('.modal-text').html('금액을 입력해주세요.');
+    })
+
+    nextBtn.addEventListener('click', () => {
+        if (price.value == "" || price.value == 0) {
+            $('#modal-text').html('NFT상품을 선택해주세요.');
+            $('#viewAlarm').modal('show')
+            $("#price").val(0);
+        } else {
+            $.ajax({
+                url: '/p/showAccount',
+                dataType: 'json',
+                type: 'POST',
+                data: null,
+                success: function (result) {
+                    if (result.success) {
+                        $("#totalPrice").html($("#price").val()+" KRW");
+                        $("#acc_nm").html(result.data.acc_nm);
+                        $("#bank_nm").html(result.data.bank_nm);
+                        $("#bank_acc").html(result.data.bank_acc);
+                        $("#bank_seq").val(result.data.seq);
+
+                        let trLen = $("#selectBody > tr").length;
+                        $("#selectNft").html("");
+                        let html = "";
+                        for (let i=0; i<trLen; i++) {
+                            html += "<tr>"
+                            html += "<td>"
+                            html += $("#selectBody > tr:eq("+i+") > td:eq(0)").text();
+                            html += "</td>"
+                            html += "<td>"
+                            html += $("#selectBody > tr:eq("+i+") > td:eq(1)").text();
+                            html += "</td>"
+                            html += "<td>"
+                            html += $("#selectBody > tr:eq("+i+") > td:eq(2)").text();
+                            html += "</td>"
+                            html += "</tr>"
+                        }
+                        $("#selectNft").append(html);
+                        $('#buyAlarm').modal('show');
+                    } else {
+                        $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
+                        $('#viewAlarm').modal('show')
+                        // alert('계좌 확인 시 오류가 발생했습니다.');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
+                    $('#viewAlarm').modal('show')
+                    // alert('계좌 확인 시 오류가 발생했습니다.');
+                } //function끝
+            });
+        }
+    })
+
+    function fnBuy() {
+        let objKrw = $('input[name=price]').val();
+        // if (parseInt(objKrw) < 10000) {
+        //     $('#modal-text').html('만원 이상 구매 가능합니다.');
+        //     $('#viewAlarm').modal('show')
+        //     return;
+        // }
+        let max_amt = $('input[name=max_amt]').val();
+        let min_amt = $('input[name=min_amt]').val();
+
+        if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
+            $('#modal-text').html(min_amt + '만원 이상 구매 가능합니다.');
+            $('#viewAlarm').modal('show');
+            // alert(min_amt + '만원 이상 구매 가능합니다.');
+            return;
+        }
+
+        if (parseInt(objKrw) > parseInt(max_amt * 10000)) {
+            $('#modal-text').html(max_amt + '만원 이하 구매 가능합니다.');
+            $('#viewAlarm').modal('show');
+            // alert(max_amt + '만원 이하 구매 가능합니다.');
+            return;
+        }
+
+        let data = {
+            objKrw: objKrw,
+            selectSellSeqArr: JSON.stringify(selectSellSeqArr),
+            selectBuyAmountArr: JSON.stringify(selectBuyAmountArr),
+            selectSellPriceArr: JSON.stringify(selectSellPriceArr),
+            bankSeq: $("#bank_seq").val(),
+        }
+
+        $.ajax({
+            url: '/p/buy',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+
+                console.log('result : ' + JSON.stringify(result))
+                if (result.success) {
+                    $('#buyAlarm').modal('hide');
+                    $("#viewAlarmLabel").html('구매신청완료')
+                    $('#modal-text').html('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
+                    $('#viewAlarm').modal('show')
+                    clearBtn.click();
+                } else {
+                    $('#buyAlarm').modal('hide')
+                    $('#modal-text').html(result.message);
+                    $('#viewAlarm').modal('show')
+                    clearBtn.click();
+                }
+
+                // $('#viewAlarm').modal('hide')
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#modal-text').html('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
+                $('#viewAlarm').modal('show');
+            }
+        });
+    }
+
+    function removeProduct(sell_seq, price) {
+        let selectPrice = parseInt($("#"+price+"productPrice").html());
+        let selectCnt = parseInt($("#"+price+"productCnt").html());
+        $("#price").val($("#price").val() - selectPrice);
+
+        totalCnt = totalCnt - parseInt(selectCnt);
+        $("#totalCnt").html(totalCnt + " Items");
+        $("#"+price+"product").remove();
+
+        var i = 0;
+        while (i < selectSellSeqArr.length) {
+            if (selectSellSeqArr[i] === sell_seq) {
+                selectSellSeqArr.splice(i, 1);
+                selectBuyAmountArr.splice(i, 1);
+                selectSellPriceArr.splice(i, 1);
+            } else {
+                ++i;
+            }
+        }
+
+    }
+</script>

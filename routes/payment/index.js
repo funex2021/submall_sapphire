@@ -38,4 +38,6 @@ router.post('/buyCancel', isAuthenticated, isAuthYn, pay.buyCancel);
 router.get('/notice', isAuthenticated, isAuthYn, pay.notice);
 router.post('/notice', isAuthenticated, isAuthYn, pay.notice);
 
+router.get('/mynft', isAuthenticated, isAuthYn, pay.mynft)
+
 module.exports = router

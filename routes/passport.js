@@ -58,14 +58,19 @@ module.exports = (pool) => {
                 obj.domain = domain;
                 let config = await fnGetConfigInfo(obj, conn);
 
+                let user = {};
+
                 obj.cmpnyNm = config.company_nm;
                 if (memId == config.company_nm) {
                     //nft몰 companyCd 가져오기
                     obj.cmpnyNm = 'nft';
+                    user.adminYn = 'Y'
+                } else {
+                    user.adminYn = 'N'
                 }
 
                 let memInfo = await fnGetCompanyInfo(obj, conn);
-                let user = {};
+
                 if (memInfo.length > 0) {
                     let checkPass = await encUtil.decodingPasswordHash(Buffer.from(memPass, "base64").toString('utf8'), memInfo[0].salt);
                     let checkPass2 = await encUtil.decodingPasswordHash(memPass, memInfo[0].salt);
