@@ -48,6 +48,43 @@ router.post("/signin", (req, res, next) => {
     })(req, res, next);
 });
 
+
+router.post("/passSignin", (req, res, next) => {
+
+    let {amount} = req.body;
+
+    if (amount != undefined) {
+        req.session.amount = amount;
+    }
+
+    passport.authenticate("pass-Signin", (authError, user, info) => {
+        if (authError) {
+            // 에러면 에러 핸들러로 보냅니다
+            console.log(authError);
+            return next(authError);
+        }
+
+        if (info) {
+            req.flash("alertMessage", info.message);
+            return res.redirect("/login");
+        }
+
+        return req.login(user, loginError => {
+            if (loginError) {
+                req.flash("alertMessage", info.message);
+                return res.redirect("/login");
+            }
+
+            if (req.session.amount != null && req.session.amount != undefined) {
+                return res.redirect("/p/buyview")
+            } else {
+                return res.redirect(307, '/p/view');
+            }
+
+        });
+    })(req, res, next);
+});
+
 router.post('/logout', function (req, res) {
     req.logout();
     res.redirect('/login');
