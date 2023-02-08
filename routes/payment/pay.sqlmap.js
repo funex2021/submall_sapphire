@@ -775,7 +775,7 @@ function fnGetSubNoticeListCnt(param, conn) {
 function fngetNftSellInfo(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select sell_seq, nft_seq, sell_amount, sell_price, sell_status from cs_nft_sell";
+        sql += "select sell_seq, nft_seq, sell_amount, sell_price, sell_status, nft_nm, nft_desc, nft_img from cs_nft_sell";
         sql += " where 1=1";
         sql += " and sell_seq = '"+param.sellSeq+"'";
 
