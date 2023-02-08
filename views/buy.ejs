@@ -258,9 +258,6 @@
         }
 
         $("#totalCnt").html(totalCnt + ' Items');
-        console.log(selectSellSeqArr)
-        console.log(selectBuyAmountArr)
-        console.log(selectSellPriceArr)
     }
 
     clearBtn.addEventListener('click', function () {
@@ -364,8 +361,6 @@
             type: 'POST',
             data: data,
             success: function (result) {
-
-                console.log('result : ' + JSON.stringify(result))
                 if (result.success) {
                     $('#buyAlarm').modal('hide');
                     $("#viewAlarmLabel").html('구매신청완료')
