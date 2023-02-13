@@ -316,19 +316,22 @@ exports.buy = async (req, res, next) => {
 
                                         await Query.QSetInsNftBuy(nftBuyObj, conn);
 
-                                        //매출 api 호출
-                                        let data = {};
-                                        data.m_id = req.user.memId;
-                                        data.buy_seq = nftBuyObj.buySeq;
-                                        data.nft_seq = nftSellInfo[0].nft_seq;
-                                        data.pdt_nm = nftSellInfo[0].nft_nm;
-                                        data.pdt_price = nftSellInfo[0].sell_price;
-                                        data.pdt_desc = nftSellInfo[0].nft_desc;
-                                        data.nft_url = nftMallUrl + nftSellInfo[0].nft_img;
-                                        data.ardrp_gubun = 'SALE000000000000001';
-                                        data.sls_sts = 'SALE000000000000004';
+                                        for (let j=0; j<nftBuyObj.buyAmount; j++) {
+                                            //매출 api 호출
+                                            let data = {};
+                                            data.m_id = req.user.memId;
+                                            data.buy_seq = nftBuyObj.buySeq;
+                                            data.nft_seq = nftSellInfo[0].nft_seq;
+                                            data.tkn_id = j;
+                                            data.pdt_nm = nftSellInfo[0].nft_nm;
+                                            data.pdt_price = nftSellInfo[0].sell_price;
+                                            data.pdt_desc = nftSellInfo[0].nft_desc;
+                                            data.nft_url = nftMallUrl + nftSellInfo[0].nft_img;
+                                            data.ardrp_gubun = 'SALE000000000000001';
+                                            data.sls_sts = 'SALE000000000000004';
 
-                                        await apiUtil.fnApiCall("/api/sales", data);
+                                            await apiUtil.fnApiCall("/api/sales", data);
+                                        }
                                     }
 
                                     if (parseInt(totalPrice) == selectTotalPrice) {

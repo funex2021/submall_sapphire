@@ -17,25 +17,34 @@
                             <div class="card-header">
                                 <h4 class="card-title">구매내역</h4>
                             </div>
-                            <div class="card-header">
+                            <div class="card-header scroll" style="overflow-x: auto;">
                                 <div class="header-left search">
-                                    <span>
+                                    <span style="margin: 0;">
                                         <i class="ri-calendar-line"></i>
                                     </span>
-                                    <input type="text" id="startDatePicker" class="form-control" value="<%= srtDt %>" placeholder="<%= srtDt %>">
-                                    <span>
+                                    <input type="text" id="startDatePicker" class="form-control" style="width: 125px;" value="<%= srtDt %>" placeholder="<%= srtDt %>">
+                                    <span style="margin: 0;">
                                         <i class="ri-calendar-line"></i>
                                     </span>
-                                    <input type="text" id="endDatePicker" class="form-control" value="<%= endDt %>" placeholder="<%= endDt %>">
-                                    <a href="#n" class="btn btn-dark w-30" onclick="fnSearch();">검색</a>
+                                    <input type="text" id="endDatePicker" class="form-control" style="width: 125px;" value="<%= endDt %>" placeholder="<%= endDt %>">
                                 </div>
-                            </div>
+                                <div class="header-left" style="width: 100%; justify-content: end;">
+                                    <div class="header-right2" style="justify-content: end;">
+                                        <a href="#n" class="btn btn-dark" onclick="fnSearch();">검색</a>
+                                    </div>
+                                </div>
 
-                            <div class="card-body">
-                                <div class="table-responsive">
+                            </div>
+<!--                            <div class="card-header">-->
+<!--                                <div class="header-right">-->
+<!--                                    <a href="#n" class="btn btn-dark" onclick="fnSearch();">검색</a>-->
+<!--                                </div>-->
+                            </div>
+                            <div class="card-body scroll" style="overflow-x: auto">
+                                <div class="table-responsive-xl">
                                     <table class="table">
                                         <colgroup>
-                                            <col width="30%">
+                                            <col width="15%">
                                             <col width="10%">
                                             <col width="10%">
                                             <col width="*">
