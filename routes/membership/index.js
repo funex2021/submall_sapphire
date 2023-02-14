@@ -77,9 +77,9 @@ router.post("/passSignin", (req, res, next) => {
             }
 
             if (req.session.amount != null && req.session.amount != undefined) {
-                return res.redirect("/p/buy")
+                return res.redirect(301, "/p/buy")
             } else {
-                return res.redirect(307, '/p/buy');
+                return res.redirect(301, '/p/buy');
             }
 
         });
