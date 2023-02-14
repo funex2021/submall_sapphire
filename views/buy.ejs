@@ -42,7 +42,7 @@
                                                 <h4 class="card-title"><%=el.nft_nm%></h4>
                                                 <div class="d-flex justify-content-between">
                                                     <div class="text-end">
-                                                        <h5 class="text-muted"><%=el.sell_price%> KRW</h5>
+                                                        <h5 class="text-muted"><%=Number(el.sell_price).toLocaleString('ko-KR')%> KRW</h5>
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-center mt-3">
@@ -87,7 +87,8 @@
                                 </div>
                                 <div class="text-end">
                                     <h5 class="text-primary">
-                                        <input type="text" class="text-primary" id="price" name=price style="border: none; background-color: inherit;" readonly> KRW(원)
+                                        <input type="hidden" class="text-primary" id="price" name="price" style="border: none; background-color: inherit;" readonly>
+                                        <input type="text" class="text-primary" id="price_view" name="price_view" style="border: none; background-color: inherit;" readonly value="0"> KRW(원)
                                     </h5>
                                 </div>
                             </div>
@@ -223,12 +224,14 @@
 
     function selectPrice(obj) {
         price.value = parseInt(price.value) + parseInt(obj.dataset.price);
+        $("#price_view").val(Number(price.value).toLocaleString('ko-KR'));
         let html = "";
         fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
         let selectRrice = obj.dataset.price;
         let i = obj.dataset.index;
         if ($("#"+i+"product").length > 0) {
             $("#"+i+"productPrice").html((parseInt($("#"+i+"productCnt").html()) + 1) * obj.dataset.price);
+            $("#"+i+"productPrice").html(Number((parseInt($("#"+i+"productCnt").html()) + 1) * obj.dataset.price).toLocaleString('ko-KR'));
             $("#"+i+"productCnt").html(parseInt($("#"+i+"productCnt").html()) + 1);
         } else {
             html += "<tr id='"+i+"product'>";
@@ -237,7 +240,7 @@
             html += obj.dataset.nftnm;
             html += "</td>";
             html += "<td id='"+i+"productCnt'>1</td>";
-            html += "<td id='"+i+"productPrice'>"+ 1 * obj.dataset.price+"</td>";
+            html += "<td id='"+i+"productPrice'>"+ Number(1 * obj.dataset.price).toLocaleString('ko-KR')+"</td>";
             html += "<td><span><i class='ri-delete-bin-line me-3' onclick='removeProduct(\""+obj.dataset.sellseq+"\",\""+obj.dataset.price+"\",\""+i+"\");'></i></span></td>";
             html += "</tr>";
         }
@@ -284,7 +287,7 @@
                 data: null,
                 success: function (result) {
                     if (result.success) {
-                        $("#totalPrice").html($("#price").val()+" KRW");
+                        $("#totalPrice").html($("#price_view").val()+" KRW");
                         $("#acc_nm").html(result.data.acc_nm);
                         $("#bank_nm").html(result.data.bank_nm);
                         $("#bank_acc").html(result.data.bank_acc);
