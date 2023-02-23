@@ -42,6 +42,13 @@
                                                 <h4 class="card-title"><%=el.nft_nm%></h4>
                                                 <div class="d-flex justify-content-between">
                                                     <div class="text-end">
+                                                        <h5 class="text-muted">
+                                                            <%=Number(el.buy_amount).toLocaleString('ko-KR')%> / <%=Number(el.sell_amount).toLocaleString('ko-KR')%>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="text-end">
                                                         <h5 class="text-muted"><%=Number(el.sell_price).toLocaleString('ko-KR')%> KRW</h5>
                                                     </div>
                                                 </div>

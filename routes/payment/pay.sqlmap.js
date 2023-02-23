@@ -435,7 +435,7 @@ function fnSetIsBuy(param, conn) {
 function fngetNftList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cnm.file_path nft_img, cns.nft_nm from cs_nft_sell cns";
+        sql += "select cns.sell_seq, cns.nft_seq, cns.cmpny_cd, cns.sell_price, cns.sell_amount, (select ifnull(sum(cnb.buy_amount), 0) from cs_nft_buy cnb where cnb.sell_seq = cns.sell_seq and cnb.buy_status = 'CMDT00000000000087') buy_amount, cnm.file_path nft_img, cns.nft_nm from cs_nft_sell cns";
         sql += " left join cs_nft_mst cnm on cnm.seq = cns.nft_seq";
         sql += " where 1=1";
         sql += " and cns.m_seq = '" + param.cmpnyMemnerSeq + "'";
@@ -444,7 +444,7 @@ function fngetNftList(param, conn) {
         sql += " and cns.sell_status = 'CMDT00000000000080'"
         sql += " order by sell_price asc";
 
-        console.log(sql)
+        console.log('fngetNftList => ', sql)
         conn.query(sql, (err, ret) => {
             if (err) {
                 console.log(err)
