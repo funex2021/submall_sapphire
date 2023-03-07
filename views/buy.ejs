@@ -336,15 +336,15 @@
         let max_amt = $('input[name=max_amt]').val();
         let min_amt = $('input[name=min_amt]').val();
 
-        if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
-            return fnAlertModal(min_amt + '만원 이상 구매 가능합니다.');
-            // alert(min_amt + '만원 이상 구매 가능합니다.');
-        }
+        // if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
+        //     return fnAlertModal(min_amt + '만원 이상 구매 가능합니다.');
+        //     // alert(min_amt + '만원 이상 구매 가능합니다.');
+        // }
 
-        if (parseInt(objKrw) > parseInt(max_amt * 10000)) {
-            return fnAlertModal(max_amt + '만원 이하 구매 가능합니다.');
-            // alert(max_amt + '만원 이하 구매 가능합니다.');
-        }
+        // if (parseInt(objKrw) > parseInt(max_amt * 10000)) {
+        //     return fnAlertModal(max_amt + '만원 이하 구매 가능합니다.');
+        //     // alert(max_amt + '만원 이하 구매 가능합니다.');
+        // }
 
         let data = {
             objKrw: objKrw,

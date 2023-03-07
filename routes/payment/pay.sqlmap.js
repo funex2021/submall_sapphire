@@ -185,10 +185,16 @@ function fnGetAllCoinBuyListTotal(param, conn) {
 function fnGetCoinBuyList(param, conn) {
     return new Promise(function (resolve, reject) {
 
-        var sql = " select seq, title,confirm_sts_name,buy_num,pay_num,send_txid,t.create_dt, nftCnt from ( "
+        var sql = " select seq, title,confirm_sts_name,buy_num,pay_num,send_txid,t.create_dt, nftCnt, "
+        sql += "  (select cnm.file_path from cs_nft_mst cnm inner join cs_nft_sell cns on cnm.seq = cns.nft_seq where cns.sell_seq = sellSeq limit 1) nftImg, "
+        sql += "  (select cnm.nft_nm from cs_nft_mst cnm inner join cs_nft_sell cns on cnm.seq = cns.nft_seq where cns.sell_seq = sellSeq limit 1) nftNm "
+        sql += "  from (  "
         sql += "  select ccs.seq seq, '구매' title ,case when ccs.sell_sts = 'CMDT00000000000024' then '대기' "
         sql += "  when ccs.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccs.buy_num , ccs.pay_num , ccs.send_txid , DATE_FORMAT(fn_get_time(ccs.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
         sql += " ,(select ifnull(sum(cnb.buy_amount), 0) from cs_nft_buy cnb where cnb.coin_sell_seq = ccs.seq) nftCnt"
+        sql += " ,(select sell_seq from cs_nft_buy where coin_sell_seq = ccs.seq limit 1) sellSeq"
+        // sql += " ,(select cnm.file_path from " + param.cs_coin_sell_detail + " ccsd left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq where ccsd.sell_seq = ccs.seq limit 1) nftImg"
+        // sql += " ,(select cnm.nft_nm from " + param.cs_coin_sell_detail + " ccsd left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq where ccsd.sell_seq = ccs.seq limit 1) nftNm"
         sql += "   from  " + param.cs_coin_sell + " ccs "
         sql += "  where  ccs.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
 
@@ -196,21 +202,24 @@ function fnGetCoinBuyList(param, conn) {
         sql += "  select ccsl.seq seq, '구매' title ,case when ccsl.sell_sts = 'CMDT00000000000024' then '대기' "
         sql += "  when ccsl.sell_sts = 'CMDT00000000000026' then '완료' else '취소' end confirm_sts_name,  ccsl.buy_num , ccsl.pay_num , ccsl.send_txid , DATE_FORMAT(fn_get_time(ccsl.create_dt), '%Y-%m-%d %H:%i:%s') create_dt  "
         sql += " ,(select ifnull(sum(cnb.buy_amount), 0) from cs_nft_buy cnb where cnb.coin_sell_seq = ccsl.seq) nftCnt"
+        sql += " ,(select sell_seq from cs_nft_buy where coin_sell_seq = ccsl.seq limit 1) sellSeq"
+        // sql += " ,(select cnm.file_path from cs_coin_sell_detail_log ccsd left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq where ccsd.sell_seq = ccsl.seq limit 1) nftImg"
+        // sql += " ,(select cnm.nft_nm from cs_coin_sell_detail_log ccsd left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq where ccsd.sell_seq = ccsl.seq limit 1) nftNm"
         sql += "   from cs_coin_sell_log ccsl "
         sql += "  where  ccsl.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "')"
 
         sql += "   union all"
-        sql += "  select '' seq, '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cct.trans_num , cct.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt, '' nftCnt "
+        sql += "  select '' seq, '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cct.trans_num , cct.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt, '' nftCnt, '' sellSeq "
         sql += "  from cs_coin_send_his ccsh "
         sql += "   inner join " + param.cs_coin_trans + " cct on ccsh.txid = cct.trans_seq and cct.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "') "
 
         sql += "   union all"
-        sql += "  select '' seq, '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cctl.trans_num , cctl.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt, '' nftCnt "
+        sql += "  select '' seq, '전환' title ,case when ccsh.confirm_yn = 'Y' then '완료' else '처리중' end confirm_sts_name,  '0' as buy_num , cctl.trans_num , cctl.send_txid , DATE_FORMAT(fn_get_time(ccsh.create_dt), '%Y-%m-%d %H:%i:%s') create_dt, '' nftCnt, '' sellSeq "
         sql += "  from cs_coin_send_his ccsh "
         sql += "   inner join cs_coin_trans_log cctl on ccsh.txid = cctl.trans_seq and cctl.m_seq = (select m_seq from cs_member cm where cm.mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "') "
 
         sql += " ) t"
-        sql += " WHERE DATE_FORMAT(t.create_dt, '%Y-%m-%d') between DATE_FORMAT('" + param.srtDt + "', '%Y-%m-%d') and DATE_FORMAT('" + param.endDt + "', '%Y-%m-%d') ";
+        // sql += " WHERE DATE_FORMAT(t.create_dt, '%Y-%m-%d') between DATE_FORMAT('" + param.srtDt + "', '%Y-%m-%d') and DATE_FORMAT('" + param.endDt + "', '%Y-%m-%d') ";
         sql += "  order by t.create_dt desc "
         sql += " limit " + (param.pageIndex - 1) * param.rowsPerPage + "," + param.rowsPerPage
 

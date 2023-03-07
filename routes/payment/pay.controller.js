@@ -490,6 +490,7 @@ exports.withdraw = async (req, res, next) => {
             })
 
         } catch (e) {
+            console.log('e : ', e)
             res.render("withdraw", {
                 "withdrawList": "",
                 "pagination": pagination,
