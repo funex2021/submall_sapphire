@@ -149,7 +149,7 @@ function fnUptMember(param, conn) {
 function fnUptBank(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " UPDATE cs_bank SET"
-        sql += " bank_info='" + param.bankInfo + "', bank_acc= '" + param.bankAcc + "', acc_nm = '" + param.accNm + "'"
+        sql += " update_dt = CURRENT_TIMESTAMP , bank_info='" + param.bankInfo + "', bank_acc= '" + param.bankAcc + "', acc_nm = '" + param.accNm + "'"
         sql += " where m_seq = '" + param.mSeq + "'";
         console.log(sql)
         conn.query(sql, (err, ret) => {

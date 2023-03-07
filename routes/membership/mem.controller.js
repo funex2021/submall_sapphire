@@ -31,7 +31,6 @@ exports.profile = async (req, res, next) => {
                 obj.cmpnyCd = cmpnyCd;
                 obj.memId = userId;
                 memInfo = await Query.QGetMemberInfo(obj, conn);
-                console.log()
                 let domain = '';
                 if(req.headers.host.indexOf('localhost') > -1){
                     domain = localUrl;
@@ -633,4 +632,45 @@ exports.updateBank = async (req, res, next) => {
         }
     });
 }
+
+
+
+exports.updatePass = async (req, res, next) => {
+    let { memPass } = req.body;
+
+    let obj = {};
+    obj.cmpnyCd = req.user.cmpnyCd;
+    obj.memId = req.user.memId;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let memInfo = await Query.QGetMemberInfo(obj, conn);
+            if (memInfo.length < 1) {
+                return res.json(rtnUtil.successFalse("500", "비밀번호 변경을 실패하였습니다.잠시후 다시 시도해주세요","",""));
+            }
+
+            if (memPass != '') {
+                let passInfo = await encryption.createPasswordHash(memPass);
+                obj.memPass = passInfo.password;
+                obj.salt = passInfo.salt;
+            }
+
+            obj.mSeq = memInfo[0].user_seq;
+            let upt = await Query.QUptMember(obj, conn);
+            conn.commit();
+
+            return res.json(rtnUtil.successTrue( "비밀번호가 변경되었습니다. 다시 로그인해주세요."));
+
+        } catch (e) {
+            conn.rollback();
+            console.log(e);
+            res.json(rtnUtil.successFalse("500", "비밀번호 변경을 실패하였습니다. 잠시후 다시 시도해주세요.","",""));
+        }
+    });
+}
+
+
 
