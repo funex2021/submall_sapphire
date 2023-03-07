@@ -14,10 +14,11 @@
     <!-- Author Details -->
     <div class="admin-menu__one">
         <h4 class="admin-menu__title nftmax-scolor">Menu</h4>
+        <input type="hidden" id="menu" value="<%= menuNum %>">
         <!-- Nav Menu -->
         <div class="menu-bar">
             <ul class="menu-bar__one">
-                <li class="active">
+                <li id="buyview">
                     <a href="/p/buyview">
                         <span class="menu-bar__text">
                             <span class="nftmax-menu-icon nftmax-svg-icon__v1">
@@ -32,7 +33,7 @@
                         </span>
                     </a>
                 </li>
-                <li>
+                <li id="buy">
                     <a href="/p/buy">
                     <span class="menu-bar__text">
                         <span class="nftmax-menu-icon nftmax-svg-icon__v6">
@@ -48,7 +49,7 @@
                     </span>
                     </a>
                 </li>
-                <li>
+                <li id="view">
                     <a href="/p/view">
                     <span class="menu-bar__text">
                         <span class="nftmax-menu-icon nftmax-svg-icon__v9">
@@ -61,7 +62,7 @@
                     </span>
                     </a>
                 </li>
-                <li>
+                <li id="notice">
                     <a href="/p/notice">
                     <span class="menu-bar__text">
                         <span class="nftmax-menu-icon nftmax-svg-icon__v8">
@@ -93,3 +94,20 @@
 <!-- End Admin Menu -->
 
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        $(".nav__link").removeClass('active');
+        if ($("#menu").val() == 0) {
+            $("#buyview").addClass('active');
+        } else if ($("#menu").val() == 1) {
+            $("#buy").addClass('active');
+        } else if ($("#menu").val() == 2) {
+            $("#view").addClass('active');
+        } else if ($("#menu").val() == 3) {
+            $("#notice").addClass('active');
+        }
+    });
+
+</script>
