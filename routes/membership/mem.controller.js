@@ -31,7 +31,6 @@ exports.profile = async (req, res, next) => {
                 obj.cmpnyCd = cmpnyCd;
                 obj.memId = userId;
                 memInfo = await Query.QGetMemberInfo(obj, conn);
-
                 let domain = '';
                 if(req.headers.host.indexOf('localhost') > -1){
                     domain = localUrl;
@@ -289,11 +288,11 @@ exports.signUpProc = async (req, res, next) => {
             let wallet = await Query.QSetWallet(obj, conn);
             obj.walletSeq = wallet.insertId;
 
-            // obj.bankInfo = bank_nm;
-            // obj.bankAcc = bank_acc;
-            // obj.accNm = acc_nm;
-            // obj.bank_code = bank_code;
-            // await Query.QSetBank(obj, conn);
+            obj.bankInfo = '';
+            obj.bankAcc = '';
+            obj.accNm = '';
+            obj.bank_code = '';
+            await Query.QSetBank(obj, conn);
 
             await Query.QSetBalance(obj, conn);
 
@@ -567,3 +566,111 @@ exports.accAuth = async (req, res, next) => {
         }
     });
 }
+
+
+exports.updateInfo = async (req, res, next) => {
+    let {userNm , userEmail} = req.body;
+    let obj = {};
+    obj.userNm = userNm;
+    obj.userEmail = userEmail;
+    obj.cmpnyCd = req.user.cmpnyCd;
+    obj.memId = req.user.memId;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let memInfo = await Query.QGetMemberInfo(obj, conn);
+            if (memInfo.length < 1) {
+                return res.json(rtnUtil.successFalse("500", "정보수정을 실패하였습니다.잠시후 다시 시도해주세요","",""));
+            }
+            obj.mSeq = memInfo[0].user_seq;
+            let upt = await  Query.QUptMember(obj, conn);
+            conn.commit();
+
+            return res.json(rtnUtil.successTrue( "정보수정이 완료되었습니다."));
+
+        } catch (e) {
+            conn.rollback();
+            console.log(e);
+            res.json(rtnUtil.successFalse("500", "정보수정을 실패하였습니다. 잠시후 다시 시도해주세요.","",""));
+        }
+    });
+}
+
+
+exports.updateBank = async (req, res, next) => {
+    let {bankInfo , accNm , bankAcc} = req.body;
+
+    let obj = {};
+    obj.bankInfo = bankInfo;
+    obj.accNm = accNm;
+    obj.bankAcc = bankAcc;
+    obj.cmpnyCd = req.user.cmpnyCd;
+    obj.memId = req.user.memId;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let memInfo = await Query.QGetMemberInfo(obj, conn);
+            if (memInfo.length < 1) {
+                return res.json(rtnUtil.successFalse("500", "계좌정보 등록을 실패하였습니다.잠시후 다시 시도해주세요","",""));
+            }
+            obj.mSeq = memInfo[0].user_seq;
+            let upt = await Query.QUptBank(obj, conn);
+            conn.commit();
+
+            return res.json(rtnUtil.successTrue( "계좌정보가 등록되었습니다."));
+
+        } catch (e) {
+            conn.rollback();
+            console.log(e);
+            res.json(rtnUtil.successFalse("500", "계좌정보 등록을 실패하였습니다. 잠시후 다시 시도해주세요.","",""));
+        }
+    });
+}
+
+
+
+exports.updatePass = async (req, res, next) => {
+    let { memPass } = req.body;
+
+    let obj = {};
+    obj.cmpnyCd = req.user.cmpnyCd;
+    obj.memId = req.user.memId;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let memInfo = await Query.QGetMemberInfo(obj, conn);
+            if (memInfo.length < 1) {
+                return res.json(rtnUtil.successFalse("500", "비밀번호 변경을 실패하였습니다.잠시후 다시 시도해주세요","",""));
+            }
+
+            if (memPass != '') {
+                let passInfo = await encryption.createPasswordHash(memPass);
+                obj.memPass = passInfo.password;
+                obj.salt = passInfo.salt;
+            }
+
+            obj.mSeq = memInfo[0].user_seq;
+            let upt = await Query.QUptMember(obj, conn);
+            conn.commit();
+
+            return res.json(rtnUtil.successTrue( "비밀번호가 변경되었습니다. 다시 로그인해주세요."));
+
+        } catch (e) {
+            conn.rollback();
+            console.log(e);
+            res.json(rtnUtil.successFalse("500", "비밀번호 변경을 실패하였습니다. 잠시후 다시 시도해주세요.","",""));
+        }
+    });
+}
+
+
+

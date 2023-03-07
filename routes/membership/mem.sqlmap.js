@@ -126,6 +126,12 @@ function fnUptMember(param, conn) {
         if (!param.authYn == "") {
             sql += " ,auth_yn = '"+param.authYn+"'";
         }
+        if (!param.userNm == "") {
+            sql += " ,mem_nm = '"+param.userNm+"'";
+        }
+        if (!param.userEmail == "") {
+            sql += " ,mem_email = '"+param.userEmail+"'";
+        }
         sql += " where m_seq = '" + param.mSeq + "'";
         sql += " and cmpny_cd = '" + param.cmpnyCd + "'";
 
@@ -143,7 +149,7 @@ function fnUptMember(param, conn) {
 function fnUptBank(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " UPDATE cs_bank SET"
-        sql += " bank_info='" + param.bankInfo + "', bank_acc= '" + param.bankAcc + "', acc_nm = '" + param.accNm + "'"
+        sql += " update_dt = CURRENT_TIMESTAMP , bank_info='" + param.bankInfo + "', bank_acc= '" + param.bankAcc + "', acc_nm = '" + param.accNm + "'"
         sql += " where m_seq = '" + param.mSeq + "'";
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -282,11 +288,11 @@ function fnGetMemberInfo(param ,conn) {
     return new Promise(function (resolve, reject) {
         var sql = " SELECT cm.m_seq user_seq, cm.mem_id user_id, cm.mem_nm user_name, cm.mem_email user_email, cm.mem_hp user_phone "
         sql += " , fn_get_name(cm.nation) user_nation_name , DATE_FORMAT(fn_get_time(cm.create_dt), '%Y-%m-%d') create_date "
-        sql += " , cb.bank_info user_bank, cb.bank_acc user_num,cb.acc_nm user_holder, concat(cb.bank_info,' ',cb.bank_acc,' ',cb.acc_nm) banks "
+        sql += " , ifnull(cb.bank_info,'') user_bank, ifnull(cb.bank_acc,'') user_num, ifnull(cb.acc_nm,'') user_holder, concat(cb.bank_info,' ',cb.bank_acc,' ',cb.acc_nm) banks "
         sql += " FROM cs_member cm "
         // sql += " inner join cs_company cc ON cm.cmpny_cd = cm.cmpny_cd "
         // sql += " inner join cs_wallet cw ON cm.m_seq = cw.m_seq "
-        sql += " inner join cs_bank cb ON cm.m_seq = cb.m_seq "
+        sql += " left join cs_bank cb ON cm.m_seq = cb.m_seq "
         sql += " WHERE cm.mem_id  = '" + param.memId + "'"
         sql += " AND cm.cmpny_cd  = '" + param.cmpnyCd + "'"
         sql += " AND cm.admin_grade = 'CMDT00000000000000'"

@@ -77,7 +77,7 @@
                                                                                     
                                                                                     <div class="nftmax-table__product-content">
                                                                                         <% if (status == '완료') { %>
-                                                                                        <a href="#n" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');">
+                                                                                        <a href="javascript:void(0);" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');">
                                                                                             <h4 class="nftmax-table__product-title">
                                                                                                 <%= el.nftNm %>
                                                                                                 <% if (el.nftCnt > 1) { %>
@@ -94,7 +94,7 @@
                                                                                             </h4>
                                                                                         <% }%>
                                                                                         
-                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#n">CNFT</a></p>
+                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="javascript:void(0)" style="cursor: default;">CNFT</a></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -153,10 +153,10 @@
                                                             
                                                         </tbody>
                                                         <!-- End NFTMax Table Body -->
-                                                       
+
                                                     </table>
+                                                    <div class="view-wallet__btn top-sell mb-3" id="viewMore"><a href="javascript:void(0)" onclick="viewMore()" style="font-size: 15px;">더보기</a></div>
                                                     <!-- End NFTMax Table -->
-                                                    <div class="view-wallet__btn top-sell" id="viewMore"><a href="#n" onclick="viewMore()">더보기</a></div>
                                                     <input type="hidden" id="pageIndex" value="<%= pagination.pageIndex %>">
                                                     <input type="hidden" id="nftBankNm" value="<%= cmpnyInfo.nft_bank_nm %>">
                                                     <input type="hidden" id="nftBankAcc" value="<%= cmpnyInfo.nft_bank_acc %>">
@@ -500,8 +500,7 @@
                     }
                     $(".nftmax-table__body").append(pcHtml);
                 } else {
-                    $("#notFoundMore").modal('show');
-                    $("#viewMore").hide();
+                   return fnAlertModal('더이상 내역이 없습니다.');
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

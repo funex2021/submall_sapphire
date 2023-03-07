@@ -110,4 +110,9 @@ router.post('/authProc', mem.authProc);
 router.post('/sendAccAuth', mem.sendAccAuth);
 router.post('/accAuth', mem.accAuth);
 
+router.post('/updateInfo', isAuthenticated ,mem.updateInfo);
+router.post('/updateBank', isAuthenticated , mem.updateBank);
+router.post('/updatePass', isAuthenticated , mem.updatePass);
+
+
 module.exports = router;

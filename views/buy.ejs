@@ -296,15 +296,19 @@
                         $("#selectNft").html("");
                         let html = "";
                         for (let i=0; i<trLen; i++) {
+
                             html += "<tr>"
                             html += "<td class='nftmax-table__column-1 nftmax-table__data-1'>"
-                            html += $("#selectBody > li:eq(0) > .nftmax-sidebar__creator .nftmax-sidebar__creator-name").text();
+                            let nameArea = "#selectBody > li:eq("+i+") > .nftmax-sidebar__creator .nftmax-sidebar__creator-name";
+                            html += $(nameArea).text();
                             html += "</td>"
                             html += "<td class='nftmax-table__column-2 nftmax-table__data-2'>"
-                            html += $("#selectBody > li:eq(0) > .nftmax-sidebar__button .nftmax-request_request").text();
+                            let countArea = "#selectBody > li:eq("+i+") > .nftmax-sidebar__button .nftmax-request_request";
+                            html += $(countArea).text();
                             html += "</td>"
                             html += "<td class='nftmax-table__column-3 nftmax-table__data-3'>"
-                            html += $("#selectBody > li:eq(0) > .nftmax-sidebar__creator .nftmax-sidebar__creator-link").text();
+                            let priceArea = "#selectBody > li:eq("+i+") > .nftmax-sidebar__creator .nftmax-sidebar__creator-link";
+                            html += $(priceArea).text();
                             html += "</td>"
                             html += "</tr>"
                         }
