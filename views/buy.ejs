@@ -61,7 +61,7 @@
                                                                     <div class="nftmax-currency">
                                                                         <div class="nftmax-currency__main">
                                                                             <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title"><%=Number(el.sell_price).toLocaleString('ko-KR')%> KRW</h4>
+                                                                                <h4 class="nftmax-currency__content-title"><%=Number(el.sell_price).toLocaleString('ko-KR')%> USD</h4>
                                                                                 <p class="nftmax-currency__content-sub"><%=Number(el.buy_amount).toLocaleString('ko-KR')%> / <%=Number(el.sell_amount).toLocaleString('ko-KR')%></p>
                                                                             </div>
                                                                         </div>
@@ -95,7 +95,7 @@
                         <div class="welcome-cta__button">
                             <input type="hidden" class="text-primary" id="price" name="price" style="border: none; background-color: inherit;" readonly>
                             <input class="nftmax-btn nftmax-btn__bordered bg" name="price_view" id="price_view" readonly style="cursor: not-allowed" value="0">
-                            <p class="nftmax-btn trs-white bl-color mb-0">KRW</p>
+                            <p class="nftmax-btn trs-white bl-color mb-0">USD</p>
                         </div>
                     </div>
                     <div class="nftmax-sidebar mg-top-40">
@@ -286,7 +286,7 @@
                 data: null,
                 success: function (result) {
                     if (result.success) {
-                        $("#totalPrice").html($("#price_view").val()+" KRW");
+                        $("#totalPrice").html($("#price_view").val()+" USD");
                         $("#acc_nm").html(result.data.acc_nm);
                         $("#bank_nm").html(result.data.bank_nm);
                         $("#bank_acc").html(result.data.bank_acc);
