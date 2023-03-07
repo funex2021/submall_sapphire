@@ -127,7 +127,7 @@
                                                                                              <a href="javascript:void(0);" class="dropdown-item list-group-item" onclick="fnChangBankCode('090','카카오뱅크')">카카오뱅크</a>
                                                                                              <a href="javascript:void(0);" class="dropdown-item list-group-item" onclick="fnChangBankCode('092','토스뱅크')">토스뱅크</a>
                                                                                         </ul>
-                                                                                        <input class="nftmax__item-input mt-2" type="text" id="bank_info" placeholder="은행을 선택하세요" required="required" value="">
+                                                                                        <input class="nftmax__item-input mt-2" type="text" id="bank_info" placeholder="은행을 선택하세요" required="required" value="<%=memInfo.bank_info%>" readonly>
                                                                                         <input id="bank_cd" type="hidden" value="">
                                                                                     </li>
                                                                                 </ul>
@@ -135,12 +135,12 @@
 
                                                                             <div class="nftmax__item-form--group">
                                                                                 <label class="nftmax__item-label">예금주</label>
-                                                                                <input class="nftmax__item-input" type="text" id="user_nm" placeholder="예금주 입력하세요." required="required" value="">
+                                                                                <input class="nftmax__item-input" type="text" id="acc_nm" placeholder="예금주 입력하세요." required="required" value="<%=memInfo.acc_nm%>" >
                                                                             </div>
                                                                             
                                                                             <div class="nftmax__item-form--group">
                                                                                 <label class="nftmax__item-label">계좌번호 </label>
-                                                                                <input class="nftmax__item-input" type="text" id="user_email" placeholder="예금주 입력하세요." required="required" value="">
+                                                                                <input class="nftmax__item-input" type="text" id="bank_acc" placeholder="예금주 입력하세요." required="required" value="<%=memInfo.bank_acc%>" >
                                                                             </div>
                                                                         </div>
                                                                    
@@ -293,13 +293,48 @@
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 wrapWindowByMaskHide();
-                fnAlertModal('회원가입시 문제가 발생하였습니다.');
+                fnAlertModal('접속량이 많아 연결이 지연되고 있습니다. 잠시후 다시 시도해주세요.');
             } //function끝
         });
 
     }
 
     function fnModifyBankInfo(){
+        if ($('#bank_info').val() == '') {
+            return fnAlertModal('은행은 필수 선택값입니다.');
+        }
+        if ($('#acc_nm').val() == '') {
+            return fnAlertModal('예금주는 필수 입력값입니다.');
+        }
+        if ($('#bank_acc').val() == '') {
+            return fnAlertModal('계좌번호는 필수 입력값입니다.');
+        }
+
+        let data = {
+            bankInfo: $("#bank_info").val(),
+            accNm : $("#acc_nm").val(),
+            bankAcc : $("#bank_acc").val(),
+        }
+
+        $.ajax({
+            url: '/m/updateBank',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    fnAlertModal(result.message);
+                } else {
+                    fnAlertModal(result.message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
+                fnAlertModal('접속량이 많아 연결이 지연되고 있습니다.  잠시후 다시 시도해주세요.');
+            } //function끝
+        });
+
 
     }
 
