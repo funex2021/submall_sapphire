@@ -131,7 +131,7 @@ Version:	1.0.0
 	margin-top: -12px;
 }
 .nftmax-wc__form-label {
-	font-size: 20px;
+	font-size: 15px;
 }
 .nftmax-wc__check-inline {
   display: flex;
@@ -305,7 +305,7 @@ Version:	1.0.0
 	min-width: 650px;
 	max-width: 650px;
 	min-height: 700px;
-	max-height: 745px;
+	max-height: 785px;
 }
 .nftmax-wc__title {
 	font-size: 55px;
@@ -354,6 +354,9 @@ Version:	1.0.0
 }
 .nftmax-wc__logo img {
 	max-width: 150px;
+}
+.nftmax-wc__heading {
+	margin-top: 10rem;
 }
 .nftmax-wc__form-inner {
 	padding: 30px;
@@ -430,6 +433,11 @@ Version:	1.0.0
 .nftmax-wc__logo img {
 	max-width: 150px;
 }
+
+.nftmax-wc__heading {
+	margin-top: 10rem;
+}
+
 .nftmax-wc__form-inner {
 	padding: 30px;
 	min-width: 100%;
