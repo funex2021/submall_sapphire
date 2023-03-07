@@ -28,6 +28,7 @@ router.post('/view', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.withd
 router.post('/addView', isAuthenticated, isAuthYn, pay.addWithdraw);
 
 router.get('/airView', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.airView);
+router.post('/airAddView', isAuthenticated, isAuthYn, pay.airAddView);
 
 router.get('/buyview', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buyview);
 router.get('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buypage);

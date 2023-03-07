@@ -108,7 +108,7 @@
                                                     </table>
                                                     <!-- End NFTMax Table -->
                                                     <div class="view-wallet__btn top-sell" id="viewMore"><a href="#n" onclick="viewMore()">더보기</a></div>
-                                                    <input type="hidden" id="pageIndex" value="1">
+                                                    <input type="hidden" id="pageIndex" value="<%= pagination.pageIndex %>">
                                                 </div>
                                                 
                                             </div>
@@ -229,31 +229,31 @@
         data.pageIndex = $("#pageIndex").val();
 
         $.ajax({
-            url: '/p/addView',
+            url: '/p/airAddView',
             dataType: 'json',
             type: 'POST',
             data: data,
             success: function (result) {
+                console.log('result : ', result)
 
-                let withdrawList = result.data.withdrawList;
+                let airList = result.data.airList;
                 var pcHtml = '';
                 var mobileHtml = '';
 
-                if(withdrawList.length > 0) {
+                if(airList.length > 0) {
 
-                    for(var i = 0; i < withdrawList.length; i++) {
+                    for(var i = 0; i < airList.length; i++) {
+
+                        
                         pcHtml += '<tr>';
                         pcHtml +=   '<td class="nftmax-table__column-1 nftmax-table__data-1">';
                         pcHtml +=       '<div class="nftmax-table__product">';
                         pcHtml +=           '<div class="nftmax-table__product-img">'; 
-                        pcHtml +=               '<img src="http://nftnting.com/' + withdrawList[i].nftImg + '" alt="#">'; 
+                        pcHtml +=               '<img src="http://nftnting.com/' + airList[i].nft_img + '" alt="#">'; 
                         pcHtml +=           '</div>'; 
                         pcHtml +=           '<div class="nftmax-table__product-content">'; 
                         pcHtml +=               '<h4 class="nftmax-table__product-title">'; 
-                        pcHtml +=                   withdrawList[i].nftNm; 
-                        if(withdrawList[i].nftCnt > 1) {
-                        pcHtml +=                   '외 ' + withdrawList[i].nftCnt + '개'; 
-                        }
+                        pcHtml +=                   airList[i].nft_nm; 
                         pcHtml +=               '</h4>'; 
                         pcHtml +=               '<p class="nftmax-table__product-desc">Owned by  <a href="#">CNFT</a></p>'; 
                         pcHtml +=           '</div>'; 
@@ -262,35 +262,23 @@
                         pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">'; 
                         pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">'; 
                         pcHtml +=           '<span class="nftmax-table__text">'; 
-                        pcHtml +=               '<b>' + withdrawList[i].title + '</b>';
+                        pcHtml +=               '<b>지급</b>';
                         pcHtml +=           '</span>'; 
                         pcHtml +=       '</div>'; 
                         pcHtml +=   '</td>'; 
-                        pcHtml +=   '<td class="nftmax-table__column-3 nftmax-table__data-3">'; 
-                        pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-two">'; 
+                        pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">'; 
+                        pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">'; 
                         pcHtml +=           '<span class="nftmax-table__text">'; 
-                        switch(withdrawList[i].confirm_sts_name) {
-                        case '취소' : pcHtml +=   '<div class="nftmax-table__status nftmax-rbcolor">취소</div>'; break;
-                        case '대기' : pcHtml +=   '<div class="nftmax-table__status nftmax-sbcolor">대기</div>'; break;
-                        case '완료' : pcHtml +=   '<div class="nftmax-table__status nftmax-gbcolor">승인</div>'; break; 
-                        default: break;
-                        }
+                        pcHtml +=               '<b>' + airList[i].price + '</b>';
                         pcHtml +=           '</span>'; 
                         pcHtml +=       '</div>'; 
                         pcHtml +=   '</td>'; 
-                        pcHtml +=   '<td class="nftmax-table__column-4 nftmax-table__data-4">'; 
-                        pcHtml +=   '<p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">' + parseInt(withdrawList[i].buy_num).toLocaleString('ko-KR') + ' USD</p>'; 
-                        pcHtml +=   '</td>'; 
-                        pcHtml +=   '<td class="nftmax-table__column-5 nftmax-table__data-5">'; 
-                        if(withdrawList[i].confirm_sts_name == '대기') {
-                            pcHtml +=   '<a href="#n" class="nftmax-btn trs-white bl-color"'; 
-                            pcHtml +=   'onclick="chkAcc(' + parseInt(withdrawList[i].buy_num).toLocaleString('ko-KR') + ',' + $("#nftBankNm").val() + ',' + $("#nftBankAcc").val() + ',' + $("#nftAccNm").val()+ ');">계좌 확인</a>'; 
-                        }
-                        pcHtml +=   '</td>'; 
-                        pcHtml +=   '<td class="nftmax-table__column-5 nftmax-table__data-5">'; 
-                        if(withdrawList[i].confirm_sts_name == '대기') {
-                            pcHtml +=       '<a href="#n" class="nftmax-btn nftmax-btn__secondary radius" onclick="buyCancelView(' + withdrawList[i].seq + ');">취소</a>'; 
-                        }
+                        pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">'; 
+                        pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">'; 
+                        pcHtml +=           '<span class="nftmax-table__text">'; 
+                        pcHtml +=               '<b>' + airList[i].tot_price + '</b>';
+                        pcHtml +=           '</span>'; 
+                        pcHtml +=       '</div>'; 
                         pcHtml +=   '</td>'; 
                         pcHtml +='</tr>'; 
                         // $("#withdraw_mobile").append(mobileHtml);

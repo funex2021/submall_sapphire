@@ -858,7 +858,7 @@ function fnGetAirdropList(param, conn) {
         sql += "  (select nft_nm from cs_nft_mst cnm where seq = cna.nft_seq) nft_nm, ";
         sql += " nft_seq, price, tot_price, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
         sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
-
+        sql += " limit " + (param.pageIndex - 1) * param.rowsPerPage + "," + param.rowsPerPage
 
         console.log('fnGetNftBuyMainList >> ' , sql);
         conn.query(sql, (err, ret) => {

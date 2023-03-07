@@ -918,3 +918,50 @@ exports.airView = async (req, res, next) => {
     // });
 
 }
+
+exports.airAddView = async (req, res, next) => {
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+    let {pageIndex, srtDt, endDt} = req.body;
+
+    if (srtDt == undefined || srtDt == '' || srtDt == null) {
+        // endDt = moment().add(7, 'hours').format("YYYY-MM-DD")
+        // srtDt = moment().add(7, 'hours').format("YYYY-MM-DD")
+        endDt = moment().format('YYYY-MM-DD');
+        srtDt = moment().format('YYYY-MM-DD');
+    }
+
+    console.log('pageIndex : ' + pageIndex)
+    console.log('srtDt : ' + srtDt)
+    console.log('endDt : ' + endDt)
+    mydb.execute(async conn => {
+        try {
+            let obj = {};
+            obj.memId = req.user.memId
+            obj.mSeq = req.user.mSeq
+            obj.cmpnyCd = req.user.cmpnyCd;
+            obj.cs_coin_sell = req.user.cs_coin_sell;
+            obj.cs_coin_trans = req.user.cs_coin_trans;
+            obj.endDt = endDt;
+            obj.srtDt = srtDt;
+
+            let totalPageCount = await Query.QGetAirdropListTotal(obj, conn);
+            if (pageIndex == "" || pageIndex == null) {
+                pageIndex = 1;
+            }
+            ;
+
+            let pagination = await pagingUtil.getPagination(pageIndex, totalPageCount)
+            obj.pageIndex = pageIndex;
+            obj.rowsPerPage = pagination.rowsPerPage;
+            pagination.totalItems = totalPageCount;
+
+            let airList = await Query.QGetAirdropList(obj, conn);
+            let balance = await Query.QGetBalance(obj, conn);
+            res.json(rtnUtil.successTrue("", {"airList": airList, "balance": balance}))
+        } catch (e) {
+            res.json(rtnUtil.successFalse('500', e.message, e, ''))
+        }
+    });
+
+}
