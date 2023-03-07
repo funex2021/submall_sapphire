@@ -8,6 +8,11 @@ const CONSTS = require(path.join(process.cwd(), '/routes/services/const'));
 const smsUtil = require(path.join(process.cwd(), "/routes/services/smsUtil"));
 const axios = require('axios')
 
+const PropertiesReader = require('properties-reader');
+const properties = PropertiesReader('pay.properties');
+const cooconUrl = properties.get('com.coocon.url');
+
+
 const {v4: uuidv4} = require('uuid');
 
 
@@ -207,15 +212,21 @@ exports.signUpProc = async (req, res, next) => {
                 return;
             }
 
-            let createWallet = await axios.get(CONSTS.API.URL + '/v1/api/blockchain/createWallet');
-            if (createWallet.data.success) {
-                obj.cmpnyAddr = createWallet.data.data.address;
-                obj.cmpnyPk = createWallet.data.data.privateKey;
-                // obj.key_id = createWallet.data.data.keyId;
-                // obj.krn = createWallet.data.data.krn;
-                // obj.public_key = createWallet.data.data.publicKey;
-            } else {
-                throw '지갑생성오류';
+            console.log('api call');
+
+            try {
+                let createWallet = await axios.get(CONSTS.API.URL + '/v1/api/blockchain/createWallet');
+                if (createWallet.data.success) {
+                    obj.cmpnyAddr = createWallet.data.data.address;
+                    obj.cmpnyPk = createWallet.data.data.privateKey;
+                    // obj.key_id = createWallet.data.data.keyId;
+                    // obj.krn = createWallet.data.data.krn;
+                    // obj.public_key = createWallet.data.data.publicKey;
+                } else {
+                    throw '지갑생성오류';
+                }
+            }catch (e){
+                console.log('error ' , e);
             }
 
             //인증번호 체크
@@ -401,53 +412,56 @@ exports.authProc = async (req, res, next) => {
 }
 
 exports.sendAccAuth = async (req, res, next) => {
-    let {bank_code, bank_acc, acc_nm} = req.body;
+    let {bank_code, bank_acc, acc_nm , bank_info} = req.body;
     let obj = {};
     obj.bank_code = bank_code;
     obj.bank_acc = bank_acc;
     obj.acc_nm = acc_nm;
+    obj.bank_info = bank_info;
 
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
 
     mydb.executeTx(async conn => {
         try {
-            let auth = await Query.QGetBankAuth(obj, conn);
-            if (auth.length > 0) {
-                res.json(rtnUtil.successFalse("400", "인증을 진행해 주세요.","", auth[0]));
-                return;
-            }
 
-            let url = 'https://api.cashes.co.kr/api/v1/viss/acct';
+            let data = JSON.stringify({
+                "acct_no":obj.bank_acc,
+                "fnni_cd":obj.bank_code,
+                "memb_nm":obj.acc_nm
+            });
+            console.log(data);
 
-            let params = {
-                'compUuid': "GPHUXJ",
-                'bankCode': bank_code,
-                'acctNo': bank_acc,
-                'custNm': acc_nm
-            }
-
-            await axios.post(url, params, {
+            var config = {
+                method: 'post',
+                url: cooconUrl + '/api/account-req',
                 headers: {
-                    'content-type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-            }).then(async function (response) {
-                console.log(response)
-                if (response.data.status == 'OK') {
-                    params.verifyTrDt = response.data.response.verifyTrDt
-                    params.verifyTrNo = response.data.response.verifyTrNo
-                    let ins = await Query.QInsBankAuth(params, conn);
-                    console.log(ins)
+                data : data
+            };
+
+            await axios(config).then(async function (response) {
+                console.log(JSON.stringify(response.data));
+                console.log(response.data.data.verify_txt);
+                obj.verify_txt = response.data.data.verify_txt;
+                obj.verify_tr_dt = response.data.data.verify_tr_dt;
+                obj.verify_tr_no = response.data.data.verify_tr_no;
+                obj.rc = response.data.rc;
+                if(response.data.rc == '0000') {
+
+                    let ins = await Query.QInsBankCertification(obj, conn);
                     conn.commit();
+                    console.log(ins)
                     res.json(rtnUtil.successTrue("1원이 전송 되었습니다.", ins.insertId));
                 } else {
-                    res.json(rtnUtil.successFalse('500', response.data.message));
+                    res.json(rtnUtil.successFalse('500', '전송을 실패했습니다.'));
                 }
-            }).catch(function (err) {
-                console.log(err);
+            })
+            .catch(function (error) {
+                console.log(error);
                 res.json(rtnUtil.successFalse('500', '전송을 실패했습니다.'));
             });
-
 
         } catch (e) {
             console.log(e);
@@ -460,56 +474,51 @@ exports.accAuth = async (req, res, next) => {
     let {seq, verifyVal} = req.body;
     let obj = {};
     obj.seq = seq;
-    obj.verifyVal = verifyVal;
+    obj.verify_val = verifyVal;
 
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
 
     mydb.executeTx(async conn => {
         try {
-            let authInfo = await Query.QGetBankAuthInfo(obj, conn);
-            if (authInfo.length < 1) {
-                res.json(rtnUtil.successFalse("500", "1원인증을 진행해 주세요.","",""));
-                return;
+            let certInfo = await Query.QGetBankCertification(obj, conn);
+            if (certInfo.length < 1) {
+                return res.json(rtnUtil.successFalse("500", "1원인증을 진행해 주세요.","",""));
             }
 
-            let url = 'https://api.cashes.co.kr/api/v1/viss/confirm';
+            var data = JSON.stringify({
+                "verify_tr_dt":certInfo[0].verify_tr_dt,
+                "verify_tr_no":certInfo[0].verify_tr_no,
+                "verify_val":obj.verify_val
+            });
+            console.log(data);
 
-            let params = {
-                'compUuid': "GPHUXJ",
-                'verifyTrDt': authInfo[0].verifyTrDt,
-                'verifyTrNo': authInfo[0].verifyTrNo,
-                'verifyVal': verifyVal
-            }
-
-            console.log(params)
-            await axios.post(url, params, {
+            var config = {
+                method: 'post',
+                url: cooconUrl + '/api/account-res',
                 headers: {
-                    'content-type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-            }).then(async function (response) {
-                console.log(response.data)
-                if (response.data.code == 'A006') {
-                    //만료된 인증
-                    // await Query.QDelBankAuth(obj, conn);
-                    obj.use_yn = 'N';
-                    await Query.QUptBankAuth(obj, conn);
+                data : data
+            };
+
+            await axios(config).then(async function (response) {
+                console.log(JSON.stringify(response.data));
+                if(response.data.rc == '0000') {
+                    await Query.QUptBankCertification(certInfo[0], conn)
                     conn.commit();
-                    res.json(rtnUtil.successFalse("501", '인증 시간이 만료되었습니다. 재인증 해주세요.'));
-                } else if(response.data.status == 'OK') {
-                    obj.auth_yn = 'Y';
-                    await Query.QUptBankAuth(obj, conn);
-                    conn.commit();
-                    res.json(rtnUtil.successTrue("인증 되었습니다."));
+                    return res.json(rtnUtil.successTrue( "인증이 완료되었습니다.", obj));
+                } else {
+                    return res.json(rtnUtil.successFalse('500', "인증이 실패되었습니다. 잠시후 다시 시도해주세요", null));
                 }
-            }).catch(function (err) {
-                console.log(err);
-                res.json(rtnUtil.successFalse("500", '인증을 실패했습니다.'));
+            })
+            .catch(function (error) {
+                return res.json(rtnUtil.successFalse('500', "인증이 실패되었습니다. 잠시후 다시 시도해주세요.", null));
             });
 
         } catch (e) {
             console.log(e);
-            res.json(rtnUtil.successFalse("500", "전송을 실패했습니다.","",""));
+            res.json(rtnUtil.successFalse("500", "인증이 실패되었습니다. 잠시후 다시 시도해주세요.","",""));
         }
     });
 }

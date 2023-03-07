@@ -16,6 +16,6 @@ define("TRON",
 
 define("API",
     {
-        "URL": "http://183.111.181.102:4050"
+        "URL": "http://nft-api.nftnting.com"
     });
 

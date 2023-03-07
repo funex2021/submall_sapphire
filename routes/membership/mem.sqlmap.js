@@ -456,6 +456,65 @@ function QUptBankAuth(param, conn) {
     });
 }
 
+
+function fnInsBankCertification(param, conn) {
+    return new Promise(function (resolve, reject) {
+
+        var sql =" INSERT INTO cs_bank_certification "
+        sql += " (bank_info, bank_acc, acc_nm, cert_text, cert_yn, create_dt, update_dt, bank_cd, verify_tr_dt, verify_tr_no) "
+        sql += " VALUES('"+param.bank_info+"', '"+param.bank_acc+"', '"+param.acc_nm+"', '"+param.verify_txt+"', 'N', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,'"+param.bank_code+"','"+param.verify_tr_dt+"','"+param.verify_tr_no+"') "
+
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+
+
+function fnGetBankCertification(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql =" select seq, verify_tr_dt, verify_tr_no, bank_cd, bank_acc, acc_nm "
+        sql += " from cs_bank_certification cbc  "
+        sql += " WHERE seq  = '"+param.seq+"' order by create_dt desc limit 1"
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnUptBankCertification(param, conn) {
+    return new Promise(function (resolve, reject) {
+
+        var sql =" UPDATE cs_bank_certification "
+        sql += " SET cert_yn = 'Y' "
+        sql += " WHERE seq = '"+param.seq+"' "
+
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+
 module.exports.QGetMemTotal = fnGetMemTotal;
 module.exports.QGetMemberList = fnGetMemList;
 module.exports.QSetMember = fnSetMember;
@@ -481,3 +540,7 @@ module.exports.QGetBankAuth = fnGetBankAuth;
 module.exports.QGetBankAuthInfo = fnGetBankAuthInfo;
 module.exports.QDelBankAuth = fnDelBankAuth;
 module.exports.QUptBankAuth = QUptBankAuth;
+
+module.exports.QInsBankCertification = fnInsBankCertification;
+module.exports.QGetBankCertification = fnGetBankCertification;
+module.exports.QUptBankCertification = fnUptBankCertification;
