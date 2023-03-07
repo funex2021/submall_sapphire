@@ -514,6 +514,25 @@ function fnUptBankCertification(param, conn) {
     });
 }
 
+/*
+* config 조회
+*/
+function fnGetConfigInfo(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = " SELECT max_amt, min_amt, is_captcha, is_pause, site_url, login_text, pwd_text, found_text, cmpny_cd, company_nm, suspension_min, is_auto_suspension_view  "
+        sql += " FROM cs_pay_config "
+        sql += " WHERE site_url = '" + param.domain + "'"
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret[0]);
+        });
+    });
+}
 
 module.exports.QGetMemTotal = fnGetMemTotal;
 module.exports.QGetMemberList = fnGetMemList;
@@ -544,3 +563,5 @@ module.exports.QUptBankAuth = QUptBankAuth;
 module.exports.QInsBankCertification = fnInsBankCertification;
 module.exports.QGetBankCertification = fnGetBankCertification;
 module.exports.QUptBankCertification = fnUptBankCertification;
+
+module.exports.QGetConfigInfo = fnGetConfigInfo;

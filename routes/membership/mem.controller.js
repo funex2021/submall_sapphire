@@ -16,6 +16,49 @@ const localUrl = properties.get('com.local.url');
 const {v4: uuidv4} = require('uuid');
 
 
+exports.profile = async (req, res, next) => {
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let userId = req.user.memId;
+            let cmpnyCd = req.user.cmpnyCd;
+            let cmpnyInfo = null;
+            let obj = {};
+   
+            try {
+                obj.cmpnyCd = cmpnyCd;
+                obj.memId = userId;
+                memInfo = await Query.QGetMemberInfo(obj, conn);
+
+                let domain = '';
+                if(req.headers.host.indexOf('localhost') > -1){
+                    domain = localUrl;
+                }else{
+                    domain = req.headers.host;
+                }
+                obj.domain = domain;
+                let config = await Query.QGetConfigInfo(obj, conn);
+                res.render("profile", {
+                    'config': config,
+                    'memInfo': memInfo[0],
+                    userId,
+                    "menuNum":4
+                })
+            } catch (e) {
+                console.log(e)
+                obj.user_id = req.user.memId
+                //res.redirect("p/buyview")
+                next(e);
+            }
+        } catch (e) {
+            console.log(e)
+            next(e);
+        }
+    });
+}
+
 exports.mview = async (req, res, next) => {
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);

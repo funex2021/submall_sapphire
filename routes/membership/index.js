@@ -99,6 +99,7 @@ router.get('/logout', function (req, res) {
 router.post('/view', isAuthenticated, mem.mview);
 router.post('/ins', isAuthenticated, mem.mins);
 router.post('/coin', isAuthenticated, mem.coinInfo);
+router.get('/profile', isAuthenticated, mem.profile);
 
 router.post('/signUpProc', mem.signUpProc);
 router.post('/sendCertNum', mem.sendCertNum);

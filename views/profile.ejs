@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <%- include('includes/cdn') %>
+    <title><%= config.found_text %> | Profile</title>
+</head>
+<body>
+<div class="body-bg" style="background-image:url('/images/body-bg.jpg')">
+    <%- include('includes/nav') %>
+    <%- include('includes/header') %>
+    <section class="nftmax-adashboard nftmax-show">
+        <div class="container">
+            <div class="row">	
+                <div class="col-lg-9 col-12 nftmax-main__column">
+                    <div class="nftmax-body">
+                        <!-- Dashboard Inner -->
+                        <div class="nftmax-dsinner">
+                            <!-- All Notification Heading -->
+                            <div class="nftmax-inner__heading">
+                                <h2 class="nftmax-inner__page-title">내 정보</h2>
+                            </div>
+                            <!-- End All Notification Heading -->
+                        
+                            <div class="nftmax-personals">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-2 col-12 nftmax-personals__list">
+                                        <div class="nftmax-psidebar">
+                                            <!-- Features Tab List -->
+                                            <div class="list-group nftmax-psidebar__list" id="list-tab" role="tablist">
+                                                <a class="list-group-item active" data-bs-toggle="list" href="#id1" role="tab"><span class="nftmax-psidebar__icon"><svg width="15" height="20" viewBox="0 0 15 20" class="fill-current" xmlns="http://www.w3.org/2000/svg"><path d="M10.8692 11.6667H4.13085C3.03569 11.668 1.98576 12.1036 1.21136 12.878C0.436961 13.6524 0.00132319 14.7023 0 15.7975V20H15.0001V15.7975C14.9987 14.7023 14.5631 13.6524 13.7887 12.878C13.0143 12.1036 11.9644 11.668 10.8692 11.6667Z"></path><path d="M7.49953 10C10.261 10 12.4995 7.76145 12.4995 5.00002C12.4995 2.23858 10.261 0 7.49953 0C4.7381 0 2.49951 2.23858 2.49951 5.00002C2.49951 7.76145 4.7381 10 7.49953 10Z"></path></svg></span><span class="nftmax-psidebar__title">내정보</span></a>
+                                                <a class="list-group-item" data-bs-toggle="list" href="#id2" role="tab"><span class="nftmax-psidebar__icon"><svg width="19" height="14" viewBox="0 0 19 14" class="fill-current" xmlns="http://www.w3.org/2000/svg"><path d="M14.5258 0H3.82277C1.71401 0.00346265 0.00346265 1.71055 0 3.82277H18.3451C18.3451 1.71401 16.6346 0.00346265 14.5258 0Z"></path><path d="M0 9.93807C0.00346265 12.0468 1.71055 13.7574 3.82277 13.7608H14.5258C16.6346 13.7574 18.3451 12.0503 18.3486 9.93807V5.35352H0V9.93807ZM5.3498 9.55718C5.3498 10.1908 4.83733 10.7033 4.20366 10.7033C3.57 10.7033 3.05752 10.1908 3.05752 9.55718C3.05752 8.92351 3.57 8.41104 4.20366 8.41104C4.83733 8.41104 5.3498 8.92351 5.3498 9.55718Z"></path></svg></span><span class="nftmax-psidebar__title">은행</span></a>
+                                                <a class="list-group-item" data-bs-toggle="list" href="#id5" role="tab"><span class="nftmax-psidebar__icon"><svg class="inline fill-current" width="18" height="21" viewBox="0 0 18 21" xmlns="http://www.w3.org/2000/svg"><path d="M14.4467 7.1581V5.94904C14.4467 2.66455 11.7822 0 8.49771 0C5.21323 0 2.54867 2.66455 2.54867 5.94904V7.1581C1.00076 7.83194 -0.000366211 9.36059 -0.000366211 11.0471V16.149C0.0034843 18.494 1.90178 20.3961 4.25059 20.4H12.7525C15.0975 20.3961 16.9996 18.4978 17.0035 16.149V11.051C16.9919 9.36059 15.9908 7.83579 14.4467 7.1581ZM9.34482 14.451C9.34482 14.9207 8.96362 15.3019 8.49386 15.3019C8.0241 15.3019 7.6429 14.9207 7.6429 14.451V12.749C7.6429 12.2793 8.0241 11.8981 8.49386 11.8981C8.96362 11.8981 9.34482 12.2793 9.34482 12.749V14.451ZM12.7448 6.8H4.24289V5.94904C4.24289 3.60023 6.14505 1.69807 8.49386 1.69807C10.8427 1.69807 12.7448 3.60023 12.7448 5.94904V6.8Z"></path></svg></span><span class="nftmax-psidebar__title">비밀번호 변경</span></a>
+                                                <a class="list-group-item" data-bs-toggle="list" href="#id7" role="tab"><span class="nftmax-psidebar__icon"><svg width="17" height="21" viewBox="0 0 17 21" class="fill-current" xmlns="http://www.w3.org/2000/svg"><path d="M9.10101 0C9.10101 1.3622 9.10101 2.64618 9.10101 3.93017C9.10101 4.65363 9.29915 4.84916 10.0256 4.84916C11.3267 4.84916 12.6278 4.84916 13.9685 4.84916C13.9685 7.41061 13.9685 9.91992 13.9685 12.4879C12.4231 12.3706 11.0427 12.7356 9.90016 13.798C8.77739 14.8473 8.30847 16.1639 8.34149 17.7216C8.11033 17.7346 7.9122 17.7542 7.71406 17.7542C5.43551 17.7542 3.16356 17.7542 0.885004 17.7477C0.20474 17.7542 0 17.5456 0 16.8547C0 11.5885 0 6.32216 0 1.05587C0 0.156425 0.158508 0 1.07653 0C3.55322 0 6.03652 0 8.51981 0C8.68493 0 8.85004 0 9.10101 0ZM6.99417 8.1406C8.09052 8.1406 9.19347 8.1406 10.2898 8.1406C10.8512 8.1406 11.1946 7.89944 11.155 7.50838C11.1088 7.01955 10.7653 6.8892 10.3228 6.89572C9.35198 6.90223 8.38772 6.8892 7.41686 6.8892C6.16861 6.8892 4.92036 6.8892 3.67211 6.89572C3.0843 6.90223 2.79371 7.18249 2.88617 7.63222C2.97203 8.03631 3.27584 8.13408 3.63908 8.13408C4.76185 8.1406 5.87801 8.1406 6.99417 8.1406ZM7.0272 10.1676C5.91103 10.1676 4.79487 10.1741 3.67871 10.1676C3.2296 10.1676 2.88617 10.311 2.88617 10.8063C2.88617 11.2886 3.2296 11.3994 3.65229 11.3994C5.88462 11.3929 8.11694 11.3929 10.3559 11.3994C10.8116 11.3994 11.1682 11.2495 11.155 10.7737C11.1418 10.2914 10.772 10.1676 10.3228 10.1741C9.2265 10.1806 8.13015 10.1676 7.0272 10.1676ZM5.13831 14.6974C5.66006 14.6974 6.18182 14.7039 6.70357 14.6909C7.11305 14.6844 7.39705 14.5019 7.40365 14.0717C7.41026 13.635 7.12626 13.4655 6.71018 13.4655C5.66667 13.4721 4.62315 13.4655 3.58625 13.4655C3.17016 13.4655 2.88617 13.6285 2.88617 14.0652C2.89277 14.4888 3.17016 14.6844 3.57964 14.6844C4.09479 14.7039 4.61655 14.6974 5.13831 14.6974ZM5.01282 4.84264C5.49495 4.84264 5.98368 4.84916 6.46581 4.84264C6.84887 4.83613 7.13287 4.65363 7.14608 4.25605C7.15268 3.83892 6.8819 3.61732 6.46581 3.61732C5.49495 3.6108 4.52409 3.6108 3.55322 3.61732C3.16356 3.61732 2.89938 3.80633 2.87957 4.20391C2.85975 4.6406 3.15035 4.82961 3.55322 4.84264C4.04196 4.85568 4.52409 4.84264 5.01282 4.84264Z"></path><path d="M9.60305 17.3306C9.60965 15.3166 11.274 13.6937 13.3148 13.7002C15.3424 13.7067 17.0133 15.3687 17.0001 17.3697C16.9869 19.3706 15.3093 21.0065 13.2752 21C11.2476 20.9935 9.59644 19.3445 9.60305 17.3306ZM12.8062 17.5065C12.6147 17.3306 12.4892 17.2263 12.3703 17.1155C12.0731 16.8222 11.7363 16.77 11.4391 17.0699C11.1287 17.3827 11.2344 17.7021 11.525 17.9889C11.7495 18.2105 11.9675 18.4386 12.1986 18.6537C12.6213 19.0578 12.9383 19.0643 13.3544 18.6602C13.863 18.1713 14.3517 17.6695 14.8602 17.1807C15.1772 16.8743 15.3622 16.555 14.9857 16.19C14.6291 15.838 14.279 15.9684 13.9686 16.2943C13.5856 16.6853 13.2091 17.0894 12.8062 17.5065Z"></path><path d="M10.3955 3.56557C10.3955 2.43801 10.3955 1.32349 10.3955 0.228516C11.5183 1.34956 12.6344 2.46408 13.7374 3.56557C12.6873 3.56557 11.5579 3.56557 10.3955 3.56557Z"></path></svg></span><span class="nftmax-psidebar__title">약관 </span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-9 col-md-10 col-12  nftmax-personals__content">
+                                        <div class="nftmax-ptabs">
+                                        
+                                            <div class="nftmax-ptabs__inner">
+                                                <div class="tab-content" id="nav-tabContent">
+                                                    <!--  Features Single Tab -->
+                                                    <div class="tab-pane fade show active" id="id1" role="tabpanel">
+                                                        <form action="#">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="nftmax-ptabs__separate">
+                                                                        <div class="nftmax-ptabs__form-main">
+                                                                           
+                                                                            <div class="nftmax__item-form--group">
+                                                                                <label class="nftmax__item-label">User ID</label>
+                                                                                <input class="nftmax__item-input" type="url" placeholder="RaidParty Fighters" required="required">
+                                                                            </div>
+
+                                                                            <div class="nftmax__item-form--group">
+                                                                                <label class="nftmax__item-label">User Name</label>
+                                                                                <input class="nftmax__item-input" type="url" placeholder="RaidParty Fighters" required="required">
+                                                                            </div>
+                                                                            
+                                                                            <div class="nftmax__item-form--group">
+                                                                                <label class="nftmax__item-label">Email </label>
+                                                                                <input class="nftmax__item-input" type="email" placeholder="info@youremail.com" required="required">
+                                                                                <p class="nftmax__item-fee-text">Your email for marketplace notifications</p>
+                                                                            </div>
+                                                                        </div>
+                                                            
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            
+                                                            <div class="nftmax__item-button--group nftmax__ptabs-bottom">
+                                                                <button class="nftmax__item-button--single nftmax__item-button--cancel">취소</button>
+                                                                <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit">수정</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- 은행 -->
+                                                    <div class="tab-pane fade" id="id2" role="tabpanel">
+                                                        <form action="#">
+                                                            <div class="nftmax-paymentm">
+                                                                <ul class="nftmax-paymentm__list">
+                                                                    <li class="nftmax-paymentm__single">
+                                                                        <div class="nftmax-paymentm__name">
+                                                                            <div class="nftmax-paymentm__icon">
+                                                                                <img src="/img/payment-1.png" alt="#">
+                                                                            </div>
+                                                                            <div class="nftmax-paymentm__content">
+                                                                                <h4 class="nftmax-paymentm__title">Datch Bangla Bank Lmd</h4>
+                                                                                <p class="nftmax-paymentm__text">Bank    **********5535</p>
+                                                                                <span class="nftmax-paymentm__badge nftmax__ok">Verified</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="nftmax-paymentm__manage-btn">
+                                                                            <button class="nftmax-btn nftmax-btn__bordered bg radius">Manage</button>
+                                                                        </div>
+                                                                    </li>	
+                                                                    
+                                                                </ul>	
+                                                            </div>	
+                                                            <div class="nftmax__item-button--group nftmax__ptabs-bottom">
+                                                                <button class="nftmax__item-button--single nftmax__item-button--cancel">취소</button>
+                                                                <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit">수정</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- //은행 -->
+                                                    <!-- password-->
+                                                    <div class="tab-pane fade" id="id5" role="tabpanel">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-12">
+                                                                <!-- Sign in Form -->
+                                                                <form class="nftmax-wc__form-main nftmax-wc__form-main--profile" action="#" method="post">
+                                                                    <div class="form-group">
+                                                                        <label class="nftmax-wc__form-label">Old Password</label>
+                                                                        <div class="form-group__input">
+                                                                            <span class="nftmax-wc__icon lock"><svg class="inline" width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.4467 7.1581V5.94904C14.4467 2.66455 11.7822 0 8.49771 0C5.21323 0 2.54867 2.66455 2.54867 5.94904V7.1581C1.00076 7.83194 -0.000366211 9.36059 -0.000366211 11.0471V16.149C0.0034843 18.494 1.90178 20.3961 4.25059 20.4H12.7525C15.0975 20.3961 16.9996 18.4978 17.0035 16.149V11.051C16.9919 9.36059 15.9908 7.83579 14.4467 7.1581ZM9.34482 14.451C9.34482 14.9207 8.96362 15.3019 8.49386 15.3019C8.0241 15.3019 7.6429 14.9207 7.6429 14.451V12.749C7.6429 12.2793 8.0241 11.8981 8.49386 11.8981C8.96362 11.8981 9.34482 12.2793 9.34482 12.749V14.451ZM12.7448 6.8H4.24289V5.94904C4.24289 3.60023 6.14505 1.69807 8.49386 1.69807C10.8427 1.69807 12.7448 3.60023 12.7448 5.94904V6.8Z" fill="#374557" fill-opacity="0.6"></path></svg></span>
+                                                                            <span class="nftmax-wc__icon"><i class="fa-solid fa-eye"></i></span>
+                                                                            <input class="nftmax-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="password-field" type="password" name="password" placeholder="" maxlength="8" required="required">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="nftmax-wc__form-label">New Password</label>
+                                                                        <div class="form-group__input">
+                                                                            <span class="nftmax-wc__icon lock"><svg class="inline" width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.4467 7.1581V5.94904C14.4467 2.66455 11.7822 0 8.49771 0C5.21323 0 2.54867 2.66455 2.54867 5.94904V7.1581C1.00076 7.83194 -0.000366211 9.36059 -0.000366211 11.0471V16.149C0.0034843 18.494 1.90178 20.3961 4.25059 20.4H12.7525C15.0975 20.3961 16.9996 18.4978 17.0035 16.149V11.051C16.9919 9.36059 15.9908 7.83579 14.4467 7.1581ZM9.34482 14.451C9.34482 14.9207 8.96362 15.3019 8.49386 15.3019C8.0241 15.3019 7.6429 14.9207 7.6429 14.451V12.749C7.6429 12.2793 8.0241 11.8981 8.49386 11.8981C8.96362 11.8981 9.34482 12.2793 9.34482 12.749V14.451ZM12.7448 6.8H4.24289V5.94904C4.24289 3.60023 6.14505 1.69807 8.49386 1.69807C10.8427 1.69807 12.7448 3.60023 12.7448 5.94904V6.8Z" fill="#374557" fill-opacity="0.6"></path></svg></span>
+                                                                            <span class="nftmax-wc__icon"><i class="fa-solid fa-eye"></i></span>
+                                                                            <input class="nftmax-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="password-field" type="password" name="password" placeholder="" maxlength="8" required="required">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="nftmax-wc__form-label">Re-enter Password</label>
+                                                                        <div class="form-group__input">
+                                                                            <span class="nftmax-wc__icon lock"><svg class="inline" width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.4467 7.1581V5.94904C14.4467 2.66455 11.7822 0 8.49771 0C5.21323 0 2.54867 2.66455 2.54867 5.94904V7.1581C1.00076 7.83194 -0.000366211 9.36059 -0.000366211 11.0471V16.149C0.0034843 18.494 1.90178 20.3961 4.25059 20.4H12.7525C15.0975 20.3961 16.9996 18.4978 17.0035 16.149V11.051C16.9919 9.36059 15.9908 7.83579 14.4467 7.1581ZM9.34482 14.451C9.34482 14.9207 8.96362 15.3019 8.49386 15.3019C8.0241 15.3019 7.6429 14.9207 7.6429 14.451V12.749C7.6429 12.2793 8.0241 11.8981 8.49386 11.8981C8.96362 11.8981 9.34482 12.2793 9.34482 12.749V14.451ZM12.7448 6.8H4.24289V5.94904C4.24289 3.60023 6.14505 1.69807 8.49386 1.69807C10.8427 1.69807 12.7448 3.60023 12.7448 5.94904V6.8Z" fill="#374557" fill-opacity="0.6"></path></svg></span>
+                                                                            <span class="nftmax-wc__icon"><i class="fa-solid fa-eye"></i></span>
+                                                                            <input class="nftmax-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="password-field" type="password" name="password" placeholder="" maxlength="8" required="required">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="nftmax__item-button--group nftmax__ptabs-bottom">
+                                                                            <button class="nftmax__item-button--single nftmax__item-button--cancel">취소</button>
+                                                                            <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit">수정</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>	
+                                                                <!-- End Sign in Form -->
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-12">
+                                                                <div class="nftmax-password__img">
+                                                                    <img src="img/password-reset.png" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- //password -->
+
+                                                    <!-- 약관 -->
+                                                    <div class="tab-pane fade" id="id7" role="tabpanel">
+                                                        <div class="nftmax-ptabs__page" >
+                                                            <h3 class="nftmax-ptabs__page-title">1. Definitions</h3>
+                                                            <p>What you do own when you buy an NFT are the keys to a non-fungible – perhaps unique – token. That token is yours to trade or hold or display in Decentraland. But the digital file associated with an NFT is just as easy to copy and paste and download as any other – the Finally, players lose their NFTs sometimes according to the rules and regulations of the NFT game.</p>
+                                                            
+                                                            <h3 class="nftmax-ptabs__page-title">2. Acceptance</h3>
+                                                            <p>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Capacity. You confirm that you have the legal capacity to receive and hold and make use of the NFT under French jurisdiction and any other relevant jurisdiction.Acceptance. By participating in the Sale, You accept and agree to these Terms and Conditions without any condition or restriction.If You do not agree to this Contract, You shall not participate in the Sale made by the Company Exercitation veniam consequat sunt nostrud amet.Capacity. You confirm that you have the legal capacity to receive and hold find to end.Contract, You shall not participate in the Sale made by the Company Exercitation venia</p>
+                                                            
+                                                            <blockquote>These Terms and Conditions are related to the sale of NFTs by the Company (the “Company”) on its Website. It solely governs the contractual relationship between You and the Company regarding the Sale and any related contract.</blockquote>
+                                                            
+                                                            <h3 class="nftmax-ptabs__page-title">3. The Sale</h3>
+                                                            <p>The Company offers NFTs featuring the Betonyou universe. The holders of one or more NFTs will be able to win cryptos while playing video games. In the future, the Company plans to develop its own games and Metaverse around the Betonyou universe (“Project”).</p>
+                                                            <p>To release the NFTs and fund the project, the Company offers NFTs from a dedicated website("Sale"). The web address of this website will be given at the time of the mint. The NFT acquisition does not confer any rights on the Company or in the future development.</p>
+                                                            
+                                                            <h3 class="nftmax-ptabs__page-title">4. Purchaser’s obligations</h3>
+                                                            <p>To the fullest extent permitted by applicable law, You undertake to indemnify, defend and hold harmless the Company from and against all claims, demands, actions, damages, losses, costs and expenses (including attorneys’ fees) that arise from or relate to (i) your Subscription or use of the NFTs; (ii) your responsibilities or obligations under this Contract; and (iii) your breach of this Contract.</p>
+
+                                                            <p>Company undertakes to act with the care normally expected from a professional in his field and to comply with the best practice in force. The best endeavor obligation only binds the Company.</p>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <!-- //약관 -->
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Dashboard Inner -->
+                    </div>
+                </div>
+         
+                
+            </div>	
+        </div>	
+    </section>
+</div>
+</body>
+</html>
+

@@ -75,6 +75,16 @@
                     </span>
                     </a>
                 </li>
+                <li id="profile" >
+                    <a data-v-63fa7ce6="" href="/m/profile" aria-current="page" class="router-link-exact-active router-link-active">
+                        <span data-v-63fa7ce6="" class="menu-bar__text">
+                            <span data-v-63fa7ce6="" class="nftmax-menu-icon nftmax-svg-icon__v10">
+                                <svg data-v-63fa7ce6="" viewBox="0 0 15 20" xmlns="http://www.w3.org/2000/svg" class="nftmax-svg-icon">
+                                    <path data-v-63fa7ce6="" d="M10.8692 11.6667H4.13085C3.03569 11.668 1.98576 12.1036 1.21136 12.878C0.436961 13.6524 0.00132319 14.7023 0 15.7975V20H15.0001V15.7975C14.9987 14.7023 14.5631 13.6524 13.7887 12.878C13.0143 12.1036 11.9644 11.668 10.8692 11.6667Z"></path>
+                                    <path data-v-63fa7ce6="" d="M7.49953 10C10.261 10 12.4995 7.76145 12.4995 5.00002C12.4995 2.23858 10.261 0 7.49953 0C4.7381 0 2.49951 2.23858 2.49951 5.00002C2.49951 7.76145 4.7381 10 7.49953 10Z"></path>
+                                </svg>
+                            </span>
+                            <span data-v-63fa7ce6="" class="menu-bar__name">내정보</span></span></a></li>
             </ul>
         </div>
     </div>
@@ -107,6 +117,8 @@
             $("#view").addClass('active');
         } else if ($("#menu").val() == 3) {
             $("#notice").addClass('active');
+        } else if ($("#menu").val() == 4) {
+            $("#profile").addClass('active');
         }
     });
 
