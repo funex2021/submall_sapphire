@@ -86,10 +86,10 @@
                                                                             </div>
                                                                             <div class="nftmax-paymentm__content">
                                                                                 <h4 class="nftmax-paymentm__title">은행정보</h4>
-                                                                                <p class="nftmax-paymentm__text"></p>
-                                                                                <p class="nftmax-paymentm__text"></p>
-                                                                                <p class="nftmax-paymentm__text"></p>
                                                                                 <% if (memInfo.user_bank != ''){%>
+                                                                                    <p class="nftmax-paymentm__text">은행 : <%=memInfo.user_bank%></p>
+                                                                                    <p class="nftmax-paymentm__text">예금주 : <%=memInfo.user_holder%></p>
+                                                                                    <p class="nftmax-paymentm__text">계좌번호 : <%=memInfo.user_num%></p>
                                                                                     <span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">변경</span>
                                                                                 <%}else{%>
                                                                                     <span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">등록</span>
@@ -149,7 +149,7 @@
 
                                                                 </ul>
                                                             </div>
-                                                            <div class="nftmax__item-button--group nftmax__ptabs-bottom">
+                                                            <div class="nftmax__item-button--group nftmax__ptabs-bottom" id="bankBtnArea">
                                                                 <span class="nftmax__item-button--single nftmax__item-button--cancel" onclick="fnBankCancel()" style="cursor: pointer;">취소</span>
                                                                 <% if (memInfo.user_bank != ''){%>
                                                                     <span class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit" onClick="fnModify(2)" style="cursor: pointer;">수정</span>
