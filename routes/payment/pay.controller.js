@@ -63,14 +63,24 @@ exports.buyview = async (req, res, next) => {
                 if (pageIndex == "" || pageIndex == null) {
                     pageIndex = 1;
                 }
-                ;
+
 
                 let pagination = await pagingUtil.getPagination(pageIndex, totalPageCount)
                 obj.pageIndex = pageIndex;
-                obj.rowsPerPage = 4;
+                obj.rowsPerPage = 5;
                 pagination.totalItems = totalPageCount;
 
-                let withdrawList = await Query.QGetAllCoinBuyList(obj, conn);
+                obj.cs_coin_sell = req.user.cs_coin_sell;
+                obj.cs_coin_sell_detail = req.user.cs_coin_sell_detail;
+
+                obj.mSeq = req.user.mSeq;
+                let withdrawList = await Query.QGetNftBuyMainList(obj, conn);
+
+                //nftList
+                let cmpnyInfoByCd = await Query.QGetCompanyInfoByCmpnyCd(obj, conn);
+                obj.cmpnyMemnerSeq = cmpnyInfoByCd[0].m_seq;
+                obj.collection_seq = cmpnyInfoByCd[0].collection_seq
+                let nftList = await Query.QgetNftList(obj, conn);
 
                 balance = await Query.QGetBalance(obj, conn);
 
@@ -90,15 +100,6 @@ exports.buyview = async (req, res, next) => {
                     totTrans = totTrans[0].trans_num;
                 }
 
-                //faqList
-                let faqList = await Query.QGetFaqList(obj, conn);
-                //noticeList
-                let noticeList = await Query.QGetNoticeList(obj, conn);
-                //subNotice
-                obj.pageIndex = 1;
-                obj.rowsPerPage = 5;
-                let subNoticeList = await Query.QGetSubNoticeList(obj, conn);
-
                 res.render("main", {
                     'cmpnyInfo': cmpnyInfo[0],
                     'coinObj': balance[0].balance,
@@ -109,9 +110,8 @@ exports.buyview = async (req, res, next) => {
                     "totBalance": totBalance,
                     "totTrans": totTrans,
                     "pagination": pagination,
-                    "faqList": faqList,
-                    "noticeList": noticeList,
-                    "subNoticeList": subNoticeList,
+                    "nftMallUrl": nftMallUrl,
+                    "nftList" : nftList,
                     "menuNum":0
                 })
             } catch (e) {

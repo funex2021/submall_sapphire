@@ -5,192 +5,116 @@
     <title><%=config.found_text%> | signUp</title>
 </head>
 <body class="@@dashboard">
-<div class="authincation section-padding">
-    <div class="container h-100">
-        <div class="row justify-content-center h-100 align-items-center">
-            <div class="col-xl-5 col-md-6">
-                <div class="mini-logo text-center my-4"><a href="/"><img src="/images/logo-dark.png" alt=""></a>
-                    <h4 class="card-title mt-5">Sign Up</h4>
-                </div>
-                <div class="auth-form card">
-                    <div class="card-body">
-                        <div>
-                            <div class="row">
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">ID</label>
-                                    <input type="text" class="form-control" id="id" value="">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">이메일</label>
-                                    <input type="text" class="form-control" id="email" value="">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">비밀번호</label>
-                                    <input type="password" class="form-control" id="password" value="">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">비밀번호 재확인</label>
-                                    <input type="password" class="form-control" id="chkPassword" value="">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">이름</label>
-                                    <input type="text" class="form-control" id="name" value="">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">예금주</label>
-                                    <input type="text" class="form-control" id="acc_nm" value="">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">은행명</label>
-                                    <select class="form-control" id="bank_code">
-                                        <option value="">선택</option>
-                                        <option value="002">산업은행</option>
-                                        <option value="003">기압은행</option>
-                                        <option value="004">국민은행</option>
-                                        <option value="007">수협은행</option>
-                                        <option value="011">NH농협은행</option>
-                                        <option value="012">농협중앙회</option>
-                                        <option value="020">우리은행</option>
-                                        <option value="023">SC제일은행</option>
-                                        <option value="027">한국씨티</option>
-                                        <option value="031">대구은행</option>
-                                        <option value="032">부산은행</option>
-                                        <option value="034">광주은행</option>
-                                        <option value="035">제주은행</option>
-                                        <option value="037">전북은행</option>
-                                        <option value="039">경남은행</option>
-                                        <option value="045">새마을금고</option>
-                                        <option value="048">신협</option>
-                                        <option value="064">산림조합</option>
-                                        <option value="071">우체국</option>
-                                        <option value="081">하나은행</option>
-                                        <option value="088">신한은행</option>
-                                        <option value="089">케이뱅크</option>
-                                        <option value="090">카카오뱅크</option>
-                                        <option value="092">토스뱅크</option>
-                                    </select>
-                                </div>
-                                <div class="col-9 mb-3">
-                                    <label class="form-label">계좌번호</label>
-                                    <input type="text" class="form-control" id="bank_acc" onkeyup="numCheck(this);" value="">
-                                    평생계좌, 가상계좌 등 본의명의 실계좌가 아닐경우 1원인증이 어렵습니다.
-                                </div>
-                                <div class="col-3" style="margin-top: 2rem;">
-                                    <a href="#n" class="btn btn-primary mr-2" id="bankAuthBtn" onclick="sendAccAuth();">전송</a>
-                                </div>
-                                <div class="col-9 mb-3">
-                                    <label class="form-label">계좌인증</label>
-                                    <input type="text" class="form-control" id="verifyVal" value="">
-                                    <input type="hidden" id="accSeq" value="">
-                                    전송된 인증 문구를 입력해 주세요.
-                                </div>
-                                <div class="col-3" style="margin-top: 2rem;">
-                                    <a href="#n" class="btn btn-primary mr-2" id="accAuthBtn" onclick="accAuth();">인증</a>
-                                </div>
-                                <div class="col-9 mb-3">
-                                    <label class="form-label">핸드폰번호</label>
-                                    <input type="text" class="form-control" id="hp" value="">
-                                </div>
-                                <div class="col-3" style="margin-top: 2rem;">
-                                    <a href="#n" class="btn btn-primary mr-2" onclick="sendCertNum();">전송</a>
-                                </div>
-                                <div class="col-9 mb-3">
-                                    <label class="form-label">인증번호</label>
-                                    <input type="text" class="form-control" id="cert_num" value="">
-                                    <input type="hidden" id="seq">
-                                </div>
-                                <div class="col-3" style="margin-top: 2rem;">
-                                    <a href="#n" class="btn btn-primary mr-2" onclick="checkCertNum();">확인</a>
-                                </div>
-                            </div>
-                            <div class="mt-3 d-grid gap-2">
-                                <a href="#n" class="btn btn-primary mr-2" onclick="signUp();">Sign Up</a>
-                            </div>
+<div class="body-bg" style="background-image:url('/images/body-bg.jpg')">
+    <!-- NFTMax Welcome -->
+    <section class="nftmax-wc nftmax-wc__full">
+        <div class="container-fluid">
+            <div class="row g-0">
+                <div class="col-xxl-6 col-lg-6 col-12 nftmax-hidden-rp">
+                    <div class="nftmax-wc__inner nft-gr-primary">
+                        <!-- Logo -->
+                        <div class="nftmax-wc__logo">
+                            <a href="/p/buyview"><img src="/images/cnft_logo-removebg-preview.png" alt="#"></a>
                         </div>
-                        <div class="text-center">
-                            <p class="mt-3 mb-0">
-                                <a class="text-primary" href="/login">login</a> to your account
-                            </p>
+                        <!-- Middle Image -->
+                        <div class="nftmax-wc__middle">
+                            <a href="/p/buyview"><img src="/images/ikonbit.png" alt="#"></a>
+                        </div>
+                        <!-- Welcome Heading -->
+                        <div class="nftmax-wc__heading">
+                            <h2 class="nftmax-wc__title">Welcome to IKONBIT <br> CNFT</h2>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xxl-6 col-lg-6 col-12">
+                    <!-- Welcome Form -->
+                    <div class="nftmax-wc__form" id="login-form">
+                        <div class="nftmax-wc__form-inner">
+                            <div class="nftmax-wc__heading">
+                                <h3 class="nftmax-wc__form-title nftmax-wc__form-title__one" style="background-image:url('/images/heading-vector.png')">Sign Up</h3>
+                            </div>
+                            <!-- Sign in Form -->
+                            <div class="nftmax-wc__form-main">
+                                <div class="form-group">
+                                    <label class="nftmax-wc__form-label">ID</label>
+                                    <div class="form-group__input">
+                                        <input class="nftmax-wc__form-input" type="text" name="login-form-username" id="id" value="" placeholder="<%=config.login_text%>" maxlength="20" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="nftmax-wc__form-label">Password</label>
+                                    <div class="form-group__input">
+                                        <input class="nftmax-wc__form-input" name="login-form-password" id="password" type="password"  placeholder="<%=config.pwd_text%>" maxlength="50" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="nftmax-wc__form-label">이메일</label>
+                                    <div class="form-group__input">
+                                        <input class="nftmax-wc__form-input" type="text" name="login-form-username" id="email" value="" placeholder="이메일을 입력해주세요." maxlength="50"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="nftmax-wc__form-label">이름</label>
+                                    <div class="form-group__input">
+                                        <input class="nftmax-wc__form-input" type="text" name="login-form-username" id="name" value="" placeholder="이름을 입력해주세요."  maxlength="15" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="nftmax-wc__form-label">전화번호</label>
+                                    <div class="form-group__input">
+                                        <input class="nftmax-wc__form-input" type="text" name="login-form-username" id="hp" value="" placeholder="전화번호를 입력해주세요."  onkeyup="numCheck(this);" maxlength="15" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="nftmax-wc__button">
+                                        <button class="ntfmax-wc__btn" onclick="signUp()">회원가입</button>
+                                        <button class="ntfmax-wc__btn ntfmax-wc__btn-google" onclick="location.href='/login'">취소</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Sign in Form -->
                         </div>
                     </div>
+                    <!-- End Welcome Form -->
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- End NFTMax Welcome -->
+
 </div>
 </body>
+<%- include('includes/modal') %>
 </html>
 <script>
-    let accConfirm = false;
     function signUp() {
         if ($("#id").val() == '') {
-            fnViewAlarm('아이디를 입력해 주세요.');
-            return;
+            return fnAlertModal('아이디를 입력해 주세요.');
         }
         if ($("#email").val() == '') {
-            fnViewAlarm('이메일을 입력해 주세요.');
-            return;
+            return fnAlertModal('이메일을 입력해 주세요.');
         } else {
             let filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
             if (!filter.test($("#email").val())) {
-                fnViewAlarm('이메일 형식을 확인해 주세요.');
-                return;
+                return fnAlertModal('이메일 형식을 확인해 주세요.');
             }
         }
 
-
         if ($("#password").val() == '') {
-            fnViewAlarm('비밀번호를 입력해 주세요.');
-            return;
+            return fnAlertModal('비밀번호를 입력해 주세요.');
         } else {
             if (!passChk()) {
                 return;
             }
         }
 
-        if ($("#chkPassword").val() == '') {
-            fnViewAlarm('비밀번호를 입력해 주세요.');
-            return;
-        }
-
-        if ($("#password").val() != $("#chkPassword").val()) {
-            fnViewAlarm('비밀번호를 확인해 주세요.');
-            return;
-        }
-
         if ($("#name").val() == '') {
-            fnViewAlarm('이름를 입력해 주세요.');
-            return;
+            return fnAlertModal('이름를 입력해 주세요.');
         }
 
-        if ($("#acc_nm").val() == '') {
-            fnViewAlarm('예금주를 입력해 주세요.');
-            return;
-        }
-
-        if ($("#bank_code").val() == '') {
-            fnViewAlarm('은행명를 선택해 주세요.');
-            return;
-        }
-
-        if ($("#bank_acc").val() == '') {
-            fnViewAlarm('계좌번호를 입력해 주세요.');
-            return;
-        }
-
-        if (!accConfirm) {
-            fnViewAlarm('계좌인증을 진행해 주세요.');
-            return;
-        }
-
-        if ($("#hp").val() == '' || $("#cert_num").val() == '') {
-            fnViewAlarm('핸드폰 인증을 진행해 주세요.');
-            return;
-        }
-
-        if ($("#seq").val() == '') {
-            fnViewAlarm('핸드폰 인증을 진행해 주세요.');
-            return;
+        if ($("#hp").val() == '' ) {
+            return fnAlertModal('핸드폰 번호를 입력해주세요.');
         }
 
         wrapWindowByMaskShow();
@@ -200,12 +124,7 @@
             email : $("#email").val(),
             password: $("#password").val(),
             name: $("#name").val(),
-            acc_nm: $("#acc_nm").val(),
-            bank_nm: $("#bank_code option:checked").text(),
-            bank_code: $("#bank_code").val(),
-            bank_acc: $("#bank_acc").val(),
             hp: $("#hp").val(),
-            seq: $("#seq").val(),
         }
 
         $.ajax({
@@ -216,74 +135,14 @@
             success: function (result) {
                 wrapWindowByMaskHide();
                 if (result.success) {
-                    fnViewLocationAlarm(result.message, '/login');
+                    fnRedirectModal(result.message, '/login');
                 } else {
-                    fnViewAlarm(result.message);
+                    fnAlertModal(result.message);
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 wrapWindowByMaskHide();
-                fnViewAlarm('회원가입시 문제가 발생하였습니다.');
-            } //function끝
-        });
-    }
-
-    function sendCertNum() {
-        if ($("#hp").val() == '') {
-            fnViewAlarm('핸드폰번호를 입력해 주세요.');
-            return;
-        }
-
-        let data = {
-            hp: $("#hp").val()
-        }
-
-        $.ajax({
-            url: '/m/sendCertNum',
-            dataType: 'json',
-            type: 'POST',
-            data: data,
-            success: function (result) {
-                if (result.success) {
-                    fnViewAlarm(result.message);
-                    $("#hp").attr('readonly', true);
-                    $("#seq").val(result.data.seq);
-                } else {
-                    fnViewAlarm(result.message);
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('회원가입시 문제가 발생하였습니다.');
-            } //function끝
-        });
-    }
-
-    function checkCertNum() {
-        if ($("#cert_num").val() == '') {
-            fnViewAlarm('인증번호를 입력해 주세요.');
-            return;
-        }
-
-        let data = {
-            seq: $("#seq").val(),
-            cert_num: $("#cert_num").val(),
-        }
-
-        $.ajax({
-            url: '/m/checkCertNum',
-            dataType: 'json',
-            type: 'POST',
-            data: data,
-            success: function (result) {
-                if (result.success) {
-                    fnViewAlarm(result.message);
-                    $("#cert_num").attr('readonly', true);
-                } else {
-                    fnViewAlarm(result.message);
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('회원가입시 문제가 발생하였습니다.');
+                fnAlertModal('회원가입시 문제가 발생하였습니다.');
             } //function끝
         });
     }
@@ -301,105 +160,11 @@
         var pattern3 = /[~!@\#$%<>^&*]/;
 
         if (!pattern1.test(pw) || !pattern2.test(pw) || !pattern3.test(pw) || pw.length<8 || pw.length>50){
-            fnViewAlarm("영문+숫자+특수기호 8자리 이상으로 구성하여야 합니다.");
+            fnAlertModal("영문+숫자+특수기호 8자리 이상으로 구성하여야 합니다.");
             return false;
         } else {
             return true;
         }
     }
-
-    function sendAccAuth() {
-        if ($("#acc_nm").val() == '') {
-            fnViewAlarm("예금주명을 입력해 주세요.");
-            return;
-        }
-        if ($("#bank_nm").val() == '') {
-            fnViewAlarm("은행명을 선택해 주세요.");
-            return;
-        }
-
-        if ($("#bank_acc").val() == '') {
-            fnViewAlarm("계좌번호를 입력해 주세요.");
-            return;
-        }
-
-        let data = {
-            bank_code: $("#bank_code").val(),
-            bank_acc: $("#bank_acc").val(),
-            acc_nm: $("#acc_nm").val(),
-            bank_info : $("#bank_code option:checked").text()
-        }
-
-        wrapWindowByMaskShow();
-
-        $.ajax({
-            url: '/m/sendAccAuth',
-            dataType: 'json',
-            type: 'POST',
-            data: data,
-            success: function (result) {
-                wrapWindowByMaskHide();
-                if (result.success) {
-                    fnViewAlarm(result.message);
-                    $("#acc_nm").attr('readonly', true);
-                    $("#bank_acc").attr('readonly', true);
-                    $("#bank_code").attr('readonly', true);
-                    $("#bankAuthBtn").attr('onclick', '');
-                    $("#accSeq").val(result.data);
-                } else {
-                    if (result.code == '400') {
-                        fnViewAlarm(result.message);
-                        $("#acc_nm").attr('readonly', true);
-                        $("#bank_acc").attr('readonly', true);
-                        $("#bank_code").attr('readonly', true);
-                        $("#bankAuthBtn").attr('onclick', '');
-                        $("#accSeq").val(result.data.seq);
-                    } else {
-                        fnViewAlarm(result.message);
-                    }
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                wrapWindowByMaskHide();
-                fnViewAlarm('계좌인증시 문제가 발생하였습니다.');
-            } //function끝
-        });
-    }
-
-    function accAuth() {
-        let data = {
-            seq: $("#accSeq").val(),
-            verifyVal: $("#verifyVal").val(),
-        }
-
-        wrapWindowByMaskShow();
-
-        $.ajax({
-            url: '/m/accAuth',
-            dataType: 'json',
-            type: 'POST',
-            data: data,
-            success: function (result) {
-                wrapWindowByMaskHide();
-                console.log(result);
-                if (result.success) {
-                    $("#verifyVal").attr('readonly', true);
-                    $("#accAuthBtn").attr('onclick', '');
-                    accConfirm = true;
-                    fnViewAlarm(result.message);
-                } else {
-                    if (result.code == '501') {
-                        fnViewAlarm(result.message);
-                        $("#verifyVal").val("");
-                        $("#bankAuthBtn").attr('onclick', 'sendAccAuth();');
-                    }
-                    fnViewAlarm(result.message);
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                wrapWindowByMaskHide();
-                fnViewAlarm('계좌인증시 문제가 발생하였습니다.');
-            } //function끝
-        });
-    }
+    
 </script>

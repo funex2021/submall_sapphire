@@ -238,11 +238,6 @@ exports.signUpProc = async (req, res, next) => {
 
     mydb.executeTx(async conn => {
         try {
-            //인증번호 seq없을시 미인증
-            if (!seq) {
-                res.json(rtnUtil.successFalse("500", "인증되지 않았습니다. 다시한번 인증해 주세요.","",""));
-                return;
-            }
 
             let domain = '';
             if(req.headers.host.indexOf('localhost') > -1){
@@ -260,7 +255,6 @@ exports.signUpProc = async (req, res, next) => {
                 return;
             }
 
-            console.log('api call');
 
             try {
                 let createWallet = await axios.get(CONSTS.API.URL + '/v1/api/blockchain/createWallet');
@@ -271,18 +265,11 @@ exports.signUpProc = async (req, res, next) => {
                     // obj.krn = createWallet.data.data.krn;
                     // obj.public_key = createWallet.data.data.publicKey;
                 } else {
-                    throw '지갑생성오류';
+                    return res.json(rtnUtil.successFalse("500", "회원가입이 실패했습니다.","",""));
                 }
             }catch (e){
                 console.log('error ' , e);
-            }
-
-            //인증번호 체크
-            obj.seq = seq;
-            let cert = await Query.QGetCertNum(obj, conn);
-            if (cert.auth_yn == 'N') {
-                res.json(rtnUtil.successFalse("500", "인증되지 않았습니다. 다시한번 인증해 주세요.","",""));
-                return;
+                return res.json(rtnUtil.successFalse("500", "회원가입이 실패했습니다.","",""));
             }
 
             obj.mSeq = uuidv4();
@@ -302,11 +289,11 @@ exports.signUpProc = async (req, res, next) => {
             let wallet = await Query.QSetWallet(obj, conn);
             obj.walletSeq = wallet.insertId;
 
-            obj.bankInfo = bank_nm;
-            obj.bankAcc = bank_acc;
-            obj.accNm = acc_nm;
-            obj.bank_code = bank_code;
-            await Query.QSetBank(obj, conn);
+            // obj.bankInfo = bank_nm;
+            // obj.bankAcc = bank_acc;
+            // obj.accNm = acc_nm;
+            // obj.bank_code = bank_code;
+            // await Query.QSetBank(obj, conn);
 
             await Query.QSetBalance(obj, conn);
 
