@@ -84,6 +84,15 @@ app.use(function (req, res, next) {
             res.render("inspection");
             return;
         } else {
+            if (req.isAuthenticated()) {
+                console.log('login!@')
+                let airdropInfo = await fnGetAirdropInfo(req.user.mSeq, conn);
+                if(airdropInfo.length > 0) {
+                    res.locals.airdropPrice = airdropInfo[0].price;
+                } else {
+                    res.locals.airdropPrice = "0";
+                }
+            }
             next();
         }
     });
@@ -110,6 +119,25 @@ function fnGetConfigInfo(param, conn) {
         });
     });
 }
+
+/*
+* config 조회
+*/
+function fnGetAirdropInfo(mSeq, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = " select tot_price price from cs_nft_airdrop cna where m_seq = '" + mSeq + "' and use_yn = 'Y' order by create_dt desc limit 1 "
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
 
 let config = {};
 app.get('/', function (req, res, next) {

@@ -850,6 +850,48 @@ function fnGetNftBuyMainList(param, conn) {
     });
 }
 
+function fnGetAirdropList(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+
+        sql += " select (select file_path from cs_nft_mst cnm where seq = cna.nft_seq) nft_img, ";
+        sql += "  (select nft_nm from cs_nft_mst cnm where seq = cna.nft_seq) nft_nm, ";
+        sql += " nft_seq, price, tot_price, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
+        sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
+
+
+        console.log('fnGetNftBuyMainList >> ' , sql);
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetAirdropListTotal(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+
+        sql += " select count(1) totSum ";
+        sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
+
+
+        console.log('fnGetNftBuyMainList >> ' , sql);
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret[0].totSum);
+        });
+    });
+}
+
+module.exports.QGetAirdropListTotal = fnGetAirdropListTotal;
+module.exports.QGetAirdropList = fnGetAirdropList;
 module.exports.QGetNftBuyMainList = fnGetNftBuyMainList;
 module.exports.QSetIsBuy = fnSetIsBuy;
 module.exports.QSetShowAccount = fnSetShowAccount;

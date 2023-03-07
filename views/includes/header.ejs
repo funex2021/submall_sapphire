@@ -21,7 +21,7 @@
 
                                 <div class="nftmax-header__amount nftmax-btn nftmax-btn__bordered bg radius">
                                     <div class="nftmax-amount__icon"><img src="/images/bag-icon.svg" alt="#"></div>
-                                    <div class="nftmax-amount__digit">10,000,000</div>
+                                    <div class="nftmax-amount__digit"><%=airdropPrice.toLocaleString('ko-KR')%></div>
                                     <div class="nftmax-amount__icon"></div>
                                 </div>
 
@@ -34,6 +34,7 @@
     </div>
     </div>
 </header>
+
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function fnCopy(_data) {

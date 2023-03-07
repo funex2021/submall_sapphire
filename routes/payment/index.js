@@ -27,6 +27,8 @@ router.get('/view', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.withdr
 router.post('/view', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.withdraw);
 router.post('/addView', isAuthenticated, isAuthYn, pay.addWithdraw);
 
+router.get('/airView', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.airView);
+
 router.get('/buyview', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buyview);
 router.get('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buypage);
 router.post('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheckAjax, pay.buy);
@@ -39,5 +41,8 @@ router.get('/notice', isAuthenticated, isAuthYn, pay.notice);
 router.post('/notice', isAuthenticated, isAuthYn, pay.notice);
 
 router.get('/mynft', isAuthenticated, isAuthYn, pay.mynft)
+
+
+
 
 module.exports = router
