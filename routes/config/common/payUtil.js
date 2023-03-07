@@ -5,6 +5,9 @@ const path = require('path');
 const rtnUtil = require(path.join(process.cwd(), '/routes/services/rtnUtil'))
 const Mydb = require(path.join(process.cwd(),'/routes/config/mydb'))
 var requestIp = require('request-ip');
+const PropertiesReader = require("properties-reader");
+const properties = PropertiesReader('pay.properties');
+const localUrl = properties.get('com.local.url');
 
 var isStatusCheck = async function (req, res, next) {
 
@@ -19,7 +22,13 @@ var isStatusCheck = async function (req, res, next) {
 
   try {  
     mydb.execute(async conn => {
-      let domain = req.headers.host;
+      let domain = '';
+      if(req.headers.host.indexOf('localhost') > -1){
+        domain = localUrl;
+      }else{
+        domain = req.headers.host;
+      }
+
       console.log('domain : ' + domain)
       obj.domain = domain;
       let config = await fnGetConfigInfo(obj, conn);
@@ -28,7 +37,12 @@ var isStatusCheck = async function (req, res, next) {
         try {  
           let mem_status = await fnGetStatus(obj, conn);
           if(mem_status == 'CMDT00000000000029') {
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+              domain = localUrl;
+            }else{
+              domain = req.headers.host;
+            }
             console.log('domain : ' + domain)
             obj.domain = domain;
             res.render("login",{'alertMessage':'회원 정지 되었습니다.', 'config':config, 'userId':''})
@@ -105,7 +119,12 @@ var isStatusCheckAjax = async function (req, res, next) {
   
   try {  
     mydb.execute(async conn => {
-      let domain = req.headers.host;
+      let domain = '';
+      if(req.headers.host.indexOf('localhost') > -1){
+        domain = localUrl;
+      }else{
+        domain = req.headers.host;
+      }
       console.log('domain : ' + domain)
       obj.domain = domain;
       let config = await fnGetConfigInfo(obj, conn);

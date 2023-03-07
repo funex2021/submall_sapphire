@@ -11,7 +11,7 @@ const axios = require('axios')
 const PropertiesReader = require('properties-reader');
 const properties = PropertiesReader('pay.properties');
 const cooconUrl = properties.get('com.coocon.url');
-
+const localUrl = properties.get('com.local.url');
 
 const {v4: uuidv4} = require('uuid');
 
@@ -201,7 +201,12 @@ exports.signUpProc = async (req, res, next) => {
                 return;
             }
 
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             obj.domain = domain;
             let config = await Query.QGetConfig(obj, conn);
             obj.cmpnyCd = config.cmpny_cd;
@@ -357,7 +362,12 @@ exports.authSignUp = async (req, res, next) => {
 
     mydb.executeTx(async conn => {
         try {
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             obj.domain = domain;
             let config = await Query.QGetConfig(obj, conn);
 
@@ -391,7 +401,12 @@ exports.authProc = async (req, res, next) => {
                 return;
             }
 
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             obj.domain = domain;
             let config = await Query.QGetConfig(obj, conn);
 

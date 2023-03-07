@@ -1,39 +1,43 @@
-<div class="header">
+<header class="nftmax-header">
     <div class="container">
-        <div class="row">
-            <div class="col-xxl-12">
-                <div class="header-content">
-                    <div class="header-left">
-
+        <div class="row g-50">
+            <div class="col-12">
+                <!-- Dashboard Header -->
+                <div class="nftmax-header__inner">
+                    <div class="nftmax__sicon close-icon d-xl-none"><img src="/images/menu-toggle.svg" alt="#"></div>
+                    <div class="nftmax-header__left">
+                        <!-- Search Form -->
+                        <!-- End Search Form -->
                     </div>
-                    <div class="header-right">
-                        <div class="dark-light-toggle theme-switch" onclick="themeToggle()">
-                            <span class="dark"><i class="ri-moon-line"></i></span>
-                            <span class="light"><i class="ri-sun-line"></i></span>
-                        </div>
-                        <div class="dropdown profile_log dropdown">
-                            <div data-bs-toggle="dropdown" aria-haspopup="true" class="" aria-expanded="false">
-                                <div class="user icon-menu active">
-                                    <span><img src="/images/profile.jpg" alt=""></span>
-                                </div>
+                    <div class="nftmax-header__right">
+                        <div class="nftmax-header__group">
+                            <!-- Search Form -->
+                            <div class="nftmax-header__amount nftmax-btn nftmax-btn__bordered bg radius">
+                                <div class="nftmax-amount__icon"><img src="/images/bag-icon.svg" alt="#"></div>
+                                <div class="nftmax-amount__digit">10,000,000</div>
+                                <div class="nftmax-amount__icon"></div>
                             </div>
-                            <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                <div class="user-email">
-                                    <div class="user">
-                                        <span class="thumb">
-                                            <img src="/images/profile.jpg" alt="">
-                                        </span>
-                                        <div class="user-info">
-                                            <h5><%= userId %></h5>
-                                        </div>
-                                    </div>
+                            <!-- End Search Form -->
+                            <div class="nftmax-header__author">
+                                <div class="nftmax-header__author-img"><img src="/images/profile.jpg" alt="" class="img-thumbnail"></div>
+                                <div class="nftmax-header__author-content">
+                                    <h4 class="nftmax-header__author-title"><%= userId %></h4>
+                                    <p class="nftmax-header__author-text v1"></p>
                                 </div>
-                                <a class="dropdown-item" href="javascript:void(0);" onclick="fnCopy('<%=user.coinAddr%>')"">
-                                    <span>
-                                        <i class="ri-user-line"></i>
-                                    </span>
-                                    <%=user.coinAddr%>
-                                </a>
+
+                                <!-- NFTMax Profile Hover -->
+                                <div class="nftmax-balance nftmax-profile__hover">
+                                    <h3 class="nftmax-balance__title">Your Address</h3>
+                                    <!-- NFTMax Balance List -->
+                                    <ul class="nftmax-balance_list">
+                                        <li>
+                                            <div class="nftmax-balance-info">
+                                                <h4 class="nftmax-balance-name"><a href="javascript:void(0);" onclick="fnCopy('<%=user.coinAddr%>')" style="word-break:break-all;" ><%=user.coinAddr%></a></h4>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- End NFTMax Balance Hover -->
                             </div>
                         </div>
                     </div>
@@ -41,12 +45,12 @@
             </div>
         </div>
     </div>
-</div>
+</header>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function fnCopy(_data) {
 
-        $('#modal-text').html('복사되었습니다.');
-        $('#viewAlarm').modal('show');
+        fnAlertModal('복사되었습니다.');
 
         const t = document.createElement("textarea");
         document.body.appendChild(t);
@@ -55,4 +59,57 @@
         document.execCommand('copy');
         document.body.removeChild(t);
     }
+
+    function fnAlertModal(text) {
+        Swal.fire({
+            title: "알림",
+            text: text,
+            heightAuto: false,
+            showCloseButton: true,
+        });
+    }
+
+    function fnRedirectModal(text, url) {
+        Swal.fire({
+            title: "알림",
+            text: text,
+            type: "success",
+            heightAuto: false,
+            allowOutsideClick: false,
+        }).then(function (result) {
+            if (true) {
+                window.location = url;
+            }
+        });
+    }
+
+    function fnRefreshModal(text) {
+        Swal.fire({
+            text: text,
+            heightAuto: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
+        })
+    }
+
+    function numberComma(str) {
+        if(null == str){
+            return '';
+        }
+        let split = str.toString().split(".");
+        if (split.length == 2) {
+            let first = split[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            let second = split[1].toString().replace("," , "");
+            return first + "." + second;
+        } else {
+            return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+
+    function noneNumberComma(str) {
+        return str.toString().replace(",", "");
+    }
+
 </script>

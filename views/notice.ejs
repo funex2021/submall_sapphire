@@ -4,89 +4,541 @@
     <%- include('includes/cdn') %>
     <title><%= config.found_text %> | History</title>
 </head>
-<body class="@@dashboard ">
-<div id="main-wrapper" class="show">
-    <%- include('includes/header') %>
+<body>
+<div class="body-bg" style="background-image:url('/images/body-bg.jpg')">
     <%- include('includes/nav') %>
-    <div class="content-body">
+    <%- include('includes/header') %>
+    <section class="nftmax-adashboard nftmax-show">
         <div class="container">
             <div class="row">
-                <div class="col-xxl-12">
-                    <div class="card">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">공지사항</h4>
-                            </div>
-                            <div class="card-header">
-                                <div class="header-left search">
-                                    <span>
-                                        <i class="ri-calendar-line"></i>
-                                    </span>
-                                    <input type="text" id="startDatePicker" class="form-control" value="<%= srtDt %>" placeholder="<%= srtDt %>">
-                                    <span>
-                                        <i class="ri-calendar-line"></i>
-                                    </span>
-                                    <input type="text" id="endDatePicker" class="form-control" value="<%= endDt %>" placeholder="<%= endDt %>">
-                                    <a href="#n" class="btn btn-dark w-30" onclick="fnSearch();">검색</a>
-                                </div>
-                            </div>
+                <div class="col-lg-9 col-12 nftmax-main__column">
+                    <div class="nftmax-body">
+                        <!-- Dashboard Inner -->
+                        <div class="nftmax-dsinner">
+                            <!-- Dashboard Slider -->
+                            <div class="nftmax-wallet__dashboard">
 
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <colgroup>
-                                            <col width="10%">
-                                            <col width="70%">
-                                            <col width="20%">
-                                        </colgroup>
-                                        <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>제목</th>
-                                            <th>등록일</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <% if (noticeList.length > 0) {
-                                            var num = pagination.totalPageCount - ((pagination.pageIndex -1) * pagination.rowsPerPage)
-                                            noticeList.forEach(function(el, index) { %>
-                                            <tr>
-                                                <td>
-                                                    <%=num - index %>
-                                                </td>
-                                                <td>
-                                                    <a aria-expanded="false" data-toggle="collapse" href=".collapseExample<%=index%>">
-                                                        <%= el.title %>
-                                                    </a>
-                                                </td>
-                                                <td><%= el.create_dt%></td>
-                                            </tr>
-                                                <tr class="collapse collapseExample<%= index %>">
-                                                    <td colspan="3">
-                                                        <%- el.content%>
-                                                    </td>
-                                                </tr>
-                                        <% }) %>
-                                        <% } else { %>
-                                            <tr>
-                                                <td colspan="3" style="text-align: center;">내역이 없습니다.</td>
-                                            </tr>
-                                        <% } %>
-                                        </tbody>
-                                    </table>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="nftmax-table mg-top-40">
+                                            <div class="nftmax-table__heading">
+                                                <h3 class="nftmax-table__title mb-0">All NFTS Update <span class="nftmax-table__badge">435</span></h3>
+                                                <ul  class="nav nav-tabs  nftmax-dropdown__list" id="nav-tab" role="tablist">
+                                                    <li class="nav-item dropdown ">
+                                                        <a class="nftmax-sidebar_btn nftmax-heading__tabs nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">All Categories <span class="nftmax-table__arrow--icon"><svg width="13" height="6" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.7" d="M12.4124 0.247421C12.3327 0.169022 12.2379 0.106794 12.1335 0.0643287C12.0291 0.0218632 11.917 0 11.8039 0C11.6908 0 11.5787 0.0218632 11.4743 0.0643287C11.3699 0.106794 11.2751 0.169022 11.1954 0.247421L7.27012 4.07837C7.19045 4.15677 7.09566 4.219 6.99122 4.26146C6.88678 4.30393 6.77476 4.32579 6.66162 4.32579C6.54848 4.32579 6.43646 4.30393 6.33202 4.26146C6.22758 4.219 6.13279 4.15677 6.05312 4.07837L2.12785 0.247421C2.04818 0.169022 1.95338 0.106794 1.84895 0.0643287C1.74451 0.0218632 1.63249 0 1.51935 0C1.40621 0 1.29419 0.0218632 1.18975 0.0643287C1.08531 0.106794 0.990517 0.169022 0.910844 0.247421C0.751218 0.404141 0.661621 0.616141 0.661621 0.837119C0.661621 1.0581 0.751218 1.2701 0.910844 1.42682L4.84468 5.26613C5.32677 5.73605 5.98027 6 6.66162 6C7.34297 6 7.99647 5.73605 8.47856 5.26613L12.4124 1.42682C12.572 1.2701 12.6616 1.0581 12.6616 0.837119C12.6616 0.616141 12.572 0.404141 12.4124 0.247421Z" fill="#374557" fill-opacity="0.6"></path></svg></span></a>
+                                                        <ul class="dropdown-menu nftmax-sidebar_dropdown">
+                                                            <a class="dropdown-item list-group-item" data-bs-toggle="tab" data-bs-target="#table_1" role="tab">Categories V1</a>
+                                                            <a class="dropdown-item list-group-item" data-bs-toggle="tab" data-bs-target="#table_2" role="tab">Categories V2</a>
+                                                            <a class="dropdown-item list-group-item"  data-bs-toggle="tab" data-bs-target="#table_1" role="tab">Categories V3</a>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content" id="myTabContent">
+                                                <div class="tab-pane fade show active" id="table_1" role="tabpanel" aria-labelledby="table_1">
+                                                    <!-- NFTMax Table -->
+                                                    <table id="nftmax-table__main" class="nftmax-table__main nftmax-table__main-v1">
+                                                        <!-- NFTMax Table Head -->
+                                                        <thead class="nftmax-table__head">
+                                                        <tr>
+                                                            <th class="nftmax-table__column-1 nftmax-table__h1">All Products</th>
+                                                            <th class="nftmax-table__column-2 nftmax-table__h2">Value</th>
+                                                            <th class="nftmax-table__column-3 nftmax-table__h3">USD</th>
+                                                            <th class="nftmax-table__column-4 nftmax-table__h4">24H%</th>
+                                                            <th class="nftmax-table__column-5 nftmax-table__h5">Bids</th>
+                                                            <th class="nftmax-table__column-6 nftmax-table__h6">Time</th>
+                                                            <th class="nftmax-table__column-7 nftmax-table__h7">Status</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <!-- NFTMax Table Body -->
+                                                        <tbody class="nftmax-table__body">
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img1.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">Mullican Computer Joy</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img1.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">Mullican Computer Joy</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img1.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">Mullican Computer Joy</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img1.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">Mullican Computer Joy</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img1.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">Mullican Computer Joy</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img1.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">Mullican Computer Joy</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img2.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">View Card by Jeff Davis</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-gbcolor">Completed</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img3.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">View Card by Jeff Davis</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img4.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">View Card by Jeff Davis</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-gbcolor">Completed</div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <!-- End NFTMax Table Body -->
+                                                    </table>
+                                                    <!-- End NFTMax Table -->
+                                                </div>
+                                                <div class="tab-pane fade" id="table_2" role="tabpanel" aria-labelledby="table_1">
+                                                    <!-- NFTMax Table -->
+                                                    <table id="nftmax-table__main" class="nftmax-table__main nftmax-table__main-v1">
+                                                        <!-- NFTMax Table Head -->
+                                                        <thead class="nftmax-table__head">
+                                                        <tr>
+                                                            <th class="nftmax-table__column-1 nftmax-table__h1">All Products</th>
+                                                            <th class="nftmax-table__column-2 nftmax-table__h2">Value</th>
+                                                            <th class="nftmax-table__column-3 nftmax-table__h3">USD</th>
+                                                            <th class="nftmax-table__column-4 nftmax-table__h4">24H%</th>
+                                                            <th class="nftmax-table__column-5 nftmax-table__h5">Bids</th>
+                                                            <th class="nftmax-table__column-6 nftmax-table__h6">Time</th>
+                                                            <th class="nftmax-table__column-7 nftmax-table__h7">Status</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <!-- NFTMax Table Body -->
+                                                        <tbody class="nftmax-table__body">
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img1.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">Mullican Computer Joy</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-sbcolor">Active</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                <div class="nftmax-table__product">
+                                                                    <div class="nftmax-table__product-img">
+                                                                        <img src="/images/nft-table-img2.png" alt="#">
+                                                                    </div>
+                                                                    <div class="nftmax-table__product-content">
+                                                                        <h4 class="nftmax-table__product-title">View Card by Jeff Davis</h4>
+                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">Xoeyam</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                    <img src="/images/eth-icon.png" alt="#"><span class="nftmax-table__text">7473 ETH</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                <div class="nftmax-table__amount nftmax-table__text-two">
+                                                                    <img src="/images/usd-icon.png" alt="#"><span class="nftmax-table__text">6392.99$</span>
+                                                                </div>
+                                                            </td>
+                                                            <td class="nftmax-table__column-4 nftmax-table__data-4">
+                                                                <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">-24.75 (11.5%)</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                <p class="nftmax-table__text nftmax-table__bid-text">343</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-6 nftmax-table__data-6">
+                                                                <p class="nftmax-table__text nftmax-table__time">2 Hours 1 min 30s</p>
+                                                            </td>
+                                                            <td class="nftmax-table__column-7 nftmax-table__data-7">
+                                                                <div class="nftmax-table__status nftmax-gbcolor">Completed</div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                        <!-- End NFTMax Table Body -->
+                                                    </table>
+                                                    <!-- End NFTMax Table -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <%- include('includes/paging') %>
-                            <input type="hidden" id="pageIndex" value="<%= pagination.pageIndex %>">
+                            <!-- End Dashboard Slider -->
+
                         </div>
+                        <!-- End Dashboard Inner -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 </body>
-<%- include('includes/modal') %>
+<div class="modal fade" id="buyAlarm" tabindex="-1" aria-labelledby="buyAlarmLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="flex items-center justify-center px-5 py-2 text-sm bg-gray-200">
+                <h5 class="items-center text-center text-black" id="buyAlarmLabel">
+                    Notification
+                </h5>
+            </div>
+            <div class="card welcome-profile">
+                <div class="card-body"><img src="./images/avatar/1.jpg" alt="">
+                    <h4>안녕하세요. NFT를 구입해주셔서 감사합니다.</h4>
+                    <p>
+                        아래 판매자 정보를 확인 하신 후, NFT구매금액을 입금하시면
+                        시스템에서 입금 확인 후, 클레이튼 블록체인으로 NFT가 자동 전송됩니다.
+                    </p>
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0);">
+                                <span class="verified"><i class="ri-check-line"></i></span>
+                                NFT 결제금액 :&nbsp;
+                                <div id="totalPrice">
+
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <span class="verified"><i class="ri-shield-check-line"></i></span>
+                                NFT 판매자 성명 :&nbsp;
+                                <div id="acc_nm">
+
+                                </div>
+                            </a>
+                            <a style="padding-top: 10px;">
+                                <span class="verified"><i class="ri-shield-check-line"></i></span>
+                                입금은행 :&nbsp;
+                                <div id="bank_nm">
+
+                                </div>
+                            </a>
+                            <a style="padding-top: 10px;">
+                                <span class="not-verified"><i class="ri-shield-check-line"></i></span>
+                                계좌번호 :&nbsp;
+                                <div id="bank_acc">
+
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="px-4 pb-2 modal-footer">
+                <button type="button" class="w-full px-5 py-2 text-xs text-white rounded-md btn btn-dark" data-bs-dismiss="modal">
+                    확인
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 </html>
 <script>
     $(function () {
@@ -130,11 +582,14 @@
         let endDt = $("#endDatePicker").val();
         let pageIndex = $("#pageIndex").val();
 
+        console.log(srtDt)
+        console.log(endDt)
+        console.log(pageIndex)
 
         var form = document.createElement("form");
         form.setAttribute("charset", "UTF-8");
         form.setAttribute("method", "Post"); //Post 방식
-        form.setAttribute("action", "/p/notice"); //요청 보낼 주소
+        form.setAttribute("action", "/p/view"); //요청 보낼 주소
         var hiddenField1 = document.createElement("input");
         hiddenField1.setAttribute("type", "hidden");
         hiddenField1.setAttribute("name", "pageIndex");
@@ -153,5 +608,95 @@
 
         document.body.appendChild(form);
         form.submit();
+    }
+
+    function fnGetNftBuyInfo(obj, seq, index) {
+        let areaExpanded = JSON.parse($(obj).attr('aria-expanded'));
+        if (!areaExpanded) {
+            let data = {
+                sellSeq: seq,
+            }
+
+            $.ajax({
+                url: '/p/selectNftBuyList',
+                dataType: 'json',
+                type: 'POST',
+                data: data,
+                success: function (result) {
+                    if (result.success) {
+                        let list = result.data;
+                        if (list.length > 0) {
+                            list.forEach(function (el, i) {
+                                let html = "";
+                                html += "<td id='nftImg'>";
+                                html += "<img loading='lazy' src='"+el.nftMallUrl + el.nft_img+"' style='width: 30%;'>"
+                                html += "</td>";
+                                html += "<td id='nftNm'>";
+                                html += el.nft_nm;
+                                html += "</td>";
+                                html += "<td id='buyAmount'>";
+                                html += el.buy_amount;
+                                html += "</td>";
+                                html += "<td id='txId' colspan='3'>";
+                                // html += el.send_txid;
+                                html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
+                                html += "</td>";
+
+                                $(".collapseExample"+index+"-"+i).html("");
+                                $(".collapseExample"+index+"-"+i).html(html);
+                            });
+                        }
+                    } else {
+                        alert(result.message);
+                    }
+                    // $('#buyModal').modal('hide')
+                    // $('#viewAlarm').modal('show')
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+                } //function끝
+            });
+        }
+    }
+
+    function chkAcc(price, bank_nm, bank_acc, acc_nm) {
+        $("#totalPrice").html(price);
+        $("#acc_nm").html(acc_nm);
+        $("#bank_nm").html(bank_nm);
+        $("#bank_acc").html(bank_acc);
+        $("#buyAlarm").modal('show');
+    }
+
+    function buyCancelView(seq) {
+        fnViewConfirmAlarm('구매취소', '취소하시겠습니까?', 'buyCancelProc(\"'+seq+'\")');
+    }
+
+    function buyCancelProc(seq) {
+        let data = {
+            seq: seq
+        }
+
+        $.ajax({
+            url: '/p/buyCancel',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                $("#viewConfirmAlarm").modal('hide');
+                if (result.success) {
+                    fnViewRefreshAlarm('취소되었습니다.');
+                } else {
+                    $("#modal-text").html(result.message);
+                    $("#viewAlarm").modal('show');
+                }
+                // $('#buyModal').modal('hide')
+                // $('#viewAlarm').modal('show')
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $("#viewConfirmAlarm").modal('hide');
+                $("#modal-text").html('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+                $("#viewAlarm").modal('show');
+            } //function끝
+        });
     }
 </script>

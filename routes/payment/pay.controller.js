@@ -15,11 +15,13 @@ const moment = require('moment');
 
 var requestIp = require('request-ip');
 
+
 /*
 * properties
 */
 const PropertiesReader = require('properties-reader');
 const properties = PropertiesReader('pay.properties');
+const localUrl = properties.get('com.local.url');
 const payTime = properties.get('com.pay.time');
 const stoptime = properties.get('com.pay.stoptime');
 const nftMallUrl = properties.get('com.nft.mall');
@@ -72,7 +74,12 @@ exports.buyview = async (req, res, next) => {
 
                 balance = await Query.QGetBalance(obj, conn);
 
-                let domain = req.headers.host;
+                let domain = '';
+                if(req.headers.host.indexOf('localhost') > -1){
+                    domain = localUrl;
+                }else{
+                    domain = req.headers.host;
+                }
                 obj.domain = domain;
                 let config = await Query.QGetConfigInfo(obj, conn);
                 let totBalance = await Query.QGetUserTotBalance(obj, conn);
@@ -172,7 +179,12 @@ exports.buypage = async (req, res, next) => {
 
                 balance = await Query.QGetBalance(obj, conn);
 
-                let domain = req.headers.host;
+                let domain = '';
+                if(req.headers.host.indexOf('localhost') > -1){
+                    domain = localUrl;
+                }else{
+                    domain = req.headers.host;
+                }
                 obj.domain = domain;
                 let config = await Query.QGetConfigInfo(obj, conn);
                 let totBalance = await Query.QGetUserTotBalance(obj, conn);
@@ -451,7 +463,12 @@ exports.withdraw = async (req, res, next) => {
             let balance = await Query.QGetBalance(obj, conn);
             let withdrawList = await Query.QGetCoinBuyList(obj, conn);
 
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             console.log('domain : ' + domain)
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
@@ -659,7 +676,12 @@ exports.notice = async (req, res, next) => {
             obj.endDt = endDt;
             obj.srtDt = srtDt;
 
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             console.log('domain : ' + domain)
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
@@ -725,7 +747,12 @@ exports.mynft = async (req, res, next) => {
             // let nftList = apiRes.data;
 
 
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
 

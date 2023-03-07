@@ -18,6 +18,7 @@ const PropertiesReader = require('properties-reader');
 const properties = PropertiesReader('pay.properties');
 const cointable = properties.get('com.coin.cointable');
 const tableVer = properties.get('com.table.version');
+const localUrl = properties.get('com.local.url');
 
 module.exports = (pool) => {
     passport.serializeUser((user, done) => { // Strategy 성공 시 호출됨
@@ -54,7 +55,12 @@ module.exports = (pool) => {
 
         mydb.executeTx(async conn => {
             try {
-                let domain = req.headers.host;
+                let domain = '';
+                if(req.headers.host.indexOf('localhost') > -1){
+                    domain = localUrl;
+                }else{
+                    domain = req.headers.host;
+                }
                 obj.domain = domain;
                 let config = await fnGetConfigInfo(obj, conn);
 
@@ -180,7 +186,12 @@ module.exports = (pool) => {
 
         mydb.executeTx(async conn => {
             try {
-                let domain = req.headers.host;
+                let domain = '';
+                if(req.headers.host.indexOf('localhost') > -1){
+                    domain = localUrl;
+                }else{
+                    domain = req.headers.host;
+                }
                 obj.domain = domain;
                 let config = await fnGetConfigInfo(obj, conn);
 

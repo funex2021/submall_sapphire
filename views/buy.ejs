@@ -4,217 +4,207 @@
     <%- include('includes/cdn') %>
     <title><%= config.found_text %> | Buy</title>
 </head>
-<body class="@@dashboard">
-<div id="main-wrapper" class="show">
-    <%- include('includes/header') %>
+<body>
+<div class="body-bg" style="background-image:url('/images/body-bg.jpg')">
     <%- include('includes/nav') %>
-    <div class="content-body">
+    <%- include('includes/header') %>
+    <section class="nftmax-adashboard nftmax-show">
         <div class="container">
-            <div class="page-title">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-6">
-                        <div class="page-title-content">
-                            <h3>NFT 구매</h3>
-                            <p class="mb-2">
-                                NFT 선택 후 구매를 신청해 주시기 바랍니다.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="header-left">
-                                <h4 class="card-title">상품</h4>
+                <div class="col-lg-9 col-12 nftmax-main__column">
+                    <div class="nftmax-body">
+                        <!-- Dashboard Inner -->
+                        <div class="nftmax-dsinner">
+
+                            <!-- Welcome CTA -->
+                            <!-- End Welcome CTA -->
+
+                            <!-- Marketplace Bar -->
+                            <div class="nftmax-marketplace__bar mg-top-20 mg-btm-40">
+                                <div class="nftmax-marketplace__bar-inner">
+
+                                    <div class="nftmax-marketplace__bar-right">
+                                        <div class="nftmax-marketplace__bar-one">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row" id="price-group">
-                                <% nftList.forEach(function(el, index) { %>
-                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="card items">
-                                            <div class="card-body">
-                                                <div class="items-img position-relative">
-                                                    <img src="<%=nftMallUrl%><%=el.nft_img%>" class="img-fluid rounded mb-3" alt="" style="width: 300px; height: 200px;">
-                                                </div>
-                                                <h4 class="card-title"><%=el.nft_nm%></h4>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-end">
-                                                        <h5 class="text-muted">
-                                                            <%=Number(el.buy_amount).toLocaleString('ko-KR')%> / <%=Number(el.sell_amount).toLocaleString('ko-KR')%>
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-end">
-                                                        <h5 class="text-muted"><%=Number(el.sell_price).toLocaleString('ko-KR')%> KRW</h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center mt-3">
-                                                    <a href="#n" class="btn btn-primary" data-price='<%=el.sell_price%>' data-sellSeq="<%=el.sell_seq%>" data-nftNm="<%=el.nft_nm%>" data-nftImg="<%=nftMallUrl%><%=el.nft_img%>" data-index="<%=index%>" onclick="selectPrice(this);">선택</a>
+
+                            <!-- Welcome CTA -->
+                            <div class="trending-action">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="tab-content" id="nav-tabContent">
+                                            <!-- Single Tab -->
+                                            <div class="tab-pane fade show active" id="id1" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                <div class="row nftmax-gap-sq30" id="price-group">
+                                                    <% nftList.forEach(function(el, index) { %>
+                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                            <!-- Marketplace Single Item -->
+                                                            <div class="trending-action__single trending-action__single--v2">
+                                                                <div class="nftmax-trendmeta">
+                                                                    <div class="nftmax-trendmeta__main">
+
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Trending Head -->
+                                                                <div class="trending-action__head">
+                                                                    <div class="trending-action__badge"></div>
+                                                                    <div class="trending-action__button v2">
+                                                                    </div>
+                                                                    <img src="<%=nftMallUrl%><%=el.nft_img%>" alt="#">
+                                                                </div>
+                                                                <!-- Trending Body -->
+                                                                <div class="trending-action__body trending-marketplace__body">
+                                                                    <h2 class="trending-action__title mb-2"><%=el.nft_nm%></h2>
+                                                                    <div class="nftmax-currency">
+                                                                        <div class="nftmax-currency__main">
+                                                                            <div class="nftmax-currency__content">
+                                                                                <h4 class="nftmax-currency__content-title"><%=Number(el.sell_price).toLocaleString('ko-KR')%> KRW</h4>
+                                                                                <p class="nftmax-currency__content-sub"><%=Number(el.buy_amount).toLocaleString('ko-KR')%> / <%=Number(el.sell_amount).toLocaleString('ko-KR')%></p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius" data-price='<%=el.sell_price%>' data-sellSeq="<%=el.sell_seq%>" data-nftNm="<%=el.nft_nm%>" data-nftImg="<%=nftMallUrl%><%=el.nft_img%>" data-index="<%=index%>" onclick="selectPrice(this);">선택</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Marketplace Item -->
+                                                        </div>
+                                                    <% })%>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <% })%>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xxl-6 col-xl-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header flex-row">
-                            <h4 class="card-title">구매 상품 </h4>
-                            <div class="header-right">
-                                <div class="text-end">
-<!--                                    <input type="text" id="price" name=price style="background-color: var(&#45;&#45;bs-body-bg); border: none;" readonly>-->
-                                    <input type="hidden" name='max_amt' id="max_amt" value="<%= config.max_amt %>">
-                                    <input type="hidden" name='min_amt' id="min_amt" value="<%= config.min_amt %>">
                                 </div>
                             </div>
+                            <!-- End Welcome CTA -->
                         </div>
+                        <!-- End Dashboard Inner -->
                     </div>
                 </div>
-                <div class="col-xxl-6 col-xl-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-body bs-0 p-0 top-creators-content  bg-transparent">
-                            <div class="d-flex justify-content-between creator-widget active  align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <div class="top-creators-user-img me-3"></div>
-                                    <div class="top-creators-info">
-                                        <h5 class="mb-0">구매금액</h5>
-                                        <p class="mb-2" id="totalCnt">
-                                            0 Items
-                                        </p>
+                <input type="hidden" name='max_amt' id="max_amt" value="<%= config.max_amt %>">
+                <input type="hidden" name='min_amt' id="min_amt" value="<%= config.min_amt %>">
+
+                <div class="col-xxl-12 col-12 nftmax-main__sidebar">
+                    <div class="welcome-cta mg-top-40">
+                        <div class="welcome-cta__heading">
+                            <h2 class="welcome-cta__title">구매 금액</h2>
+                            <p class="welcome-cta__text" id="totalCnt">0 Items</p>
+                        </div>
+                        <div class="welcome-cta__button">
+                            <input type="hidden" class="text-primary" id="price" name="price" style="border: none; background-color: inherit;" readonly>
+                            <input class="nftmax-btn nftmax-btn__bordered bg" name="price_view" id="price_view" readonly style="cursor: not-allowed" value="0">
+                            <p class="nftmax-btn trs-white bl-color mb-0">KRW</p>
+                        </div>
+                    </div>
+                    <div class="nftmax-sidebar mg-top-40">
+                        <div class="row">
+                            <div class="col-xxl-12 col-xl-12 col-12">
+                                <!-- NFTMax Single Sidebar -->
+                                <div class="nftmax-sidebar__single" style="padding: 20px;">
+                                    <!-- Sidebar Heading -->
+                                    <div class="nftmax-sidebar__heading">
+                                        <h4 class="nftmax-sidebar__title">구매 상품</h4>
                                     </div>
+                                    <!-- Sidebar Creator Lists -->
+                                    <div class="nftmax-sidebar__creators">
+                                        <ul class="nftmax-sidebar__creatorlist" id="selectBody">
+                                        </ul>
+                                        <div class="mt-4">
+                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__primary radius clear-btn">초기화</a>
+                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius next-btn">구매하기</a>
+                                        </div>
+                                    </div>
+                                    <!-- End Sidebar Creator Lists -->
                                 </div>
-                                <div class="text-end">
-                                    <h5 class="text-primary">
-                                        <input type="hidden" class="text-primary" id="price" name="price" style="border: none; background-color: inherit;" readonly>
-                                        <input type="text" class="text-primary" id="price_view" name="price_view" style="border: none; background-color: inherit; width: 50%;" readonly value="0"> KRW(원)
-                                    </h5>
-                                </div>
+                                <!-- End NFTMax Single Sidebar -->
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="row">
-                <div class="col-xxl-12">
-                    <div class="card">
-                        <div class="card-body p-0 bs-0 bg-transparent">
-                            <div class="bid-table">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
+        </div>
+        <div class="nftmax-preview__modal modal fade" id="buyAlarm" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+            <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+                <div class="modal-content nftmax-preview__modal-content">
+                    <div class="modal-header nftmax__modal__header">
+                        <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">Buy</h4>
+                        <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
+                    </div>
+                    <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                        <div class="nftmax-preview__close">
+
+                            <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;">
+                                <!-- Single Wallet -->
+                                <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info m-1">
+                                        <p style="margin-bottom: 1px;">선택하신 상품과 결제 금액을 확인해주세요. <br/>구매를 진행하시겠습니까? </p>
+                                    </div>
+                                </li>
+                                <!-- End Single Wallet -->
+                                <!-- Single Wallet -->
+                                <!-- End Single Wallet -->
+                                <!-- Single Wallet -->
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info mt-1">
+                                        <h4>NFT 결제금액 :&nbsp;</h4>
+                                        <h4 id="totalPrice"></h4>
+                                    </div>
+                                </li>
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <table id="nftmax-table__main" class="nftmax-table__main nftmax-table__main-v1">
+                                        <!-- NFTMax Table Head -->
+                                        <thead class="nftmax-table__head">
                                         <tr>
-                                            <th>상품명</th>
-                                            <th>수량</th>
-                                            <th>상품가격</th>
-                                            <th>삭제</th>
+                                            <th class="nftmax-table__column-1 nftmax-table__h1">상품</th>
+                                            <th class="nftmax-table__column-2 nftmax-table__h2">수량</th>
+                                            <th class="nftmax-table__column-3 nftmax-table__h3">금액</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="selectBody">
-
+                                        <!-- NFTMax Table Body -->
+                                        <tbody class="nftmax-table__body" id="selectNft">
                                         </tbody>
                                     </table>
-                                </div>
+                                </li>
+                                <input type="hidden" id="bank_seq">
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info">
+                                        <p style="margin-bottom: 1px;">NFT 판매자 성명 :&nbsp;</p>
+                                        <p style="margin-bottom: 1px;" id="acc_nm"></p>
+                                    </div>
+                                </li>
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info">
+                                        <p style="margin-bottom: 1px;">입금은행 :&nbsp;</p>
+                                        <p style="margin-bottom: 1px;" id="bank_nm"></p>
+                                    </div>
+                                </li>
+                                <!-- End Single Wallet -->
+                                <!-- Single Wallet -->
+                                <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info">
+                                        <p style="margin-bottom: 1px;">계좌번호 :&nbsp;</p>
+                                        <p style="margin-bottom: 1px;" id="bank_acc"></p>
+                                    </div>
+                                </li>
+                                <!-- End Single Wallet -->
+                            </ul>
+                            <div class="nftmax__item-button--group">
+                                <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " data-bs-dismiss="modal" onclick="fnBuy()">확인</button>
+                                <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr">취소</span> </button>
                             </div>
                         </div>
                     </div>
-                    <div style="float: right;">
-                        <a class="btn btn-primary clear-btn" href="#n">초기화</a>
-                        <a href="#n" class="btn btn-success next-btn">구매하기</a>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
+    </section>
 </div>
 </body>
-<div class="modal fade" id="buyAlarm" tabindex="-1" aria-labelledby="buyAlarmLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="flex items-center justify-center px-5 py-2 text-sm bg-gray-200">
-                <h5 class="items-center text-center" id="buyAlarmLabel">
-                    Buy
-                </h5>
-            </div>
-            <div class="card welcome-profile">
-                <div class="card-body">
-                    <h4>선택하신 상품들과 결제 금액을 확인해주세요. 구매를 진행하시겠습니까? </h4>
-                    <p>
-                        아래 판매자 정보를 확인 하신 후, NFT구매금액을 입금하시면
-                        시스템에서 입금 확인 후, 클레이튼 블록체인으로 NFT가 자동 전송됩니다.
-                    </p>
-                    <ul>
-                        <li>
-                            <a>
-                                <span class="verified"><i class="ri-check-line"></i></span>
-                                NFT 결제금액 :&nbsp;
-                                <div id="totalPrice">
-
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <table>
-                                <colgroup>
-                                    <col width="300px;">
-                                    <col width="300px;">
-                                </colgroup>
-                                <thead>
-                                    <th>상품</th>
-                                    <th>수량</th>
-                                    <th>금액</th>
-                                </thead>
-                                <tbody id="selectNft">
-                                </tbody>
-                            </table>
-                        </li>
-                        <li>
-                            <input type="hidden" id="bank_seq">
-                            <a>
-                                <span class="verified"><i class="ri-shield-check-line"></i></span>
-                                NFT 판매자 성명 :&nbsp;
-                                <div id="acc_nm">
-
-                                </div>
-                            </a>
-                            <a style="padding-top: 10px;">
-                                <span class="verified"><i class="ri-shield-check-line"></i></span>
-                                입금은행 :&nbsp;
-                                <div id="bank_nm">
-
-                                </div>
-                            </a>
-                            <a style="padding-top: 10px;">
-                                <span class="not-verified"><i class="ri-shield-check-line"></i></span>
-                                계좌번호 :&nbsp;
-                                <div id="bank_acc">
-
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="px-4 pb-2 modal-footer">
-                <button type="button" class="w-full px-5 py-2 text-xs text-white rounded-md btn btn-dark" data-bs-dismiss="modal" onclick="fnBuy()">
-                    확인
-                </button>
-                <button type="button" class="w-full px-5 py-2 text-xs text-white rounded-md btn btn-dark" data-bs-dismiss="modal">
-                    취소
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<%- include('includes/modal') %>
 </html>
 <script>
     if ($("#price").val() == '') {
@@ -233,23 +223,25 @@
         price.value = parseInt(price.value) + parseInt(obj.dataset.price);
         $("#price_view").val(Number(price.value).toLocaleString('ko-KR'));
         let html = "";
-        fnViewAlarm(obj.dataset.nftnm +' 상품을 선택하였습니다.');
+        fnAlertModal(obj.dataset.nftnm +' 상품을 선택하였습니다.');
         let selectRrice = obj.dataset.price;
         let i = obj.dataset.index;
         if ($("#"+i+"product").length > 0) {
-            $("#"+i+"productPrice").html((parseInt($("#"+i+"productCnt").html()) + 1) * obj.dataset.price);
-            $("#"+i+"productPrice").html(Number((parseInt($("#"+i+"productCnt").html()) + 1) * obj.dataset.price).toLocaleString('ko-KR'));
-            $("#"+i+"productCnt").html(parseInt($("#"+i+"productCnt").html()) + 1);
+            $("#"+i+"productPrice").html(((parseInt($("#"+i+"productCnt").html()) + 1) * obj.dataset.price));
+            $("#"+i+"productPrice").html((Number((parseInt($("#"+i+"productCnt").html()) + 1) * obj.dataset.price).toLocaleString('ko-KR')));
+            $("#"+i+"productCnt").html((parseInt($("#"+i+"productCnt").html()) + 1));
         } else {
-            html += "<tr id='"+i+"product'>";
-            html += "<td>";
-            html += "<img src='"+obj.dataset.nftimg+"' alt='' width='40' class='me-2 rounded-circle'>";
-            html += obj.dataset.nftnm;
-            html += "</td>";
-            html += "<td id='"+i+"productCnt'>1</td>";
-            html += "<td id='"+i+"productPrice'>"+ Number(1 * obj.dataset.price).toLocaleString('ko-KR')+"</td>";
-            html += "<td><span><i class='ri-delete-bin-line me-3' onclick='removeProduct(\""+obj.dataset.sellseq+"\",\""+obj.dataset.price+"\",\""+i+"\");'></i></span></td>";
-            html += "</tr>";
+            html += '<li id="'+i+'product">'
+            html += '<div class="nftmax-sidebar__creator">';
+            html += '<img src="'+obj.dataset.nftimg+'" alt="#">';
+            html += '<a href="#"><b class="nftmax-sidebar__creator-name" id="'+i+'name">'+obj.dataset.nftnm+'</b></a>';
+            html += '<span class="nftmax-sidebar__creator-link" id="'+i+'productPrice">'+Number(1 * obj.dataset.price).toLocaleString('ko-KR')+'</span>';
+            html += '</div>';
+            html += '    <div class="nftmax-sidebar__button">';
+            html += '        <a href="javascript:void(0);" class="nftmax-request_request" id="'+i+'productCnt">1</a>';
+            html += '        <a href="javascript:void(0);" class="nftmax-sidebar__button-btn nftmax-request_close" onclick="removeProduct(\''+obj.dataset.sellseq+'\',\''+obj.dataset.price+'\',\''+i+'\');"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>';
+            html += '    </div>';
+            html += '</li>';
         }
         totalCnt ++;
         $("#selectBody").append(html);
@@ -284,8 +276,7 @@
 
     nextBtn.addEventListener('click', () => {
         if (price.value == "" || price.value == 0) {
-            $('#modal-text').html('NFT상품을 선택해주세요.');
-            $('#viewAlarm').modal('show')
+            fnAlertModal('NFT상품을 선택해주세요.');
             $("#price").val(0);
         } else {
             $.ajax({
@@ -301,33 +292,34 @@
                         $("#bank_acc").html(result.data.bank_acc);
                         $("#bank_seq").val(result.data.seq);
 
-                        let trLen = $("#selectBody > tr").length;
+                        let trLen = $("#selectBody > li").length;
                         $("#selectNft").html("");
                         let html = "";
                         for (let i=0; i<trLen; i++) {
                             html += "<tr>"
-                            html += "<td>"
-                            html += $("#selectBody > tr:eq("+i+") > td:eq(0)").text();
+                            html += "<td class='nftmax-table__column-1 nftmax-table__data-1'>"
+                            html += $("#selectBody > li:eq(0) > .nftmax-sidebar__creator .nftmax-sidebar__creator-name").text();
                             html += "</td>"
-                            html += "<td>"
-                            html += $("#selectBody > tr:eq("+i+") > td:eq(1)").text();
+                            html += "<td class='nftmax-table__column-2 nftmax-table__data-2'>"
+                            html += $("#selectBody > li:eq(0) > .nftmax-sidebar__button .nftmax-request_request").text();
                             html += "</td>"
-                            html += "<td>"
-                            html += $("#selectBody > tr:eq("+i+") > td:eq(2)").text();
+                            html += "<td class='nftmax-table__column-3 nftmax-table__data-3'>"
+                            html += $("#selectBody > li:eq(0) > .nftmax-sidebar__creator .nftmax-sidebar__creator-link").text();
                             html += "</td>"
                             html += "</tr>"
                         }
+
+                        console.log(trLen)
+
                         $("#selectNft").append(html);
                         $('#buyAlarm').modal('show');
                     } else {
-                        $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
-                        $('#viewAlarm').modal('show')
+                        fnAlertModal('계좌 확인 시 오류가 발생했습니다.');
                         // alert('계좌 확인 시 오류가 발생했습니다.');
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    $('#modal-text').html('계좌 확인 시 오류가 발생했습니다.');
-                    $('#viewAlarm').modal('show')
+                    fnAlertModal('계좌 확인 시 오류가 발생했습니다.');
                     // alert('계좌 확인 시 오류가 발생했습니다.');
                 } //function끝
             });
@@ -337,7 +329,7 @@
     function fnBuy() {
         let objKrw = $('input[name=price]').val();
         // if (parseInt(objKrw) < 10000) {
-        //     $('#modal-text').html('만원 이상 구매 가능합니다.');
+        //     fnAlertModal('만원 이상 구매 가능합니다.');
         //     $('#viewAlarm').modal('show')
         //     return;
         // }
@@ -345,17 +337,13 @@
         let min_amt = $('input[name=min_amt]').val();
 
         if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
-            $('#modal-text').html(min_amt + '만원 이상 구매 가능합니다.');
-            $('#viewAlarm').modal('show');
+            return fnAlertModal(min_amt + '만원 이상 구매 가능합니다.');
             // alert(min_amt + '만원 이상 구매 가능합니다.');
-            return;
         }
 
         if (parseInt(objKrw) > parseInt(max_amt * 10000)) {
-            $('#modal-text').html(max_amt + '만원 이하 구매 가능합니다.');
-            $('#viewAlarm').modal('show');
+            return fnAlertModal(max_amt + '만원 이하 구매 가능합니다.');
             // alert(max_amt + '만원 이하 구매 가능합니다.');
-            return;
         }
 
         let data = {
@@ -374,32 +362,29 @@
             success: function (result) {
                 if (result.success) {
                     $('#buyAlarm').modal('hide');
-                    $("#viewAlarmLabel").html('구매신청완료')
-                    $('#modal-text').html('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
-                    $('#viewAlarm').modal('show')
+                    fnAlertModal('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
                     clearBtn.click();
                 } else {
-                    $('#buyAlarm').modal('hide')
-                    $('#modal-text').html(result.message);
-                    $('#viewAlarm').modal('show')
+                    fnAlertModal(result.message);
                     clearBtn.click();
                 }
-
                 // $('#viewAlarm').modal('hide')
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#modal-text').html('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
-                $('#viewAlarm').modal('show');
+                fnAlertModal('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
+                
             }
         });
     }
 
     function removeProduct(sell_seq, price, index) {
-        let selectPrice = parseInt($("#"+index+"productPrice").html());
-        let selectCnt = parseInt($("#"+index+"productCnt").html());
-        $("#price").val($("#price").val() - selectPrice);
+        let selectPrice = parseInt(noneNumberComma($("#"+index+"productPrice").html()));
+        let selectCnt = parseInt(noneNumberComma($("#"+index+"productCnt").html()));
 
-        totalCnt = totalCnt - parseInt(selectCnt);
+        $("#price").val($("#price").val() - selectPrice);
+        $("#price_view").val(Number($("#price").val()).toLocaleString('ko-KR'));
+
+        totalCnt = totalCnt - selectCnt;
         $("#totalCnt").html(totalCnt + " Items");
         $("#"+index+"product").remove();
 

@@ -4,207 +4,363 @@
     <%- include('includes/cdn') %>
     <title><%= config.found_text %> | Main</title>
 </head>
-<body class="dashboard" id="mainBody">
-    <div id="main-wrapper" class="show">
-        <%- include('includes/header') %>
-        <%- include('includes/nav') %>
-        <div class="content-body">
-            <div class="container">
-                <div class="row">
-                    <% if (cmpnyInfo.point_view_yn == 'Y') { %>
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="stat-widget d-flex align-items-center">
-                                <div class="widget-icon me-3 bg-primary"><span><i class="ri-file-copy-2-line"></i></span></div>
-                                <div class="widget-content">
-                                    <h3>
+<body>
 
-                                        <%= parseInt(coinObj).toLocaleString('ko-KR') %> Point
-                                    </h3>
-                                    <p>사용 가능한 포인트</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6">
-                            <div class="stat-widget d-flex align-items-center">
-                                <div class="widget-icon me-3 bg-success"><span><i class="ri-file-list-3-line"></i></span></div>
-                                <div class="widget-content">
-                                    <h3>
-                                        <%= parseInt(totTrans).toLocaleString('ko-KR') %> Point
-                                    </h3>
-                                    <p>사용 포인트</p>
-                                </div>
-                            </div>
-                        </div>
-                    <% } %>
+<div class="body-bg" style="background-image:url('/images/body-bg.jpg')" >
+    <%- include('includes/nav') %>
+    <%- include('includes/header') %>
+    <!-- NFTmax Dashboard -->
+    <section class="nftmax-adashboard nftmax-show">
+        <div class="container">
+            <div class="row">
+                <div class="col-xxl-9 col-12 nftmax-main__column">
+                    <div class="nftmax-body">
+                        <!-- Dashboard Inner -->
+                        <div class="nftmax-dsinner">
+                            <!-- Dashboard Slider -->
+                            <div class="dashboard-banner nftmax-bg-cover mg-top-40" style="background-image:url('/images/banner-bg.png')">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="dashboard-banner__main">
+                                            <div class="dashboard-banner__column dashboard-banner__column--one">
+                                                <!-- Dashboard Content -->
+                                                <div class="dashboard-banner__content">
+                                                    <h2 class="dashboard-banner__title nftmax-font-regular nftmax-lspacing">Lock and Lob x Fiesta Spurs</h2>
+                                                    <p class="dashboard-banner__text nftmax-lspacing">ID : 2320382</p>
+                                                </div>
 
-<!--                    <div class="col-xl-3 col-sm-6">-->
-<!--                        <div class="stat-widget d-flex align-items-center">-->
-<!--                            <div class="widget-icon me-3 bg-warning"><span><i class="ri-file-paper-line"></i></span></div>-->
-<!--                            <div class="widget-content">-->
-<!--                                <h3><%= totBalance %> Point</h3>-->
-<!--                                <p>구매 포인트</p>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                </div>
-                <div id="row">
-                    <div class="col-xxl-12 col-xl-12">
-                        <div class="card welcome-profile">
-                            <div class="card-body">
-                                <h4>NFT몰 입점몰에서의 NFT 구매시 체크사항!</h4>
-                                <p style="color: red;">NFT몰의 크리에이터가 민팅한 실제 블록체인 NFT 컬렉션입니다.</p>
-                                <p>회원은 실제 블록체인 NFT 구매 진행이 이루어지며, 결제 처리 완료 시, 디지털 작품의 소유권을 증명할 수 있는 NFT가 전자 지갑주소로 전송됩니다.</p>
-                                <p style="color: red">단, 블록체인 네트워크 상태에 따라 전송시간이 소요될 수 있습니다.</p>
-                                <p>NFT 구매에 있어서 이용약관 및 거래약관은 NFT몰의 약관을 따릅니다.</p>
-                                <% if (cmpnyInfo.point_view_yn == 'Y') { %>
-                                    <p style="color: red">포인트는 NFT몰과 관련이 없으며, 포인트와 관련된 사항이나 회원정보수정은 크리에이터에게 문의하세요.</p>
-                                <% } %>
+                                                <div class="nftmax-header__author nftmax-header__author-two ">
+                                                    <div class="nftmax-header__author-img"><img src="/images/profile-pic-2.png" alt="#"></div>
+                                                    <div class="nftmax-header__author-content ">
+                                                        <h4 class="nftmax-header__author-title nftmax-header__author-title--two nftmax-lspacing">Brokln Simons</h4>
+                                                        <p class="nftmax-header__author-text nftmax-header__author-text--two"><a href="#" class="nftmax-font-regular nftmax-lspacing">@broklinslam_75</a></p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="dashboard-banner__bids">
+                                                    <div class="dashboard-banner__bid">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group">
+                                                            <p class="dashboard-banner__group-small">Current Bid</p>
+                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
+                                                            <p class="dashboard-banner__group-small">773.69 <span>USD</span></p>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <div class="dashboard-banner__middle-border"></div>
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group">
+                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
+                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/12/26"></h3>
+                                                            <p class="dashboard-banner__group-small nftmax-timing"><span>Hrs</span> <span>Min</span> <span>Sec</span></p>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                    </div>
+                                                </div>
+
+                                                <!-- Dashboard Banner Button -->
+                                                <div class="dashboard-banner__button">
+                                                    <div class="dashboard-banner__single-btn">
+                                                        <a class="dashboard-banner__heart"><i class="fa-solid fa-heart"></i></a>
+                                                    </div>
+                                                    <div class="dashboard-banner__single-btn dashboard-banner__main-btn">
+                                                        <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
+                                                    </div>
+                                                    <div class="dashboard-banner__single-btn">
+                                                        <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
+                                                    </div>
+                                                </div>
+                                                <!-- End Dashboard Banner Button -->
+                                            </div>
+                                            <div class="dashboard-banner__column dashboard-banner__column--two">
+                                                <div class="dashboard-banner__slider">
+                                                    <div class="dashboard-banner__single-slider">
+                                                        <img src="/images/dashboard-slider-1.png" alt="#">
+                                                    </div>
+                                                    <div class="dashboard-banner__single-slider">
+                                                        <img src="/images/slide_2.jpg" alt="#">
+                                                    </div>
+                                                    <div class="dashboard-banner__single-slider">
+                                                        <img src="/images/slide_3.jpg" alt="#">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xxl-12 col-xl-12">
-                        <div class="card m-0">
-                            <div class="card-header">
-                                <h4 class="card-title"></h4>
-                                <a class="btn btn-primary" href="/p/buy">NFT 구매하기 -></a>
+                            <!-- End Dashboard Slider -->
+
+                            <!-- Welcome CTA -->
+                            <div class="welcome-cta mg-top-40">
+                                <div class="welcome-cta__heading">
+                                    <h2 class="welcome-cta__title">Create your own NFT and extraordinary get lot of Sell..</h2>
+                                    <p class="welcome-cta__text nftmax-lspacing">Buy and sell NFTs from the world’s top artists</p>
+                                </div>
+                                <div class="welcome-cta__button">
+                                    <a href="product-upload.html" class="nftmax-btn nftmax-btn__bordered bg radius">Upload Products</a>
+                                    <a href="marketplace.html" class="nftmax-btn trs-white bl-color">View Art Work</a>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xxl-6 col-xl-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">공지사항</h4>
-                                <small>
-                                    <a href="javascript:void(0);">More</a>
-                                </small>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive api-table">
-                                    <table class="table">
-                                        <colgroup>
-                                            <col width="70%">
-                                            <col width="30%">
-                                        </colgroup>
-                                        <thead>
-                                        <tr>
-                                            <th>제목</th>
-                                            <th>등록일</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <% noticeList.forEach(function (el, index) { %>
-                                            <tr>
-                                                <td>
-                                                    <a data-toggle="collapse" href="#noticeList<%=index%>"><%= el.title %></a>
-                                                </td>
-                                                <td>
-                                                    <%=el.create_dt%>
-                                                </td>
-                                            </tr>
-                                            <tr class="collapse" id="noticeList<%= index %>">
-                                                <td colspan="2">
-                                                    <%- el.content%>
-                                                </td>
-                                            </tr>
-                                        <% }) %>
-                                        </tbody>
-                                    </table>
+                            <!-- End Welcome CTA -->
+
+                            <!-- Trending Action -->
+                            <div class="trending-action mg-top-40">
+                                <h2 class="trending-action__heading">Trending Action</h2>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="trending-action__slider">
+                                            <!-- Treadning Single -->
+                                            <div class="trending-action__single">
+                                                <!-- Trending Head -->
+                                                <div class="trending-action__head">
+                                                    <div class="trending-action__button">
+                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
+                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                                    </div>
+                                                    <img src="/images/trending-img-1.png" alt="#">
+                                                </div>
+                                                <!-- Trending Body -->
+                                                <div class="trending-action__body">
+                                                    <div class="trending-action__author-meta">
+                                                        <div class="trending-action__author-img"><img src="/images/author-pic.png" alt="#"></div>
+                                                        <p class="trending-action__author-name">Owned by <a href="profile.html">Bilout</a></p>
+                                                    </div>
+                                                    <h2 class="trending-action__title"><a href="active-bids.html">Interconnected Planes</a></h2>
+                                                    <div class="dashboard-banner__bid dashboard-banner__bid-v2">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Current Bid</p>
+                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <div class="dashboard-banner__middle-border"></div>
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
+                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/09/01"></h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-banner__button trending-action__bottom">
+                                                    <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
+                                                    <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
+                                                </div>
+                                            </div>
+                                            <!-- End Treadning Single -->
+                                            <!-- Treadning Single -->
+                                            <div class="trending-action__single">
+                                                <!-- Trending Head -->
+                                                <div class="trending-action__head">
+                                                    <div class="trending-action__button">
+                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
+                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                                    </div>
+                                                    <img src="/images/trending-img-2.png" alt="#">
+                                                </div>
+                                                <!-- Trending Body -->
+                                                <div class="trending-action__body">
+                                                    <div class="trending-action__author-meta">
+                                                        <div class="trending-action__author-img"><img src="/images/author-pic.png" alt="#"></div>
+                                                        <p class="trending-action__author-name">Owned by <a href="profile.html">Bilout</a></p>
+                                                    </div>
+                                                    <h2 class="trending-action__title"><a href="active-bids.html">Interconnected Planes</a></h2>
+                                                    <div class="dashboard-banner__bid dashboard-banner__bid-v2">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Current Bid</p>
+                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <div class="dashboard-banner__middle-border"></div>
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
+                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/09/01"></h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-banner__button trending-action__bottom">
+                                                    <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
+                                                    <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
+                                                </div>
+                                            </div>
+                                            <!-- End Treadning Single -->
+                                            <!-- Treadning Single -->
+                                            <div class="trending-action__single">
+                                                <!-- Trending Head -->
+                                                <div class="trending-action__head">
+                                                    <div class="trending-action__button">
+                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
+                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                                    </div>
+                                                    <img src="/images/trending-img-3.png" alt="#">
+                                                </div>
+                                                <!-- Trending Body -->
+                                                <div class="trending-action__body">
+                                                    <div class="trending-action__author-meta">
+                                                        <div class="trending-action__author-img"><img src="/images/author-pic.png" alt="#"></div>
+                                                        <p class="trending-action__author-name">Owned by <a href="profile.html">Bilout</a></p>
+                                                    </div>
+                                                    <h2 class="trending-action__title"><a href="active-bids.html">Interconnected Planes</a></h2>
+                                                    <div class="dashboard-banner__bid dashboard-banner__bid-v2">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Current Bid</p>
+                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <div class="dashboard-banner__middle-border"></div>
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
+                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/09/01"></h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-banner__button trending-action__bottom">
+                                                    <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
+                                                    <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
+                                                </div>
+                                            </div>
+                                            <!-- End Treadning Single -->
+                                            <!-- Treadning Single -->
+                                            <div class="trending-action__single">
+                                                <!-- Trending Head -->
+                                                <div class="trending-action__head">
+                                                    <div class="trending-action__button">
+                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
+                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                                    </div>
+                                                    <img src="/images/trending-img-4.png" alt="#">
+                                                </div>
+                                                <!-- Trending Body -->
+                                                <div class="trending-action__body">
+                                                    <div class="trending-action__author-meta">
+                                                        <div class="trending-action__author-img"><img src="/images/author-pic.png" alt="#"></div>
+                                                        <p class="trending-action__author-name">Owned by <a href="profile.html">Bilout</a></p>
+                                                    </div>
+                                                    <h2 class="trending-action__title"><a href="active-bids.html">Interconnected Planes</a></h2>
+                                                    <div class="dashboard-banner__bid dashboard-banner__bid-v2">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Current Bid</p>
+                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <div class="dashboard-banner__middle-border"></div>
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
+                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/09/01"></h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-banner__button trending-action__bottom">
+                                                    <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
+                                                    <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
+                                                </div>
+                                            </div>
+                                            <!-- End Treadning Single -->
+                                            <!-- Treadning Single -->
+                                            <div class="trending-action__single">
+                                                <!-- Trending Head -->
+                                                <div class="trending-action__head">
+                                                    <div class="trending-action__button">
+                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
+                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                                    </div>
+                                                    <img src="/images/trending-img-1.png" alt="#">
+                                                </div>
+                                                <!-- Trending Body -->
+                                                <div class="trending-action__body">
+                                                    <div class="trending-action__author-meta">
+                                                        <div class="trending-action__author-img"><img src="/images/author-pic.png" alt="#"></div>
+                                                        <p class="trending-action__author-name">Owned by <a href="profile.html">Bilout</a></p>
+                                                    </div>
+                                                    <h2 class="trending-action__title"><a href="active-bids.html">Interconnected Planes</a></h2>
+                                                    <div class="dashboard-banner__bid dashboard-banner__bid-v2">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Current Bid</p>
+                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <div class="dashboard-banner__middle-border"></div>
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
+                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/09/01"></h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-banner__button trending-action__bottom">
+                                                    <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
+                                                    <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
+                                                </div>
+                                            </div>
+                                            <!-- End Treadning Single -->
+                                            <!-- Treadning Single -->
+                                            <div class="trending-action__single">
+                                                <!-- Trending Head -->
+                                                <div class="trending-action__head">
+                                                    <div class="trending-action__button">
+                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
+                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                                    </div>
+                                                    <img src="/images/trending-img-2.png" alt="#">
+                                                </div>
+                                                <!-- Trending Body -->
+                                                <div class="trending-action__body">
+                                                    <div class="trending-action__author-meta">
+                                                        <div class="trending-action__author-img"><img src="/images/author-pic.png" alt="#"></div>
+                                                        <p class="trending-action__author-name">Owned by <a href="profile.html">Bilout</a></p>
+                                                    </div>
+                                                    <h2 class="trending-action__title"><a href="active-bids.html">Interconnected Planes</a></h2>
+                                                    <div class="dashboard-banner__bid dashboard-banner__bid-v2">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Current Bid</p>
+                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <div class="dashboard-banner__middle-border"></div>
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group dashboard-banner__group-v2">
+                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
+                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/09/01"></h3>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-banner__button trending-action__bottom">
+                                                    <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
+                                                    <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
+                                                </div>
+                                            </div>
+                                            <!-- End Treadning Single -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xxl-6 col-xl-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">FAQ</h4>
-                                <small>
-                                    <a href="javascript:void(0);">More</a>
-                                </small>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive api-table">
-                                    <table class="table">
-                                        <col width="70%">
-                                        <col width="30%">
-                                        <thead>
-                                        <tr>
-                                            <th>제목</th>
-                                            <th>등록일</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <% faqList.forEach(function (el, index) { %>
-                                            <tr>
-                                                <td>
-                                                    <a data-toggle="collapse" href="#faqList<%=index%>"><%= el.title %></a>
-                                                </td>
-                                                <td>
-                                                    <%=el.create_dt%>
-                                                </td>
-                                            </tr>
-                                            <tr class="collapse" id="faqList<%= index %>">
-                                                <td colspan="2">
-                                                    <%- el.content%>
-                                                </td>
-                                            </tr>
-                                        <% }) %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xxl-6 col-xl-6 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">서브몰 공지사항</h4>
-                                <small>
-                                    <a href="javascript:void(0);">More</a>
-                                </small>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive api-table">
-                                    <table class="table">
-                                        <col width="70%">
-                                        <col width="30%">
-                                        <thead>
-                                        <tr>
-                                            <th>제목</th>
-                                            <th>등록일</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <% subNoticeList.forEach(function (el, index) { %>
-                                        <tr>
-                                            <td>
-                                                <a data-toggle="collapse" href="#subNoticeList<%=index%>"><%= el.title %></a>
-                                            </td>
-                                            <td>
-                                                <%=el.create_dt%>
-                                            </td>
-                                        </tr>
-                                        <tr class="collapse" id="subNoticeList<%= index %>">
-                                            <td colspan="2">
-                                                <%- el.content%>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- End Dashboard Inner -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- End NFTmax Dashboard -->
+
+</div>
+
+<script>
+</script>
+
 </body>
-<%- include('includes/modal') %>
+
 </html>

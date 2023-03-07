@@ -16,7 +16,7 @@ const Mydb = require(path.join(process.cwd(), '/routes/config/mydb'))
 const PropertiesReader = require('properties-reader');
 const properties = PropertiesReader('pay.properties');
 const port = properties.get('com.server.port');
-
+const localUrl = properties.get('com.local.url');
 /*
 * DB config
 */
@@ -68,7 +68,12 @@ app.use(function (req, res, next) {
         res.locals.user = req.user;
     }
 
-    let domain = req.headers.host;
+    let domain = '';
+    if(req.headers.host.indexOf('localhost') > -1){
+        domain = localUrl;
+    }else{
+        domain = req.headers.host;
+    }
     let obj = {}
     obj.domain = domain;
     let pool = req.app.get('pool');
@@ -115,7 +120,12 @@ app.get('/', function (req, res, next) {
     let mydb = new Mydb(pool);
     mydb.execute(async conn => {
         try {
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             let obj = {}
             obj.domain = domain;
             config = await fnGetConfigInfo(obj, conn);
@@ -153,7 +163,12 @@ app.get('/login', function (req, res, next) {
     let mydb = new Mydb(pool);
     mydb.executeTx(async conn => {
         try {
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             let obj = {}
             obj.domain = domain;
             config = await fnGetConfigInfo(obj, conn);
@@ -182,7 +197,12 @@ app.get('/signUp', function (req, res, next) {
     let mydb = new Mydb(pool);
     mydb.execute(async conn => {
         try {
-            let domain = req.headers.host;
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
             let obj = {}
             obj.domain = domain;
             config = await fnGetConfigInfo(obj, conn);

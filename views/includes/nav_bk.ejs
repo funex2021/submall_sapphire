@@ -1,0 +1,59 @@
+<div class="sidebar">
+    <div class="menu">
+        <ul>
+            <li>
+                <a href="/p/buyview">
+                    <span>
+                        <i class="ri-layout-grid-fill"></i>
+                        <div style="font-size: 1px; margin-top: -10px; color: grey;">Main</div>
+                    </span>
+<!--                    <span class="nav-text">Main</span>-->
+                </a>
+            </li>
+            <li class="">
+                <a href="/p/buy">
+                    <span>
+                        <i class="ri-star-line"></i>
+                        <div style="font-size: 1px; margin-top: -10px; color: grey;">구매</div>
+                    </span>
+<!--                    <span class="nav-text">구매</span>-->
+                </a>
+            </li>
+            <li class="">
+                <a href="/p/view">
+                    <span>
+                        <i class="ri-wallet-line"></i>
+                        <div style="font-size: 1px; margin-top: -10px; color: grey;">내역</div>
+                    </span>
+<!--                    <span class="nav-text">구매내역</span>-->
+                </a>
+            </li>
+            <li class="">
+                <a href="/p/notice">
+                    <span>
+                        <i class="ri-heart-line"></i>
+                        <div style="font-size: 1px; margin-top: -10px; color: grey;">공지</div>
+                    </span>
+<!--                    <span class="nav-text">공지사항</span>-->
+                </a>
+            </li>
+            <% if (user.adminYn == 'Y') { %>
+                <li class="">
+                    <a href="/p/mynft">
+                        <span>
+                            <i class="ri-window-line"></i>
+                            <div style="font-size: 1px; margin-top: -10px; color: grey;">판매</div>
+                        </span>
+                        <!--                        <span class="nav-text">Sell</span>-->
+                    </a>
+                </li>
+            <% } %>
+            <li class=" logout">
+                <a href="/logout">
+                    <span><i class="ri-logout-circle-line"></i></span>
+                    <span class="nav-text">Signout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
