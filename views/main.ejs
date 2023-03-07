@@ -24,52 +24,11 @@
                                         <div class="dashboard-banner__main">
                                             <div class="dashboard-banner__column dashboard-banner__column--one">
                                                 <!-- Dashboard Content -->
-                                                <div class="dashboard-banner__content">
-                                                    <h4 class="nftmax-header__author-title nftmax-header__author-title--two nftmax-lspacing"><%=userId%></h4>
-                                                </div>
+<!--                                                <div class="dashboard-banner__content">-->
+<!--                                                    <h4 class="nftmax-header__author-title nftmax-header__author-title&#45;&#45;two nftmax-lspacing"><%=userId%></h4>-->
+<!--                                                </div>-->
 
-                                                <div class="nftmax-header__author nftmax-header__author-two ">
-                                                    <div class="nftmax-header__author-content ">
-                                                        <h4 class="nftmax-header__author-title nftmax-header__author-title--two nftmax-lspacing">Brokln Simons</h4>
-                                                        <h2 class="dashboard-banner__title nftmax-font-regular nftmax-lspacing"><%=userId%></h2>
-                                                    </div>
-                                                </div>
 
-                                                <div class="dashboard-banner__bids">
-                                                    <div class="dashboard-banner__bid">
-                                                        <!-- Single Bid -->
-                                                        <div class="dashboard-banner__group">
-                                                            <p class="dashboard-banner__group-small">Current Bid</p>
-                                                            <h3 class="dashboard-banner__group-title">75,320 ETH</h3>
-                                                            <p class="dashboard-banner__group-small">773.69 <span>USD</span></p>
-                                                        </div>
-                                                        <!-- End Single Bid -->
-                                                        <div class="dashboard-banner__middle-border"></div>
-                                                        <!-- Single Bid -->
-                                                        <div class="dashboard-banner__group">
-                                                            <p class="dashboard-banner__group-small">Remaing Time</p>
-                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/12/26"></h3>
-                                                            <p class="dashboard-banner__group-small nftmax-timing"><span>Hrs</span> <span>Min</span> <span>Sec</span></p>
-                                                        </div>
-                                                        <!-- End Single Bid -->
-                                                    </div>
-                                                </div>
-
-                                                <!-- Dashboard Banner Button -->
-                                                <div class="dashboard-banner__button">
-                                                    <div class="dashboard-banner__single-btn">
-                                                        <a class="dashboard-banner__heart"><i class="fa-solid fa-heart"></i></a>
-                                                    </div>
-                                                    <div class="dashboard-banner__single-btn dashboard-banner__main-btn">
-                                                        <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>
-                                                    </div>
-                                                    <div class="dashboard-banner__single-btn">
-                                                        <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>
-                                                    </div>
-                                                </div>
-                                                <!-- End Dashboard Banner Button -->
-                                            </div>
-                                            <div class="dashboard-banner__column dashboard-banner__column--two">
                                                 <div class="dashboard-banner__slider">
                                                     <div class="dashboard-banner__single-slider">
                                                         <img src="/images/dashboard-slider-1.png" alt="#">
@@ -82,6 +41,71 @@
                                                     </div>
                                                     <div class="dashboard-banner__single-slider">
                                                         <img src="/images/slide_3.jpg" alt="#">
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Dashboard Banner Button -->
+<!--                                                <div class="dashboard-banner__button">-->
+<!--                                                    <div class="dashboard-banner__single-btn">-->
+<!--                                                        <a class="dashboard-banner__heart"><i class="fa-solid fa-heart"></i></a>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="dashboard-banner__single-btn dashboard-banner__main-btn">-->
+<!--                                                        <a href="active-bids.html" class="nftmax-btn nftmax-btn__secondary radius">Place a Bid</a>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="dashboard-banner__single-btn">-->
+<!--                                                        <a href="marketplace.html" class="nftmax-btn trs-white">View Art Work</a>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+                                                <!-- End Dashboard Banner Button -->
+                                            </div>
+                                            <div class="dashboard-banner__column dashboard-banner__column--two">
+                                                <div class="nftmax-header__author nftmax-header__author-two ">
+                                                    <div class="nftmax-header__author-content ">
+                                                        <h4 class="nftmax-header__author-title nftmax-header__author-title--two nftmax-lspacing"></h4>
+                                                        <p class="nftmax-font-regular" style="color: #fff;">
+                                                            CNFT는 CNX네트워크를 기반으로한 <br/>
+                                                            메타버스 공간에서 메타버스간의 소통시<br/>
+                                                            GAS로 사용되는 새로운 개념에 하이브리드코인입니다.<br/>
+                                                        </p>
+                                                        <div class="dashboard-banner__button" id="textMoreBtn">
+                                                            <div class="dashboard-banner__single-btn">
+                                                                <a onclick="fnViewMoreText();" class="nftmax-btn trs-white">더보기</a>
+                                                            </div>
+                                                        </div>
+
+                                                        <hr/>
+                                                        <p class="nftmax-font-regular" style="color: #fff; display: none;" id="textMoreArea">
+                                                            CNFT는  COFINEX거래소의 CNX메인넷을 <br/>
+                                                            기반으로 탄생한  CNM코인의 NFT형식코인이며,<br/>
+                                                            메타버스 공간에에서의 <br/>
+                                                            RISK FINANCING COIN으로<br/>
+                                                            FINANCE UTILITY 중심 코인의 역할을<br/>
+                                                            수행합니다.<br/>
+                                                        </p>
+                                                        <div class="dashboard-banner__button" id="textCloseBtn" style="display: none;">
+                                                            <div class="dashboard-banner__single-btn">
+                                                                <a onclick="fnViewColseText();" class="nftmax-btn trs-white">감추기</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard-banner__bids">
+                                                    <div class="dashboard-banner__bid">
+                                                        <!-- Single Bid -->
+                                                        <div class="dashboard-banner__group" >
+                                                            <p class="dashboard-banner__group-small">Klaytn Address</p>
+                                                            <span class="dashboard-banner__group-title" style="word-break:break-all;cursor:pointer;"><%=user.coinAddr%></span>
+                                                        </div>
+                                                        <!-- End Single Bid -->
+                                                        <!--                                                        <div class="dashboard-banner__middle-border"></div>-->
+                                                        <!-- Single Bid -->
+                                                        <!--                                                        <div class="dashboard-banner__group">-->
+                                                        <!--                                                            <p class="dashboard-banner__group-small">Remaing Time</p>-->
+                                                        <!--                                                            <h3 class="dashboard-banner__group-title" data-countdown="2023/12/26"></h3>-->
+                                                        <!--                                                            <p class="dashboard-banner__group-small nftmax-timing"><span>Hrs</span> <span>Min</span> <span>Sec</span></p>-->
+                                                        <!--                                                        </div>-->
+                                                        <!-- End Single Bid -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -287,8 +311,26 @@
 </div>
 
 <script>
+    function fnViewMoreText(){
+        $("#textMoreArea").show();
+        $("#textCloseBtn").show();
+        $("#textMoreBtn").hide();
+    }
+    function fnViewColseText(){
+        $("#textMoreArea").hide();
+        $("#textCloseBtn").hide();
+        $("#textMoreBtn").show();
+    }
 </script>
+<style>
+    .dashboard-banner__bid{
+        height: 10rem !important;
+    }
 
+    .nftmax-header__author.nftmax-header__author-two{
+        margin-bottom: 15px;
+    }
+</style>
 </body>
 
 </html>
