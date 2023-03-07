@@ -41,11 +41,11 @@
                                                         <!-- NFTMax Table Head -->
                                                         <thead class="nftmax-table__head">
                                                         <tr>
-                                                            <th class="nftmax-table__column-1 nftmax-table__h1">날짜</th>
+                                                            <th class="nftmax-table__column-1 nftmax-table__h1">상품</th>
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">sales</th>
                                                             <th class="nftmax-table__column-3 nftmax-table__h3">상태</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">구매금액</th>
-                                                            <th class="nftmax-table__column-5 nftmax-table__h5">비고</th>
+                                                            <th colspan="2" class="nftmax-table__column-5 nftmax-table__h5">기타</th>
                                                         </tr>
                                                         </thead>
                                                         <!-- NFTMax Table Body -->
@@ -62,17 +62,39 @@
                                                                         <tr>
                                                                             <td class="nftmax-table__column-1 nftmax-table__data-1">
                                                                                 <div class="nftmax-table__product">
-                                                                                    <div class="nftmax-table__product-img">
-                                                                                        <img src="http://nftnting.com/<%= el.nftImg %>" alt="#">
-                                                                                    </div>
+                                                                                    <% if (status == '완료') { %>
+                                                                                    <a href="#n" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');">
+                                                                                        <div class="nftmax-table__product-img">
+                                                                                            <img src="http://nftnting.com/<%= el.nftImg %>" alt="#">
+                                                                                        </div>
+                                                                                    </a>
+                                                                                    <% } else { %>
+                                                                                        <div class="nftmax-table__product-img">
+                                                                                            <img src="http://nftnting.com/<%= el.nftImg %>" alt="#">
+                                                                                        </div>
+                                                                                    <% }%>
+
+                                                                                    
                                                                                     <div class="nftmax-table__product-content">
-                                                                                        <h4 class="nftmax-table__product-title">
-                                                                                            <%= el.nftNm %>
-                                                                                            <% if (el.nftCnt > 1) { %>
-                                                                                                외 <%= el.nftCnt - 1 %> 개
-                                                                                            <% } %>
-                                                                                        </h4>
-                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#">CNFT</a></p>
+                                                                                        <% if (status == '완료') { %>
+                                                                                        <a href="#n" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');">
+                                                                                            <h4 class="nftmax-table__product-title">
+                                                                                                <%= el.nftNm %>
+                                                                                                <% if (el.nftCnt > 1) { %>
+                                                                                                    외 <%= el.nftCnt - 1 %> 개
+                                                                                                <% } %>
+                                                                                            </h4>
+                                                                                        </a>
+                                                                                        <% } else { %>
+                                                                                            <h4 class="nftmax-table__product-title">
+                                                                                                <%= el.nftNm %>
+                                                                                                <% if (el.nftCnt > 1) { %>
+                                                                                                    외 <%= el.nftCnt - 1 %> 개
+                                                                                                <% } %>
+                                                                                            </h4>
+                                                                                        <% }%>
+                                                                                        
+                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#n">CNFT</a></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -107,7 +129,15 @@
                                                                                 <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor"><%= parseInt(buy_num).toLocaleString('ko-KR') %> USD</p>
                                                                             </td>
                                                                             <td class="nftmax-table__column-5 nftmax-table__data-5">
-                                                                                <p class="nftmax-table__text nftmax-table__bid-text"></p>
+                                                                                <% if (status == '대기') { %>
+                                                                                    <a href="#n" class="nftmax-btn trs-white bl-color"
+                                                                                    onclick="chkAcc('<%= parseInt(buy_num).toLocaleString('ko-KR') %>','<%=cmpnyInfo.nft_bank_nm%>','<%=cmpnyInfo.nft_bank_acc%>','<%=cmpnyInfo.nft_acc_nm%>');">계좌 확인</a>
+                                                                                <% } %>
+                                                                            </td>
+                                                                            <td class="nftmax-table__column-5 nftmax-table__data-5">
+                                                                                <% if (status == '대기') { %>
+                                                                                    <a href="#n" class="nftmax-btn nftmax-btn__secondary radius" onclick="buyCancelView('<%=el.seq%>');">취소</a>
+                                                                                <% } %>
                                                                             </td>
                                                                         </tr>
                                                                 <% }) %>
@@ -120,10 +150,17 @@
                                                                         <% } %>
                                                                     </tr> -->
                                                             <% } %>
+                                                            
                                                         </tbody>
                                                         <!-- End NFTMax Table Body -->
+                                                       
                                                     </table>
                                                     <!-- End NFTMax Table -->
+                                                    <div class="view-wallet__btn top-sell" id="viewMore"><a href="#n" onclick="viewMore()">더보기</a></div>
+                                                    <input type="hidden" id="pageIndex" value="<%= pagination.pageIndex %>">
+                                                    <input type="hidden" id="nftBankNm" value="<%= cmpnyInfo.nft_bank_nm %>">
+                                                    <input type="hidden" id="nftBankAcc" value="<%= cmpnyInfo.nft_bank_acc %>">
+                                                    <input type="hidden" id="nftAccNm" value="<%= cmpnyInfo.nft_acc_nm %>">
                                                 </div>
                                                 
                                             </div>
@@ -142,65 +179,212 @@
     </section>
 </div>
 </body>
-<div class="modal fade" id="buyAlarm" tabindex="-1" aria-labelledby="buyAlarmLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="flex items-center justify-center px-5 py-2 text-sm bg-gray-200">
-                <h5 class="items-center text-center text-black" id="buyAlarmLabel">
-                    Notification
-                </h5>
+<div class="nftmax-preview__modal modal fade" id="buyAlarm" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+        <div class="modal-content nftmax-preview__modal-content">
+            <div class="modal-header nftmax__modal__header">
+                <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">계좌 확인</h4>
+                <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
             </div>
-            <div class="card welcome-profile">
-                <div class="card-body"><img src="./images/avatar/1.jpg" alt="">
-                    <h4>안녕하세요. NFT를 구입해주셔서 감사합니다.</h4>
-                    <p>
-                        아래 판매자 정보를 확인 하신 후, NFT구매금액을 입금하시면
-                        시스템에서 입금 확인 후, 클레이튼 블록체인으로 NFT가 자동 전송됩니다.
-                    </p>
-                    <ul>
-                        <li>
-                            <a href="javascript:void(0);">
-                                <span class="verified"><i class="ri-check-line"></i></span>
-                                NFT 결제금액 :&nbsp;
-                                <div id="totalPrice">
+            <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                <div class="nftmax-preview__close">
 
-                                </div>
-                            </a>
+                    <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;">
+                        <!-- Single Wallet -->
+                        <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info m-1">
+                                <p style="margin-bottom: 1px;">
+                                    안녕하세요. <br/>
+                                    NFT를 구입해주셔서 감사합니다.<br/>
+                                    아래 판매자 정보를 확인 하신 후,<br/>
+                                    NFT 구매금액을 입금하시면<br/>
+                                    시스템에서 입금 확인 후,<br/>
+                                    클레이튼 블록체인으로 NFT가 자동 전송됩니다.
+                                </p>
+                            </div>
                         </li>
-                        <li>
-                            <a>
-                                <span class="verified"><i class="ri-shield-check-line"></i></span>
-                                NFT 판매자 성명 :&nbsp;
-                                <div id="acc_nm">
-
-                                </div>
-                            </a>
-                            <a style="padding-top: 10px;">
-                                <span class="verified"><i class="ri-shield-check-line"></i></span>
-                                입금은행 :&nbsp;
-                                <div id="bank_nm">
-
-                                </div>
-                            </a>
-                            <a style="padding-top: 10px;">
-                                <span class="not-verified"><i class="ri-shield-check-line"></i></span>
-                                계좌번호 :&nbsp;
-                                <div id="bank_acc">
-
-                                </div>
-                            </a>
+                        <!-- End Single Wallet -->
+                        <!-- Single Wallet -->
+                        <!-- End Single Wallet -->
+                        <!-- Single Wallet -->
+                        <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info mt-1">
+                                <h4>NFT 결제금액 :&nbsp;</h4>
+                                <h4 id="totalPrice"></h4>
+                            </div>
                         </li>
+                        <input type="hidden" id="bank_seq">
+                        <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info">
+                                <p style="margin-bottom: 1px;">NFT 판매자 성명 :&nbsp;</p>
+                                <p style="margin-bottom: 1px;" id="acc_nm"></p>
+                            </div>
+                        </li>
+                        <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info">
+                                <p style="margin-bottom: 1px;">입금은행 :&nbsp;</p>
+                                <p style="margin-bottom: 1px;" id="bank_nm"></p>
+                            </div>
+                        </li>
+                        <!-- End Single Wallet -->
+                        <!-- Single Wallet -->
+                        <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info">
+                                <p style="margin-bottom: 1px;">계좌번호 :&nbsp;</p>
+                                <p style="margin-bottom: 1px;" id="bank_acc"></p>
+                            </div>
+                        </li>
+                        <!-- End Single Wallet -->
                     </ul>
+                    <div class="nftmax__item-button--group">
+                        <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " data-bs-dismiss="modal" >확인</button>
+                        <!-- <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr">취소</span> </button> -->
+                    </div>
                 </div>
-            </div>
-            <div class="px-4 pb-2 modal-footer">
-                <button type="button" class="w-full px-5 py-2 text-xs text-white rounded-md btn btn-dark" data-bs-dismiss="modal">
-                    확인
-                </button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="nftmax-preview__modal modal fade" id="buyCancel" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+        <div class="modal-content nftmax-preview__modal-content">
+            <div class="modal-header nftmax__modal__header">
+                <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">구매 취소</h4>
+                <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
+            </div>
+            <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                <div class="nftmax-preview__close">
+
+                    <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;">
+                        <!-- Single Wallet -->
+                        <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info m-1">
+                                <p style="margin-bottom: 1px;">
+                                    구매를 취소하시겠습니까?
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <input type="hidden" id="cancelSeq" />
+                    <div class="nftmax__item-button--group">
+                        <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " data-bs-dismiss="modal" onclick="buyCancelProc()">취소하기</button>
+                        <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr">닫기</span> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nftmax-preview__modal modal fade" id="cancelComp" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+        <div class="modal-content nftmax-preview__modal-content">
+            <div class="modal-header nftmax__modal__header">
+                <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">구매 취소</h4>
+                <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
+            </div>
+            <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                <div class="nftmax-preview__close">
+
+                    <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;">
+                        <!-- Single Wallet -->
+                        <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info m-1">
+                                <p style="margin-bottom: 1px;">
+                                    취소가 완료되었습니다.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <input type="hidden" id="cancelSeq" />
+                    <div class="nftmax__item-button--group">
+                        <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr" onclick="location.reload()">닫기</span> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nftmax-preview__modal modal fade" id="notFoundMore" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+        <div class="modal-content nftmax-preview__modal-content">
+            <div class="modal-header nftmax__modal__header">
+                <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">알림</h4>
+                <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
+            </div>
+            <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                <div class="nftmax-preview__close">
+
+                    <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;">
+                        <!-- Single Wallet -->
+                        <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                            <div class="nftmax-balance-info m-1">
+                                <p style="margin-bottom: 1px;">
+                                    더 이상 내역이 없습니다.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <input type="hidden" id="cancelSeq" />
+                    <div class="nftmax__item-button--group">
+                        <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr" >닫기</span> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nftmax-preview__modal modal fade" id="imgDetail" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+        <div class="modal-content nftmax-preview__modal-content">
+            <div class="modal-header nftmax__modal__header">
+                <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">NFT</h4>
+                <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="$('#buyDetail').modal('show');"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
+            </div>
+            <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                <div class="nftmax-preview__close">
+
+                    <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;" id="imgList">
+                        <!-- Single Wallet -->
+                        
+                    </ul>
+                    <div class="nftmax__item-button--group">
+                        <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " data-bs-dismiss="modal" onclick="$('#buyDetail').modal('show');">확인</button>
+                        <!-- <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr">취소</span> </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nftmax-preview__modal modal fade" id="buyDetail" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+        <div class="modal-content nftmax-preview__modal-content">
+            <div class="modal-header nftmax__modal__header">
+                <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">구매 내역</h4>
+                <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
+            </div>
+            <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                <div class="nftmax-preview__close">
+
+                    <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;" id="buyList">
+                        <!-- Single Wallet -->
+                        
+                    </ul>
+                    <div class="nftmax__item-button--group">
+                        <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " data-bs-dismiss="modal" >확인</button>
+                        <!-- <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr">취소</span> </button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </html>
 <script>
     $(function () {
@@ -239,6 +423,96 @@
         });//datepicker end
     });
 
+
+    function viewMore() {
+        $("#pageIndex").val(Number($("#pageIndex").val()) + 1);
+        // var data = { "pageIndex": $("#pageIndex").val() };
+
+        var data = {};
+        data.pageIndex = $("#pageIndex").val();
+
+        $.ajax({
+            url: '/p/addView',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+
+                let withdrawList = result.data.withdrawList;
+                var pcHtml = '';
+                var mobileHtml = '';
+
+                if(withdrawList.length > 0) {
+
+                    for(var i = 0; i < withdrawList.length; i++) {
+                        pcHtml += '<tr>';
+                        pcHtml +=   '<td class="nftmax-table__column-1 nftmax-table__data-1">';
+                        pcHtml +=       '<div class="nftmax-table__product">';
+                        pcHtml +=           '<div class="nftmax-table__product-img">'; 
+                        pcHtml +=               '<img src="http://nftnting.com/' + withdrawList[i].nftImg + '" alt="#">'; 
+                        pcHtml +=           '</div>'; 
+                        pcHtml +=           '<div class="nftmax-table__product-content">'; 
+                        pcHtml +=               '<h4 class="nftmax-table__product-title">'; 
+                        pcHtml +=                   withdrawList[i].nftNm; 
+                        if(withdrawList[i].nftCnt > 1) {
+                        pcHtml +=                   '외 ' + withdrawList[i].nftCnt + '개'; 
+                        }
+                        pcHtml +=               '</h4>'; 
+                        pcHtml +=               '<p class="nftmax-table__product-desc">Owned by  <a href="#">CNFT</a></p>'; 
+                        pcHtml +=           '</div>'; 
+                        pcHtml +=       '</div>'; 
+                        pcHtml +=   '</td>'; 
+                        pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">'; 
+                        pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">'; 
+                        pcHtml +=           '<span class="nftmax-table__text">'; 
+                        pcHtml +=               '<b>' + withdrawList[i].title + '</b>';
+                        pcHtml +=           '</span>'; 
+                        pcHtml +=       '</div>'; 
+                        pcHtml +=   '</td>'; 
+                        pcHtml +=   '<td class="nftmax-table__column-3 nftmax-table__data-3">'; 
+                        pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-two">'; 
+                        pcHtml +=           '<span class="nftmax-table__text">'; 
+                        switch(withdrawList[i].confirm_sts_name) {
+                        case '취소' : pcHtml +=   '<div class="nftmax-table__status nftmax-rbcolor">취소</div>'; break;
+                        case '대기' : pcHtml +=   '<div class="nftmax-table__status nftmax-sbcolor">대기</div>'; break;
+                        case '완료' : pcHtml +=   '<div class="nftmax-table__status nftmax-gbcolor">승인</div>'; break; 
+                        default: break;
+                        }
+                        pcHtml +=           '</span>'; 
+                        pcHtml +=       '</div>'; 
+                        pcHtml +=   '</td>'; 
+                        pcHtml +=   '<td class="nftmax-table__column-4 nftmax-table__data-4">'; 
+                        pcHtml +=   '<p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">' + parseInt(withdrawList[i].buy_num).toLocaleString('ko-KR') + ' USD</p>'; 
+                        pcHtml +=   '</td>'; 
+                        pcHtml +=   '<td class="nftmax-table__column-5 nftmax-table__data-5">'; 
+                        if(withdrawList[i].confirm_sts_name == '대기') {
+                            pcHtml +=   '<a href="#n" class="nftmax-btn trs-white bl-color"'; 
+                            pcHtml +=   'onclick="chkAcc(' + parseInt(withdrawList[i].buy_num).toLocaleString('ko-KR') + ',' + $("#nftBankNm").val() + ',' + $("#nftBankAcc").val() + ',' + $("#nftAccNm").val()+ ');">계좌 확인</a>'; 
+                        }
+                        pcHtml +=   '</td>'; 
+                        pcHtml +=   '<td class="nftmax-table__column-5 nftmax-table__data-5">'; 
+                        if(withdrawList[i].confirm_sts_name == '대기') {
+                            pcHtml +=       '<a href="#n" class="nftmax-btn nftmax-btn__secondary radius" onclick="buyCancelView(' + withdrawList[i].seq + ');">취소</a>'; 
+                        }
+                        pcHtml +=   '</td>'; 
+                        pcHtml +='</tr>'; 
+                        // $("#withdraw_mobile").append(mobileHtml);
+                    }
+                    $(".nftmax-table__body").append(pcHtml);
+                } else {
+                    $("#notFoundMore").modal('show');
+                    $("#viewMore").hide();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // $('.popupWrap').hide();
+                // $('.pMessage').html('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.')
+                // $('#alertPopup').show();
+                alert('error')
+            } //function끝
+        });
+    }
+
     function fnSearch() {
         let srtDt = $("#startDatePicker").val();
         let endDt = $("#endDatePicker").val();
@@ -272,53 +546,75 @@
         form.submit();
     }
 
-    function fnGetNftBuyInfo(obj, seq, index) {
-        let areaExpanded = JSON.parse($(obj).attr('aria-expanded'));
-        if (!areaExpanded) {
-            let data = {
-                sellSeq: seq,
-            }
+    function fnGetNftImageInfo(nftMallUrl, nft_img) {
+        let html = "";
+        html += '<li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">';
+        html += '<div class="nftmax-balance-info m-1">'
+        html += '<p style="margin-bottom: 1px;">'
+        html += '<img src="' + nftMallUrl + nft_img + '" alt="#">'
+        html += '</p>'
+        html += '</li>'
+        $("#imgList").html(html)
+        $("#buyDetail").modal('hide');
+        $("#imgDetail").modal('show');
+    }
 
-            $.ajax({
-                url: '/p/selectNftBuyList',
-                dataType: 'json',
-                type: 'POST',
-                data: data,
-                success: function (result) {
-                    if (result.success) {
-                        let list = result.data;
-                        if (list.length > 0) {
-                            list.forEach(function (el, i) {
-                                let html = "";
-                                html += "<td id='nftImg'>";
-                                html += "<img loading='lazy' src='"+el.nftMallUrl + el.nft_img+"' style='width: 30%;'>"
-                                html += "</td>";
-                                html += "<td id='nftNm'>";
-                                html += el.nft_nm;
-                                html += "</td>";
-                                html += "<td id='buyAmount'>";
-                                html += el.buy_amount;
-                                html += "</td>";
-                                html += "<td id='txId' colspan='3'>";
-                                // html += el.send_txid;
-                                html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
-                                html += "</td>";
+    function fnGetNftBuyInfo(seq, index) {
 
-                                $(".collapseExample"+index+"-"+i).html("");
-                                $(".collapseExample"+index+"-"+i).html(html);
-                            });
-                        }
-                    } else {
-                        alert(result.message);
-                    }
-                    // $('#buyModal').modal('hide')
-                    // $('#viewAlarm').modal('show')
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
-                } //function끝
-            });
+        let data = {
+            sellSeq: seq,
         }
+        $.ajax({
+            url: '/p/selectNftBuyList',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                if (result.success) {
+                    let list = result.data;
+                    if (list.length > 0) {
+                        let html = "";
+                        list.forEach(function (el, i) {
+                            html += '<li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">';
+                            html += '<div class="nftmax-balance-info">'
+                            
+                            html += '<div class="nftmax-table__product-img">'
+                            html += '<img src="' + el.nftMallUrl + el.nft_img + '" alt="#" onclick="fnGetNftImageInfo(\'' + el.nftMallUrl + '\',\'' + el.nft_img +'\')">'
+                            html += '</div>'                                            
+                            html += '<p style="margin-bottom: 1px;">' + el.nft_nm + '</p>'
+                            html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"
+                            html += '<p style="margin-bottom: 1px;">' + el.send_txid.substring(0,10) + '...</p>'
+                            html += '</a>'
+                            html += '</li>'
+                            // html += "<img loading='lazy' src='"+el.nftMallUrl + el.nft_img+"' style='width: 30%;'>"
+                            // html += "</td>";
+                            // html += "<td id='nftNm'>";
+                            // html += el.nft_nm;
+                            // html += "</td>";
+                            // html += "<td id='buyAmount'>";
+                            // html += el.buy_amount;
+                            // html += "</td>";
+                            // html += "<td id='txId' colspan='3'>";
+                            // // html += el.send_txid;
+                            // html += "<a href='#n' onclick='window.open(\"https://baobab.scope.klaytn.com/tx/"+el.send_txid+"\",\"_blank\");'>"+el.send_txid+"</a>"
+                            // html += "</td>";
+
+                            // $(".collapseExample"+index+"-"+i).html("");
+                            // $(".collapseExample"+index+"-"+i).html(html);
+                        });
+                        $("#buyList").html(html)
+                    }
+                    $("#buyDetail").modal('show');
+                } else {
+                    alert(result.message);
+                }
+                // $('#buyModal').modal('hide')
+                // $('#viewAlarm').modal('show')
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('알수 없는 오류가 발생했습니다. 관리자에게 문의하세요.');
+            } //function끝
+        });
     }
 
     function chkAcc(price, bank_nm, bank_acc, acc_nm) {
@@ -330,12 +626,14 @@
     }
 
     function buyCancelView(seq) {
-        fnViewConfirmAlarm('구매취소', '취소하시겠습니까?', 'buyCancelProc(\"'+seq+'\")');
+        // fnViewConfirmAlarm('구매취소', '취소하시겠습니까?', 'buyCancelProc(\"'+seq+'\")');
+        $("#buyCancel").modal('show');
+        $("#cancelSeq").val(seq)
     }
 
-    function buyCancelProc(seq) {
+    function buyCancelProc() {
         let data = {
-            seq: seq
+            seq: $("#cancelSeq").val()
         }
 
         $.ajax({
@@ -346,11 +644,9 @@
             success: function (result) {
                 $("#viewConfirmAlarm").modal('hide');
                 if (result.success) {
-                    fnViewRefreshAlarm('취소되었습니다.');
-                } else {
-                    $("#modal-text").html(result.message);
-                    $("#viewAlarm").modal('show');
-                }
+                    $("#cancelComp").modal('show');
+                    // fnViewRefreshAlarm('취소되었습니다.');
+                } 
                 // $('#buyModal').modal('hide')
                 // $('#viewAlarm').modal('show')
             },
