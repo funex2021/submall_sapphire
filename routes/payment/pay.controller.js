@@ -112,6 +112,7 @@ exports.buyview = async (req, res, next) => {
                     "faqList": faqList,
                     "noticeList": noticeList,
                     "subNoticeList": subNoticeList,
+                    "menuNum":0
                 })
             } catch (e) {
                 console.log(e)
@@ -213,6 +214,7 @@ exports.buypage = async (req, res, next) => {
                     "pagination": pagination,
                     "nftList": nftList,
                     "nftMallUrl": nftMallUrl,
+                    "menuNum":1
                 })
             } catch (e) {
                 console.log(e)
@@ -484,6 +486,7 @@ exports.withdraw = async (req, res, next) => {
                 'srtDt': srtDt,
                 'endDt': endDt,
                 'userId': userId,
+                "menuNum":2
             })
 
         } catch (e) {
@@ -705,6 +708,7 @@ exports.notice = async (req, res, next) => {
                 'endDt': endDt,
                 'pagination': pagination,
                 'noticeList': noticeList,
+                "menuNum":3
             })
 
         } catch (e) {
