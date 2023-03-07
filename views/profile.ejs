@@ -49,19 +49,19 @@
                                                                         <div class="nftmax-ptabs__form-main">
                                                                            
                                                                             <div class="nftmax__item-form--group">
-                                                                                <label class="nftmax__item-label">User ID</label>
-                                                                                <input class="nftmax__item-input" type="url" placeholder="RaidParty Fighters" required="required">
+                                                                                <label class="nftmax__item-label">ID</label>
+                                                                                <input class="nftmax__item-input" type="url" id="user_id" placeholder="RaidParty Fighters" required="required" value="<%=memInfo.user_id%>" readOnly>
+                                                                                <p class="nftmax__item-fee-text">수정이 불가능합니다.</p>
                                                                             </div>
 
                                                                             <div class="nftmax__item-form--group">
-                                                                                <label class="nftmax__item-label">User Name</label>
-                                                                                <input class="nftmax__item-input" type="url" placeholder="RaidParty Fighters" required="required">
+                                                                                <label class="nftmax__item-label">이름</label>
+                                                                                <input class="nftmax__item-input" type="url" id="user_nm" placeholder="RaidParty Fighters" required="required" value="<%=memInfo.user_name%>">
                                                                             </div>
                                                                             
                                                                             <div class="nftmax__item-form--group">
                                                                                 <label class="nftmax__item-label">Email </label>
-                                                                                <input class="nftmax__item-input" type="email" placeholder="info@youremail.com" required="required">
-                                                                                <p class="nftmax__item-fee-text">Your email for marketplace notifications</p>
+                                                                                <input class="nftmax__item-input" type="email" id="user_email" placeholder="info@youremail.com" required="required" value="<%=memInfo.user_email%>">
                                                                             </div>
                                                                         </div>
                                                             
@@ -71,8 +71,8 @@
                                                             
                                                             
                                                             <div class="nftmax__item-button--group nftmax__ptabs-bottom">
-                                                                <button class="nftmax__item-button--single nftmax__item-button--cancel">취소</button>
-                                                                <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit">수정</button>
+                                                                <!-- <button class="nftmax__item-button--single nftmax__item-button--cancel">취소</button> -->
+                                                                <span class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit" onClick="fnModify(1)">수정</span>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -82,26 +82,42 @@
                                                             <div class="nftmax-paymentm">
                                                                 <ul class="nftmax-paymentm__list">
                                                                     <li class="nftmax-paymentm__single">
-                                                                        <div class="nftmax-paymentm__name">
+                                                                        <div class="nftmax-paymentm__name" id="bankInfo">
                                                                             <div class="nftmax-paymentm__icon">
                                                                                 <img src="/images/payment-1.png" alt="#">
                                                                             </div>
                                                                             <div class="nftmax-paymentm__content">
-                                                                                <h4 class="nftmax-paymentm__title">Datch Bangla Bank Lmd</h4>
-                                                                                <p class="nftmax-paymentm__text">Bank    **********5535</p>
-                                                                                <span class="nftmax-paymentm__badge nftmax__ok">Verified</span>
+                                                                                <h4 class="nftmax-paymentm__title">은행정보</h4>
+                                                                                <p class="nftmax-paymentm__text"><%=memInfo.user_bank%></p>
+                                                                                <p class="nftmax-paymentm__text"><%=memInfo.user_holder%></p>
+                                                                                <p class="nftmax-paymentm__text"><%=memInfo.user_num%></p>
+                                                                                <span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()">변경</span>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="nftmax-paymentm__manage-btn">
-                                                                            <button class="nftmax-btn nftmax-btn__bordered bg radius">Manage</button>
+                                                                        <div class="nftmax-ptabs__form-main" id="bankModify" style="display:none">
+                                                                            <div class="nftmax__item-form--group">
+                                                                                <label class="nftmax__item-label">은행명</label>
+                                                                                <input class="nftmax__item-input" type="url" id="user_id" placeholder="RaidParty Fighters" required="required" value="<%=memInfo.user_bank%>" readOnly>
+                                                                            </div>
+
+                                                                            <div class="nftmax__item-form--group">
+                                                                                <label class="nftmax__item-label">계좌주</label>
+                                                                                <input class="nftmax__item-input" type="url" id="user_nm" placeholder="RaidParty Fighters" required="required" value="<%=memInfo.user_holder%>">
+                                                                            </div>
+                                                                            
+                                                                            <div class="nftmax__item-form--group">
+                                                                                <label class="nftmax__item-label">계좌번호 </label>
+                                                                                <input class="nftmax__item-input" type="email" id="user_email" placeholder="info@youremail.com" required="required" value="<%=memInfo.user_num%>">
+                                                                            </div>
                                                                         </div>
+                                                                   
                                                                     </li>
 
                                                                 </ul>
                                                             </div>
                                                             <div class="nftmax__item-button--group nftmax__ptabs-bottom">
-                                                                <button class="nftmax__item-button--single nftmax__item-button--cancel">취소</button>
-                                                                <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit">수정</button>
+                                                                <span class="nftmax__item-button--single nftmax__item-button--cancel" onclick="fnBankCancel()">취소</span>
+                                                                <span class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit" onClick="fnModify(2)">수정</span>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -138,8 +154,7 @@
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <div class="nftmax__item-button--group nftmax__ptabs-bottom">
-                                                                            <button class="nftmax__item-button--single nftmax__item-button--cancel">취소</button>
-                                                                            <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit">수정</button>
+                                                                            <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit" onClick="fnModify(3)">수정</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -194,6 +209,29 @@
         </div>	
     </section>
 </div>
+
+<script>
+    function fnModify(index) {
+        if(index == 1) {
+
+        } else if(index == 2) {
+            
+        } else if(index == 3) {
+            
+        }
+    }
+
+
+    function fnBankModiry() {
+        $('#bankInfo').hide();
+        $('#bankModify').show();
+    }
+
+    function fnBankCancel() {
+        $('#bankInfo').show();
+        $('#bankModify').hide();
+    }
+</script>
 </body>
 </html>
 
