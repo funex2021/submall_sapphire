@@ -42,7 +42,7 @@
                                                         <!-- NFTMax Table Head -->
                                                         <thead class="nftmax-table__head">
                                                         <tr>
-                                                            <th class="nftmax-table__column-1 nftmax-table__h1">상품</th>
+                                                            <th class="nftmax-table__column-2 nftmax-table__h2">상품</th>
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">sales</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">변동금액</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">누적금액</th>
@@ -53,7 +53,7 @@
                                                             <% if (airList.length > 0) {
                                                                 airList.forEach(function(el, index) { %>
                                                                         <tr>
-                                                                            <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
                                                                                 <div class="nftmax-table__product">
                                                                                     <a href="#n" onclick="fnGetNftImageInfo('http://nftnting.com','<%= el.nft_img %>');">
                                                                                         <div class="nftmax-table__product-img">
@@ -108,7 +108,7 @@
                                                        
                                                     </table>
                                                     <!-- End NFTMax Table -->
-                                                    <div class="view-wallet__btn top-sell" id="viewMore"><a href="#n" onclick="viewMore()">더보기</a></div>
+                                                    <div class="view-wallet__btn top-sell mb-3" id="viewMore"><a href="javascript:void(0);" style="font-size: 15px;" onclick="viewMore()">더보기</a></div>
                                                     <input type="hidden" id="pageIndex" value="<%= pagination.pageIndex %>">
                                                 </div>
                                                 
