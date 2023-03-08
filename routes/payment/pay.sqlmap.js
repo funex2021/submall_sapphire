@@ -825,19 +825,21 @@ function fnGetNftListByAirdrop(param, conn) {
 function fnGetNftBuyMainList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-
-        sql += "select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount from "+param.cs_coin_sell_detail+" ccsd";
+        sql += "select t.* from ( ";
+        sql += " select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount , DATE_FORMAT(ccsl.create_dt, '%Y-%m-%d %H:%i:%s') as create_dt from "+param.cs_coin_sell_detail+" ccsd";
         sql += " left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq";
         sql += " inner join "+param.cs_coin_sell+" ccsl on ccsd.sell_seq  = ccsl.seq";
         sql += " where 1=1";
         sql += " and ccsl.m_seq = '" + param.mSeq + "'";
         sql += " union all";
-        sql += " select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount from cs_coin_sell_detail_log ccsd";
+        sql += " select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount , DATE_FORMAT(ccsl.create_dt, '%Y-%m-%d %H:%i:%s') as create_dt  from cs_coin_sell_detail_log ccsd";
         sql += " left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq";
         sql += " inner join cs_coin_sell_log ccsl on ccsd.sell_seq  = ccsl.seq";
         sql += " where 1=1";
         sql += " and ccsl.m_seq = '" + param.mSeq + "'";
-        sql += " limit 0,5";
+        sql += " ) t "
+        sql += " order by t.create_dt desc "
+        sql += " limit 0,5 ";
 
         console.log('fnGetNftBuyMainList >> ' , sql);
         conn.query(sql, (err, ret) => {
@@ -860,7 +862,7 @@ function fnGetAirdropList(param, conn) {
         sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
         sql += " limit " + (param.pageIndex - 1) * param.rowsPerPage + "," + param.rowsPerPage
 
-        console.log('fnGetNftBuyMainList >> ' , sql);
+        console.log('fnGetAirdropList >> ' , sql);
         conn.query(sql, (err, ret) => {
             if (err) {
                 console.log(err)
@@ -879,7 +881,7 @@ function fnGetAirdropListTotal(param, conn) {
         sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
 
 
-        console.log('fnGetNftBuyMainList >> ' , sql);
+        console.log('fnGetAirdropListTotal >> ' , sql);
         conn.query(sql, (err, ret) => {
             if (err) {
                 console.log(err)

@@ -100,10 +100,10 @@
                                             <!-- NFTMax Table Head -->
                                             <thead class="nftmax-table__head">
                                             <tr>
-                                                <th class="nftmax-table__column-2 nftmax-table__h2" style="text-align: left !important">상품이미지</th>
-                                                <th class="nftmax-table__column-3 nftmax-table__h3">상품명</th>
-                                                <th class="nftmax-table__column-4 nftmax-table__h4">구매수량</th>
-                                                <th class="nftmax-table__column-1 nftmax-table__1">Klaytn Contract</th>
+                                                <th class="nftmax-table__column-2 nftmax-table__h2" style="text-align: left !important">상품</th>
+                                                <th class="nftmax-table__column-4 nftmax-table__h4">수량</th>
+                                                <th class="nftmax-table__column-3 nftmax-table__h3">구매일</th>
+                                                <th class="nftmax-table__column-2 nftmax-table__h2">Klaytn Contract</th>
                                             </tr>
                                             </thead>
                                             <!-- NFTMax Table Body -->
@@ -114,18 +114,20 @@
                                                         <td class="nftmax-table__column-2 nftmax-table__data-2">
                                                             <div class="nftmax-table__product">
                                                                 <div class="nftmax-table__product-img">
-                                                                    <img src="<%=nftMallUrl%><%=el.nft_img%>" alt="#">
+                                                                    <img src="<%=nftMallUrl%><%=el.nft_img%>" alt="<%=el.nft_nm%>">
+                                                                </div>
+                                                                <div class="nftmax-table__product-content">
+                                                                    <h4 class="nftmax-table__product-title"><%=el.nft_nm%></h4>
                                                                 </div>
                                                             </div>
                                                         </td>
-
-                                                        <td class="nftmax-table__column-3 nftmax-table__data-3">
-                                                            <p class="nftmax-table__text nftmax-table__bid-text"><%=el.nft_nm%></p>
-                                                        </td>
                                                         <td class="nftmax-table__column-4 nftmax-table__data-4">
-                                                            <p class="nftmax-table__text nftmax-table__time"><%=Number(el.buy_amount).toLocaleString('ko-KR')%></p>
+                                                            <p class="nftmax-table__text nftmax-table__bid-text"><%=Number(el.buy_amount).toLocaleString('ko-KR')%></p>
                                                         </td>
-                                                        <td class="nftmax-table__column-1 nftmax-table__data-1">
+                                                        <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                            <p class="nftmax-table__text nftmax-table__time"><%=el.create_dt%></p>
+                                                        </td>
+                                                        <td class="nftmax-table__column-2 nftmax-table__data-2">
                                                             <p class="nftmax-table__text nftmax-table__time"><%=el.send_txid%></p>
                                                         </td>
                                                     </tr>
