@@ -963,5 +963,96 @@ exports.airAddView = async (req, res, next) => {
             res.json(rtnUtil.successFalse('500', e.message, e, ''))
         }
     });
+}
 
+
+exports.haveNft = async (req, res, next) => {
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+    let {pageIndex, srtDt, endDt} = req.body;
+
+    if (srtDt == undefined || srtDt == '' || srtDt == null) {
+        // endDt = moment().add(7, 'hours').format("YYYY-MM-DD")
+        // srtDt = moment().add(7, 'hours').format("YYYY-MM-DD")
+        endDt = moment().format('YYYY-MM-DD');
+        srtDt = moment().format('YYYY-MM-DD');
+    }
+
+    mydb.executeTx(async conn => {
+        try {
+            let userId = req.user.memId;
+            let mSeq = req.user.mSeq;
+            let cmpnyCd = req.user.cmpnyCd;
+
+            let obj = {}
+            //let coinObj = await axios.get(CONSTS.API.URL+'/public/balance1/'+address);
+            obj.cmpnyCd = cmpnyCd;
+            obj.cs_coin_sell = req.user.cs_coin_sell;
+            obj.cs_coin_trans = req.user.cs_coin_trans;
+            obj.cs_coin_sell_detail = req.user.cs_coin_sell_detail;
+            obj.cs_coin_trans_detail = req.user.cs_coin_trans_detail;
+            //은행정보 가져오기
+            obj.userId = userId;
+            obj.srtDt = srtDt;
+            obj.endDt = endDt;
+            obj.mSeq = mSeq;
+
+            let search = {}
+
+            search.srtDt = srtDt;
+            search.endDt = endDt;
+
+            let cmpnyInfo  = await Query.QGetCompanyInfo(obj, conn);
+            let balanceCnt = await Query.QGetBalanceCnt(obj, conn);
+            if (balanceCnt == 0) await Query.QInsMeberBalance(obj, conn);
+
+            obj.memId = userId
+            let totalPageCount = await Query.QGetAirdropListTotal(obj, conn);
+            if (pageIndex == "" || pageIndex == null) {
+                pageIndex = 1;
+            }
+
+            let pagination = await pagingUtil.getPagination(pageIndex, totalPageCount) ;
+            obj.pageIndex = pageIndex;
+            obj.rowsPerPage = pagination.rowsPerPage;
+            pagination.totalItems = totalPageCount;
+
+            let balance = await Query.QGetBalance(obj, conn);
+            let airList = await Query.QGetAirdropList(obj, conn);
+
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
+            console.log('domain : ' + domain)
+            obj.domain = domain;
+            let config = await Query.QGetConfigInfo(obj, conn);
+
+            console.log({pagination});
+            res.render("haveNft", {
+                'cmpnyInfo': cmpnyInfo[0],
+                "airList": airList,
+                "pagination": pagination,
+                "coinObj": balance[0].balance,
+                'amount': req.session.amount,
+                'config': config,
+                'srtDt': srtDt,
+                'endDt': endDt,
+                'userId': userId,
+                "menuNum":5
+            })
+
+        } catch (e) {
+            console.log('e : ', e)
+            res.render("airdrop", {
+                "airList": "",
+                "pagination": pagination,
+                "balance": 0,
+                'amount': req.session.amount
+            })
+        }
+    });
 }

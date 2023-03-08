@@ -43,6 +43,8 @@ router.post('/notice', isAuthenticated, isAuthYn, pay.notice);
 
 router.get('/mynft', isAuthenticated, isAuthYn, pay.mynft)
 
+router.get('/haveNft', isAuthenticated, isAuthYn, pay.haveNft);
+router.post('/haveNft', isAuthenticated, isAuthYn, pay.haveNft);
 
 
 
