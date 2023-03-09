@@ -34,6 +34,7 @@ router.post('/airAddView', isAuthenticated, isAuthYn, pay.airAddView);
 router.get('/buyview', isAuthenticated, isAuthYn, payUtil.isStatusCheck, exchangeUtil.fnGetExchangeRate, pay.buyview);
 router.get('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buypage);
 router.post('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheckAjax, pay.buy);
+router.post('/sell', isAuthenticated, isAuthYn, payUtil.isStatusCheckAjax, pay.sell);
 
 router.post('/showAccount', isAuthenticated, isAuthYn, pay.showAccount);
 router.post('/selectNftBuyList', isAuthenticated, isAuthYn, pay.selectNftBuyList);

@@ -85,6 +85,7 @@ module.exports = (pool) => {
                         user.mSeq = memInfo[0].m_seq;
                         user.memId = memInfo[0].mem_id;
                         user.cmpnyCd = memInfo[0].cmpny_cd; //req.user.cmpnyCd;
+                        user.cmpnyNm = memInfo[0].cmpny_nm;
                         user.memNm = memInfo[0].mem_nm;
                         user.coinAddr = memInfo[0].coin_addr;
                         user.bankSeq = memInfo[0].bank_seq;
@@ -286,6 +287,7 @@ module.exports = (pool) => {
     function fnGetCompanyInfo(param, conn) {
         return new Promise(function (resolve, reject) {
             var sql = " SELECT cm.m_seq , cm.mem_id, cm.cmpny_cd, cm.mem_pass, cm.salt, cm.mem_nm, cm.mem_hp "
+            sql += " , (select cmpny_nm from cs_company where cmpny_cd = cm.cmpny_cd) cmpny_nm "
             sql += " , cm.mem_email, nation, fn_get_name(cm.nation) nation_name , DATE_FORMAT(cm.create_dt, '%Y-%m-%d %H:%i:%s') create_dt "
             sql += " , cm.bank_seq , cm.auth_yn";
             sql += " ,cw.coin_addr, cw.coin_pk "

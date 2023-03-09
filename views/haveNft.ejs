@@ -18,41 +18,6 @@
                             <div class="nftmax-dsinner">
 
                                 <!-- Welcome CTA -->
-                                <!-- <div class="welcome-cta mg-top-40">
-                                    <div class="welcome-cta__heading">
-                                        <h2 class="welcome-cta__title">Create your own NFT and extraordinary get lot of Sell..</h2>
-                                        <p class="welcome-cta__text">Buy and sell NFTs from the world’s top artists</p>
-                                    </div>
-                                    <div class="welcome-cta__button">
-                                        <a href="product-upload.html" class="nftmax-btn nftmax-btn__bordered bg radius">Upload Products</a>
-                                        <a href="marketplace.html" class="nftmax-btn trs-white bl-color">View Art Work</a>
-                                    </div>
-                                </div> -->
-                                <!-- End Welcome CTA -->
-
-                                <!-- Marketplace Bar -->
-                                <!-- <div class="nftmax-marketplace__bar mg-top-50 mg-btm-40">
-                                    <div class="nftmax-marketplace__bar-inner">
-                                        <div class="list-group nftmax-marketplace__bar-list" id="list-tab" role="tablist">
-                                            <a class="list-group-item active" data-bs-toggle="list" href="#id1" role="tab">Explore</a>
-                                            <a class="list-group-item" data-bs-toggle="list" href="#id2" role="tab">Featured  Artist</a>
-                                            <a class="list-group-item" data-bs-toggle="list" href="#id1" role="tab">Open Market</a>
-                                            <a class="list-group-item" data-bs-toggle="list" href="#id2" role="tab">Partner Shops</a>
-                                            <a class="list-group-item" data-bs-toggle="list" href="#id1" role="tab">Game Assets</a>
-                                        </div>
-
-                                        <div class="nftmax-marketplace__bar-right">
-                                            <div class="nftmax-marketplace__bar-one">
-                                                <form class="nftmax-marketplace__bar-search" action="#">
-                                                    <button class="search-btn" type="submit"><img src="/images/search.png" alt="#"></button>
-                                                    <input name="s" value="" type="text" placeholder="Search items, collections...">
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-
-                                <!-- Welcome CTA -->
                                 <div class="trending-action">
                                     <div class="row">
                                         <div class="col-12">
@@ -60,623 +25,64 @@
                                                 <!-- Single Tab -->
                                                 <div class="tab-pane fade show active" id="id1" role="tabpanel" aria-labelledby="nav-home-tab">
                                                     <div class="row nftmax-gap-sq30">
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
+                                                        <% nftList.forEach(function(el, index) { %>
+                                                            <div class="col-lg-4 col-md-6 col-12">
+                                                                <!-- Marketplace Single Item -->
+                                                                <div class="trending-action__single trending-action__single--v2" style="height: 381px;">
+                                                                    <!-- <div class="nftmax-trendmeta">
+                                                                        <div class="nftmax-trendmeta__main">
+                                                                            <div class="nftmax-trendmeta__author">
+                                                                                <div class="nftmax-trendmeta__img">
+                                                                                    <img src="/images/market-author-1.png" alt="#">
+                                                                                </div>
+                                                                                <div class="nftmax-trendmeta__content">
+                                                                                    <span class="nftmax-trendmeta__small">Owned by</span>
+                                                                                    <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
+                                                                            <div class="nftmax-trendmeta__author">
+                                                                                <div class="nftmax-trendmeta__content">
+                                                                                    <span class="nftmax-trendmeta__small">Create by</span>
+                                                                                    <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
+                                                                                </div>
+                                                                                <div class="nftmax-trendmeta__img">
+                                                                                    <img src="/images/market-author-2.png" alt="#">
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
+                                                                    </div> -->
+                                                                    <!-- Trending Head -->
+                                                                    <div class="trending-action__head" >
+                                                                        <!-- <div class="trending-action__badge"><span>Active</span></div>
+                                                                        <div class="trending-action__button v2">
+                                                                            <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
+                                                                            <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                                                        </div> -->
+                                                                        <img src="<%=nftMallUrl%><%=el.file_path%>" alt="#" style="max-width: 344px;max-height: 251px;">
+                                                                    </div>
+                                                                    <!-- Trending Body -->
+                                                                    <div class="trending-action__body trending-marketplace__body">
+                                                                        <h2 class="trending-action__title mb-2"><%=el.nft_nm%></h2>
+                                                                        <div class="nftmax-currency" style="height: 40px;">
+                                                                            <div class="nftmax-currency__main">
+                                                                                <div class="nftmax-currency__content">
+                                                                                    <% if(el.price == 0) { %>
+                                                                                    <h4 class="nftmax-currency__content-title"><%=el.buy_amount%> 개</h4>
+                                                                                    <% } else { %>
+                                                                                        <h4 class="nftmax-currency__content-title"><%=el.price.toLocaleString('ko-KR')%> KRW</h4>
+                                                                                        <!-- <p class="nftmax-currency__content-sub"><%=el.price.toLocaleString('ko-KR')%> KRW</p> -->
+                                                                                    <% } %>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
+                                                                            <% if(el.price > 0) { %>
+                                                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius" data-index="<%=index%>" onclick="fnPinPop('<%=el.price.toLocaleString()%>', '<%=el.price%>', '<%=el.nft_seq%>')">판매</a>
+                                                                            <% } %>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-1.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
+                                                                <!-- End Marketplace Item -->
                                                             </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-2.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-3.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-4.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-5.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-6.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-7.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-8.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-9.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="id2" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                    <div class="row nftmax-gap-sq30">
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/trending-img-1.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-8.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
-                                                        <div class="col-lg-4 col-md-6 col-12">
-                                                            <!-- Marketplace Single Item -->
-                                                            <div class="trending-action__single trending-action__single--v2">
-                                                                <div class="nftmax-trendmeta">
-                                                                    <div class="nftmax-trendmeta__main">
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-1.png" alt="#">
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Owned by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Rrayak John</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="nftmax-trendmeta__author">
-                                                                            <div class="nftmax-trendmeta__content">
-                                                                                <span class="nftmax-trendmeta__small">Create by</span>
-                                                                                <h4 class="nftmax-trendmeta__title">Yuaisn Kha</h4>
-                                                                            </div>
-                                                                            <div class="nftmax-trendmeta__img">
-                                                                                <img src="/images/market-author-2.png" alt="#">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Trending Head -->
-                                                                <div class="trending-action__head">
-                                                                    <div class="trending-action__badge"><span>Active</span></div>
-                                                                    <div class="trending-action__button v2">
-                                                                        <a class="trending-action__btn heart-icon"><i class="fa-solid fa-heart"></i></a>
-                                                                        <a class="trending-action__btn"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                                                                    </div>
-                                                                    <img src="/images/marketplace-9.png" alt="#">
-                                                                </div>
-                                                                <!-- Trending Body -->
-                                                                <div class="trending-action__body trending-marketplace__body">
-                                                                    <h2 class="trending-action__title"><a href="marketplace-details.html">Interconnected Planes</a></h2>
-                                                                    <div class="nftmax-currency">
-                                                                        <div class="nftmax-currency__main">
-                                                                            <div class="nftmax-currency__icon"><img src="/images/eth-icon.png" alt="#"></div>
-                                                                            <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title">75,320 ETH </h4>
-                                                                                <p class="nftmax-currency__content-sub">(773.69  USD)</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <a href="#" class="nftmax-btn nftmax-btn__secondary radius">On Sale</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- End Marketplace Item -->
-                                                        </div>
+                                                        <% }) %>
                                                     </div>
                                                 </div>
                                             </div>
@@ -688,252 +94,169 @@
                             <!-- End Dashboard Inner -->
                         </div>
                     </div>
-
-                    <div class="col-xxl-3 col-12 nftmax-main__sidebar">
-                        <div class="nftmax-sidebar mg-top-40">
-                            <div class="row">
-                                <div class="col-xxl-12 col-xl-6 col-12 nftmax-sidebar__widget">
-                                    <!-- NFTMax Single Sidebar -->
-                                    <div class="nftmax-sidebar__single">
-                                        <!-- Sidebar Heading -->
-                                        <div class="nftmax-sidebar__heading">
-                                            <h4 class="nftmax-sidebar__title">Statistics</h4>
-                                            <ul  class="nav nav-tabs nftmax-dropdown__list" id="nav-tab" role="tablist">
-                                                <li class="nav-item dropdown">
-                                                    <a class="nftmax-sidebar_btn nftmax-heading__tabs nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Last 7 days <span class="nftmax-sidebar__arrow--icon"><svg width="13" height="6" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.7" d="M12.4124 0.247421C12.3327 0.169022 12.2379 0.106794 12.1335 0.0643287C12.0291 0.0218632 11.917 0 11.8039 0C11.6908 0 11.5787 0.0218632 11.4743 0.0643287C11.3699 0.106794 11.2751 0.169022 11.1954 0.247421L7.27012 4.07837C7.19045 4.15677 7.09566 4.219 6.99122 4.26146C6.88678 4.30393 6.77476 4.32579 6.66162 4.32579C6.54848 4.32579 6.43646 4.30393 6.33202 4.26146C6.22758 4.219 6.13279 4.15677 6.05312 4.07837L2.12785 0.247421C2.04818 0.169022 1.95338 0.106794 1.84895 0.0643287C1.74451 0.0218632 1.63249 0 1.51935 0C1.40621 0 1.29419 0.0218632 1.18975 0.0643287C1.08531 0.106794 0.990517 0.169022 0.910844 0.247421C0.751218 0.404141 0.661621 0.616141 0.661621 0.837119C0.661621 1.0581 0.751218 1.2701 0.910844 1.42682L4.84468 5.26613C5.32677 5.73605 5.98027 6 6.66162 6C7.34297 6 7.99647 5.73605 8.47856 5.26613L12.4124 1.42682C12.572 1.2701 12.6616 1.0581 12.6616 0.837119C12.6616 0.616141 12.572 0.404141 12.4124 0.247421Z" fill="#374557" fill-opacity="0.6"></path></svg></span></a>
-                                                    <ul class="dropdown-menu nftmax-sidebar_dropdown">
-                                                        <a class="list-group-item" data-bs-toggle="list" data-bs-target="#side__one" role="tab">Daily</a>
-                                                        <a class="list-group-item" data-bs-toggle="list" data-bs-target="#side__one" role="tab">Weekly</a>
-                                                        <a class="list-group-item"  data-bs-toggle="list"data-bs-target="#side__one" role="tab">Monthly</a>
-                                                    </ul>
-                                                </li>
-                                            </ul>
+                </div>
+            </div>
+            
+            <div class="nftmax-preview__modal modal fade" id="sellAlarm" tabindex="-1" aria-labelledby="logoutmodal" aria-hidden="true" >
+                <div class="modal-dialog modal-dialog-centered nftmax-close__modal-close">
+                    <div class="modal-content nftmax-preview__modal-content">
+                        <div class="modal-header nftmax__modal__header">
+                            <h4 class="modal-title nftmax-preview__modal-title" id="logoutmodal">Sell</h4>
+                            <button type="button" class="nftmax-preview__modal--close btn-close" data-bs-dismiss="modal" aria-label="Close"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 16.16C36 17.4399 36 18.7199 36 20.0001C35.7911 20.0709 35.8636 20.2554 35.8385 20.4001C34.5321 27.9453 30.246 32.9248 22.9603 35.2822C21.9006 35.6251 20.7753 35.7657 19.6802 35.9997C18.4003 35.9997 17.1204 35.9997 15.8401 35.9997C15.5896 35.7086 15.2189 35.7732 14.9034 35.7093C7.77231 34.2621 3.08728 30.0725 0.769671 23.187C0.435002 22.1926 0.445997 21.1199 0 20.1599C0 18.7198 0 17.2798 0 15.8398C0.291376 15.6195 0.214408 15.2656 0.270759 14.9808C1.71321 7.69774 6.02611 2.99691 13.0428 0.700951C14.0118 0.383805 15.0509 0.386897 15.9999 0C17.2265 0 18.4532 0 19.6799 0C19.7156 0.124041 19.8125 0.136067 19.9225 0.146719C27.3 0.868973 33.5322 6.21922 35.3801 13.427C35.6121 14.3313 35.7945 15.2484 36 16.16ZM33.011 18.0787C33.0433 9.77105 26.3423 3.00309 18.077 2.9945C9.78479 2.98626 3.00344 9.658 2.98523 17.8426C2.96667 26.1633 9.58859 32.9601 17.7602 33.0079C26.197 33.0577 32.9787 26.4186 33.011 18.0787Z" fill="#374557" fill-opacity="0.6"></path><path d="M15.9309 18.023C13.9329 16.037 12.007 14.1207 10.0787 12.2072C9.60071 11.733 9.26398 11.2162 9.51996 10.506C9.945 9.32677 11.1954 9.0811 12.1437 10.0174C13.9067 11.7585 15.6766 13.494 17.385 15.2879C17.9108 15.8401 18.1633 15.7487 18.6375 15.258C20.3586 13.4761 22.1199 11.7327 23.8822 9.99096C24.8175 9.06632 26.1095 9.33639 26.4967 10.517C26.7286 11.2241 26.3919 11.7413 25.9133 12.2178C24.1757 13.9472 22.4477 15.6855 20.7104 17.4148C20.5228 17.6018 20.2964 17.7495 20.0466 17.9485C22.0831 19.974 24.0372 21.8992 25.9689 23.8468C26.9262 24.8119 26.6489 26.1101 25.4336 26.4987C24.712 26.7292 24.2131 26.3441 23.7455 25.8757C21.9945 24.1227 20.2232 22.3892 18.5045 20.6049C18.0698 20.1534 17.8716 20.2269 17.4802 20.6282C15.732 22.4215 13.9493 24.1807 12.1777 25.951C11.7022 26.4262 11.193 26.7471 10.4738 26.4537C9.31345 25.9798 9.06881 24.8398 9.98589 23.8952C11.285 22.5576 12.6138 21.2484 13.9387 19.9355C14.5792 19.3005 15.2399 18.6852 15.9309 18.023Z" fill="#374557" fill-opacity="0.6"></path></svg></button>
+                        </div>
+                        <div class="modal-body nftmax-modal__body modal-body nftmax-close__body" style="padding: 10px 20px;">
+                            <div class="nftmax-preview__close">
+    
+                                <ul class="nftmax-wallet__list" style="gap: 10px;width: 100%;">
+                                    <!-- Single Wallet -->
+                                    <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                        <div class="nftmax-balance-info m-1">
+                                            <p style="margin-bottom: 1px;">선택하신 상품의 판매금액을 입력해주세요. <br/>판매를 진행하시겠습니까? </p>
                                         </div>
-
-                                        <div class="tab-content" id="nav-tabContent">
-                                            <!-- Single Tab -->
-                                            <div class="tab-pane fade show active" id="side__one" role="tabpanel" aria-labelledby="side__one">
-                                                <!-- Platform List -->
-                                                <div class="nftmax-sidebar__charts nftmax-sidebar__charts--v1">
-                                                    <div class="nftmax-sidebar__cside-one">
-                                                        <canvas id="myChart_Side_One"></canvas>
-                                                        <div class="nftmax-sidebar__cicon"><img src="/images/charts-middle.png" alt="#"></div>
-                                                    </div>
-                                                    <div class="nftmax-sidebar__cstatics">
-                                                        <h4 class="nftmax-sidebar__cstatics-title">Your All Artwork Statistics</h4>
-                                                        <ul class="nftmax-sidebar__clist">
-                                                            <li><span class="nftmax-sidebar__ccolor nftmax-sidebar__ccolor-one"></span>Total Sold</li>
-                                                            <li><span class="nftmax-sidebar__ccolor nftmax-sidebar__ccolor-two"></span>Total Cancel</li>
-                                                            <li><span class="nftmax-sidebar__ccolor nftmax-sidebar__ccolor-three"></span>Total Panding</li>
-                                                        </ul>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Single Tab -->
+                                    </li>
+                                    <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                        <div class="nftmax-balance-info">
+                                            <p style="margin-bottom: 1px;">수수료 :&nbsp;</p>
+                                            <p style="margin-bottom: 1px;" id="operRate"></p>
                                         </div>
-                                    </div>
-                                    <!-- End NFTMax Single Sidebar -->
-                                </div>
-
-                                <div class="col-xxl-12 col-xl-6 col-12 nftmax-sidebar__widget">
-                                    <!-- NFTMax Single Sidebar -->
-                                    <div class="nftmax-sidebar__single">
-                                        <ul class="nav nav-tabs nftmax-dropdown__list" id="nav-tab" role="tablist">
-                                            <li class="nav-item dropdown nftmax-multiple__adropdownn">
-                                                <a class="nftmax-heading__amount-dropdown nav-link  dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><div class="nftmax__amount-dropdown"><img src="/images/eth-icon.png" alt="#">ETH rate<span class="nftmax-sidebar__arrow--icon"><svg width="14" height="7" viewBox="0 0 14 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.7092 0.288658C13.6163 0.197192 13.5057 0.124593 13.3839 0.0750502C13.262 0.025507 13.1313 0 12.9993 0C12.8673 0 12.7366 0.025507 12.6148 0.0750502C12.4929 0.124593 12.3824 0.197192 12.2894 0.288658L7.70992 4.7581C7.61697 4.84956 7.50638 4.92216 7.38453 4.9717C7.26269 5.02125 7.132 5.04676 7 5.04676C6.868 5.04676 6.73731 5.02125 6.61547 4.9717C6.49362 4.92216 6.38303 4.84956 6.29008 4.7581L1.7106 0.288658C1.61765 0.197192 1.50706 0.124593 1.38521 0.0750502C1.26337 0.025507 1.13268 0 1.00068 0C0.868682 0 0.737991 0.025507 0.616146 0.0750502C0.4943 0.124593 0.383712 0.197192 0.29076 0.288658C0.10453 0.471497 0 0.718831 0 0.976639C0 1.23445 0.10453 1.48178 0.29076 1.66462L4.88024 6.14382C5.44268 6.69206 6.20509 7 7 7C7.79491 7 8.55732 6.69206 9.11976 6.14382L13.7092 1.66462C13.8955 1.48178 14 1.23445 14 0.976639C14 0.718831 13.8955 0.471497 13.7092 0.288658Z" fill="#374557"></path></svg></span></div></a>
-                                                <ul class="dropdown-menu nftmax-sidebar_dropdown">
-                                                    <a class="list-group-item" data-bs-toggle="tab" data-bs-target="#side__two" role="tab"><div class="nftmax__amount-dropdown"><img src="/images/eth-icon.png" alt="#">ETH rate</div></a>
-                                                    <a class="list-group-item" data-bs-toggle="tab"  data-bs-target="#side__two" role="tab"><div class="nftmax__amount-dropdown"><img src="/images/btc-icon.png" alt="#">BTC rate</div></a>
-                                                </ul>
-                                            </li>
-                                        </ul>
-
-                                        <div class="tab-content" id="nav-tabContent">
-                                            <!-- Single Tab -->
-                                            <div class="tab-pane fade show active" id="side__two" role="tabpanel" aria-labelledby="side__two">
-                                                <div class="nftmax-amount__statics">
-                                                    <h4 class="nftmax-amount__statics__title">$7473.67 USD</h4>
-                                                    <p class="nftmax-amount__statics__text">+324.75 (11.5%)</p>
-                                                </div>
-
-                                                <div class="nftmax-sidebar__cside-one">
-                                                    <canvas id="myChart_Side_Two"></canvas>
-                                                </div>
-                                            </div>
-                                            <!-- End Single Tab -->
+                                    </li>
+                                    <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                        <div class="nftmax-balance-info mt-1">
+                                            <h4 style="margin-bottom: 1px;">보유금액 :&nbsp;</h4>
+                                            <h4 style="margin-bottom: 1px;" id="myPrice"></h4>
                                         </div>
-                                    </div>
-                                    <!-- End NFTMax Single Sidebar -->
-                                </div>
-
-                                <div class="col-xxl-12 col-xl-6 col-12 nftmax-sidebar__widget">
-                                    <!-- NFTMax Single Sidebar -->
-                                    <div class="nftmax-sidebar__single">
-                                        <!-- Sidebar Heading -->
-                                        <div class="nftmax-sidebar__heading">
-                                            <h4 class="nftmax-sidebar__title">Top Creators</h4>
-                                            <ul  class="nav nav-tabs nftmax-dropdown__list" id="nav-tab" role="tablist">
-                                                <li class="nav-item dropdown">
-                                                    <a class="nftmax-sidebar_btn nftmax-heading__tabs nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">View All <svg width="13" height="6" viewBox="0 0 13 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path opacity="0.7" d="M12.4124 0.247421C12.3327 0.169022 12.2379 0.106794 12.1335 0.0643287C12.0291 0.0218632 11.917 0 11.8039 0C11.6908 0 11.5787 0.0218632 11.4743 0.0643287C11.3699 0.106794 11.2751 0.169022 11.1954 0.247421L7.27012 4.07837C7.19045 4.15677 7.09566 4.219 6.99122 4.26146C6.88678 4.30393 6.77476 4.32579 6.66162 4.32579C6.54848 4.32579 6.43646 4.30393 6.33202 4.26146C6.22758 4.219 6.13279 4.15677 6.05312 4.07837L2.12785 0.247421C2.04818 0.169022 1.95338 0.106794 1.84895 0.0643287C1.74451 0.0218632 1.63249 0 1.51935 0C1.40621 0 1.29419 0.0218632 1.18975 0.0643287C1.08531 0.106794 0.990517 0.169022 0.910844 0.247421C0.751218 0.404141 0.661621 0.616141 0.661621 0.837119C0.661621 1.0581 0.751218 1.2701 0.910844 1.42682L4.84468 5.26613C5.32677 5.73605 5.98027 6 6.66162 6C7.34297 6 7.99647 5.73605 8.47856 5.26613L12.4124 1.42682C12.572 1.2701 12.6616 1.0581 12.6616 0.837119C12.6616 0.616141 12.572 0.404141 12.4124 0.247421Z" fill="#374557" fill-opacity="0.6"></path></svg></a>
-                                                    <ul class="dropdown-menu nftmax-sidebar_dropdown">
-                                                        <a class="list-group-item" data-bs-toggle="tab" data-bs-target="#daily" role="tab">Daily</a>
-                                                        <a class="list-group-item" data-bs-toggle="tab" data-bs-target="#weekly" role="tab">Weekly</a>
-                                                        <a class="list-group-item"  data-bs-toggle="tab" data-bs-target="#daily" role="tab">Monthly</a>
-                                                    </ul>
-                                                </li>
-                                            </ul>
+                                    </li>
+                                    <input type="hidden" id="_myPrice"/>
+                                    <input type="hidden" id="nftSeq"/>
+                                    <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                        <div class="nftmax__item-form--group ">
+                                            <label class="nftmax__item-label">판매금액 : </label>
+                                            <input class="nftmax__item-input ikon_bit_id" type="text" placeholder="" id="sellPrice" required="required" maxlength="30">
                                         </div>
-                                        <!-- Sidebar Creator Lists -->
-                                        <div class="nftmax-sidebar__creators">
-                                            <div class="tab-content" id="nav-tabContent">
-                                                <!-- Single Tab -->
-                                                <div class="tab-pane fade" id="daily" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                    <ul class="nftmax-sidebar__creatorlist">
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-1.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Albert Flores<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-2.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Jenny Wilson<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-3.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Robert Fox<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-4.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Jacob Jones<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-5.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Cody Fisher<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <!-- Single Tab -->
-                                                <div class="tab-pane fade show active" id="weekly" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                                    <ul class="nftmax-sidebar__creatorlist">
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-1.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Albert Flores<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-2.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Jenny Wilson<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-3.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Robert Fox<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-4.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Jacob Jones<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="nftmax-sidebar__creator">
-                                                                <img src="/images/creator-5.png" alt="#">
-                                                                <a href="#"><b class="nftmax-sidebar__creator-name">Cody Fisher<span class="nftmax-sidebar__creator-link">@broklinslam_75</span></b></a>
-                                                            </div>
-                                                            <div class="nftmax-sidebar__button">
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_request"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.1351 5.4852H11.1378V4.4879C11.1378 4.2125 10.9145 3.98926 10.6391 3.98926C10.3637 3.98926 10.1405 4.2125 10.1405 4.4879V5.4852H9.14317C8.86778 5.4852 8.64453 5.70845 8.64453 5.98384C8.64453 6.25924 8.86778 6.48248 9.14317 6.48248H10.1405V7.47979C10.1405 7.75518 10.3637 7.97843 10.6391 7.97843C10.9145 7.97843 11.1378 7.75518 11.1378 7.47979V6.48248H12.1351C12.4105 6.48248 12.6337 6.25924 12.6337 5.98384C12.6337 5.70845 12.4105 5.4852 12.1351 5.4852Z" fill="white"></path><path d="M5.15595 5.98378C6.80833 5.98378 8.14784 4.64426 8.14784 2.99189C8.14784 1.33951 6.80833 0 5.15595 0C3.50358 0 2.16406 1.33951 2.16406 2.99189C2.16406 4.64426 3.50358 5.98378 5.15595 5.98378Z" fill="white"></path><path d="M5.1558 6.98096C2.67838 6.98372 0.670727 8.99137 0.667969 11.4688C0.667969 11.7442 0.891215 11.9674 1.16661 11.9674H9.14497C9.42037 11.9674 9.64361 11.7442 9.64361 11.4688C9.64088 8.99137 7.63323 6.98369 5.1558 6.98096Z" fill="white"></path></svg></a>
-                                                                <a href="#" class="nftmax-sidebar__button-btn nftmax-request_close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                    </li>
+                                    <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                        <div class="nftmax-balance-info mt-1">
+                                            <h4 style="margin-bottom: 1px;">지급금액 :&nbsp;</h4>
+                                            <h4 style="margin-bottom: 1px;" id="payPrice"></h4>
                                         </div>
-                                        <!-- End Sidebar Creator Lists -->
-                                    </div>
-                                    <!-- End NFTMax Single Sidebar -->
-                                </div>
-
-                                <div class="col-xxl-12 col-xl-6 col-12 nftmax-sidebar__widget">
-                                    <!-- NFTMax Single Sidebar -->
-                                    <div class="nftmax-sidebar__single">
-                                        <!-- Sidebar Heading -->
-                                        <div class="nftmax-sidebar__heading">
-                                            <h4 class="nftmax-sidebar__title">Top Flatform</h4>
-                                            <a href="#" class="nftmax-sidebar_btn">View All</a>
+                                    </li>
+                                    <!-- <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                        <div class="nftmax__item-radio--group">
+                                            <input class="nftmax__item-radio-title" type="radio" placeholder="" name="buyType" required="required" value="package">
+                                            <label class="nftmax__item-radio-label">패키지 구매</label>&nbsp;&nbsp;
+                                            <input class="nftmax__item-radio-title" type="radio" placeholder="" name="buyType" required="required" value="trading">
+                                            <label class="nftmax__item-radio-label">트레이딩 구매</label>
                                         </div>
-                                        <!-- Platform List -->
-                                        <div class="nftmax-sidebar__platform">
-                                            <ul class="nftmax-sidebar__list">
-                                                <li><a href="#"><img src="/images/platform-1.png" alt="#">OpenSea</a></li>
-                                                <li><a href="#"><img src="/images/platform-2.png" alt="#">Rarible</a></li>
-                                                <li><a href="#"><img src="/images/platform-3.png" alt="#">Myth Market</a></li>
-                                                <li><a href="#"><img src="/images/platform-4.png" alt="#">KnownOrigin</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- End NFTMax Single Sidebar -->
+                                    </li> -->
+                                </ul>
+                                <div class="nftmax__item-button--group">
+                                    <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " data-bs-dismiss="modal" onclick="fnSell()">확인</button>
+                                    <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered--plus radius" data-bs-dismiss="modal"><span class="ntfmax__btn-textgr">취소</span> </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
     </div>
 </div>
 </body>
+<%- include('includes/modal') %>
 </html>
 <script>
+    function fnPinPop(price, _price, nftSeq){
+        Swal.fire({
+            title: '핀 번호를 입력해주세요.',
+            customClass: {
+                title: 'text-lg'
+            },
+            showCloseButton: true,
+            html: `<input id="pinNum" type="password" maxLength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '')" inputmode="numeric" placeholder="핀 번호" class="nftmax__item-input"  />`,
+            preConfirm: async () => {
+                let pin = $('#pinNum').val();
+                if(!nullChk(pin)){
+                    Swal.showValidationMessage('핀번호를 입력해주세요.');
+                }else if(pin.length != 4){
+                    Swal.showValidationMessage('핀번호를 4자리 입력해주세요.');
+                }
+
+                let data = {};
+                data.pin = pin;
+                wrapWindowByMaskShow();
+                $.ajax({
+                    url: "/m/pinnCheck",
+                    dataType: "json",
+                    type: "POST",
+                    data: data,
+                    success: function (result) {
+                        console.log(result);
+                        wrapWindowByMaskHide();
+                        if (result.success) {
+                            sellPop(price, _price, nftSeq);
+                        } else {
+                            fnAlertModal(result.message);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        wrapWindowByMaskHide();
+                        fnAlertModal("Failed due to an unknown server error.");
+                    }, //function끝
+                });
+            },
+        });
+    }
+
+    function sellPop(price, _price, nftSeq) {
+        $("#operRate").html("<%= config.sell_fee %> %");
+        $("#myPrice").html(price)
+        $("#_myPrice").val(_price)
+        $("#nftSeq").val(nftSeq)
+        $('#sellAlarm').modal('show');
+    }
+
+    $("#sellPrice").keyup(function(e){
+        
+        let price = $("#sellPrice").val();
+        if(Number($("#_myPrice").val()) < Number(price)) {
+            fnAlertModal($("#_myPrice").val() + "원까지 판매 가능합니다.");
+            $("#sellPrice").val($("#_myPrice").val())
+            $("#payPrice").html(Math.ceil(Number($("#_myPrice").val()) * (1 - Number("<%= config.sell_fee %>") / 100)).toLocaleString() )
+        } else {
+            $("#payPrice").html(Math.ceil(Number(price) * (1 - Number("<%= config.sell_fee %>") / 100)).toLocaleString() )
+        }
+    });
+
+    function fnSell() {
+        let sellPrice = $('#sellPrice').val();
+
+        let data = {
+            sellPrice: sellPrice,
+            nftSeq: $("#nftSeq").val()
+        }
+
+        console.log('data : ', data)
+        wrapWindowByMaskShow();
+        $.ajax({
+            url: '/p/sell',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    $('#sellAlarm').modal('hide');
+                    fnAlertModal('판매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
+                } else {
+                    fnAlertModal(result.message);
+                }
+                // $('#viewAlarm').modal('hide')
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                fnAlertModal('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
+                wrapWindowByMaskHide();
+                
+            }
+        });
+    }
 </script>

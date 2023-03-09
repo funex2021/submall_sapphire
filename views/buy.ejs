@@ -329,8 +329,8 @@
                     $("#totalPrice").html($("#price_view").val() + " USD");
                     console.log('$("#price").val() : ', $("#price").val())
                     console.log('result.data.oper_rate : ', result.data.oper_rate)
-                    $("#totalPriceKrw").html((Number($("#price").val()) * 1.007 * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
-                    $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / 0.7 %");
+                    $("#totalPriceKrw").html((Number($("#price").val()) * (1 + Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
+                    $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / <%= config.buy_fee %> %");
                     operRate = result.data.oper_rate;
                     $("#acc_nm").html(result.data.acc_nm);
                     $("#bank_nm").html(result.data.bank_nm);

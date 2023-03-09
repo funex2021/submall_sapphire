@@ -358,11 +358,27 @@ exports.buy = async (req, res, next) => {
                                         logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 구매 요청 "
                                         logObj.isSuccess = "01"
                                         obj.usdCost = obj.buyNum;
-                                        obj.buyNum = Number(obj.usdCost) * Number(operRate) * 1.007;
+                                        let domain = '';
+                                        if(req.headers.host.indexOf('localhost') > -1){
+                                            domain = localUrl;
+                                        }else{
+                                            domain = req.headers.host;
+                                        }
+                                        obj.domain = domain;
+                                        let config = await Query.QGetConfigInfo(obj, conn);
+                                        
+                                        obj.buyNum = Number(obj.usdCost) * Number(operRate) * (1 + Number(config.buy_fee) / 100);
+                                        obj.krwCost = Number(obj.usdCost) * Number(operRate);
                                         await Query.QSetHistory(logObj, conn);
                                         await Query.QSetCoinBuy(obj, conn);
                                         await Query.QSetIsBuy(obj, conn);
-
+                                        obj.operRate = operRate;
+                                        obj.fee = config.buy_fee;
+                                        obj.platformFee = config.platform_fee;
+                                        obj.platformAmount = Number(obj.buyNum) * (Number(config.platform_fee) / 100);
+                                        obj.platformAmount = obj.platformAmount < 1000 ? 1000 : obj.platformAmount;
+                                        await Query.QInsCoinSellCacl(obj, conn);
+                                        
                                         conn.commit();
                                         res.json(rtnUtil.successTrue("200", "", ""));
                                     } else {
@@ -883,44 +899,6 @@ exports.airView = async (req, res, next) => {
             })
         }
     });
-    
-    
-    // let pool = req.app.get('pool');
-    // let mydb = new Mydb(pool);
-    // let {pageIndex, srtDt, endDt} = req.body;
-
-    // if (srtDt == undefined || srtDt == '' || srtDt == null) {
-    //     // endDt = moment().add(7, 'hours').format("YYYY-MM-DD")
-    //     // srtDt = moment().add(7, 'hours').format("YYYY-MM-DD")
-    //     endDt = moment().format('YYYY-MM-DD');
-    //     srtDt = moment().format('YYYY-MM-DD');
-    // }
-
-    // mydb.executeTx(async conn => {
-    //     try {
-    //         let userId = req.user.memId;
-    //         let cmpnyCd = req.user.cmpnyCd;
-    //         let cmpnyInfo = null;
-
-    //         let obj = {}
-    //         obj.cmpnyCd = cmpnyCd;
-    //         obj.userId = userId;
-
-    //         let airList = await Query.QGetAirdropList(obj, conn);
-
-    //         console.log({pagination});
-    //         res.render("withdraw", {
-    //             "airList": airList,
-    //             "menuNum":5
-    //         })
-
-    //     } catch (e) {
-    //         console.log('e : ', e)
-    //         res.render("airdrop", {
-    //             "airList": "",
-    //         })
-    //     }
-    // });
 
 }
 
@@ -975,45 +953,18 @@ exports.haveNft = async (req, res, next) => {
 
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
-    let {pageIndex, srtDt, endDt} = req.body;
+    let {pageIndex} = req.body;
 
-    if (srtDt == undefined || srtDt == '' || srtDt == null) {
-        // endDt = moment().add(7, 'hours').format("YYYY-MM-DD")
-        // srtDt = moment().add(7, 'hours').format("YYYY-MM-DD")
-        endDt = moment().format('YYYY-MM-DD');
-        srtDt = moment().format('YYYY-MM-DD');
-    }
 
     mydb.executeTx(async conn => {
         try {
-            let userId = req.user.memId;
             let mSeq = req.user.mSeq;
-            let cmpnyCd = req.user.cmpnyCd;
-
+            let userId = req.user.memId;
+            
             let obj = {}
-            //let coinObj = await axios.get(CONSTS.API.URL+'/public/balance1/'+address);
-            obj.cmpnyCd = cmpnyCd;
-            obj.cs_coin_sell = req.user.cs_coin_sell;
-            obj.cs_coin_trans = req.user.cs_coin_trans;
-            obj.cs_coin_sell_detail = req.user.cs_coin_sell_detail;
-            obj.cs_coin_trans_detail = req.user.cs_coin_trans_detail;
-            //은행정보 가져오기
-            obj.userId = userId;
-            obj.srtDt = srtDt;
-            obj.endDt = endDt;
             obj.mSeq = mSeq;
 
-            let search = {}
-
-            search.srtDt = srtDt;
-            search.endDt = endDt;
-
-            let cmpnyInfo  = await Query.QGetCompanyInfo(obj, conn);
-            let balanceCnt = await Query.QGetBalanceCnt(obj, conn);
-            if (balanceCnt == 0) await Query.QInsMeberBalance(obj, conn);
-
-            obj.memId = userId
-            let totalPageCount = await Query.QGetAirdropListTotal(obj, conn);
+            let totalPageCount = await Query.QGetMyNftListTotal(obj, conn);
             if (pageIndex == "" || pageIndex == null) {
                 pageIndex = 1;
             }
@@ -1023,8 +974,9 @@ exports.haveNft = async (req, res, next) => {
             obj.rowsPerPage = pagination.rowsPerPage;
             pagination.totalItems = totalPageCount;
 
-            let balance = await Query.QGetBalance(obj, conn);
-            let airList = await Query.QGetAirdropList(obj, conn);
+            let nftList = await Query.QGetMyNftList(obj, conn);
+
+            console.log('nftList : ', nftList)
 
             let domain = '';
             if(req.headers.host.indexOf('localhost') > -1){
@@ -1038,14 +990,11 @@ exports.haveNft = async (req, res, next) => {
 
             console.log({pagination});
             res.render("haveNft", {
-                'cmpnyInfo': cmpnyInfo[0],
-                "airList": airList,
+                "nftList": nftList,
                 "pagination": pagination,
-                "coinObj": balance[0].balance,
                 'amount': req.session.amount,
                 'config': config,
-                'srtDt': srtDt,
-                'endDt': endDt,
+                "nftMallUrl": nftMallUrl,
                 'userId': userId,
                 "menuNum":6
             })
@@ -1053,11 +1002,128 @@ exports.haveNft = async (req, res, next) => {
         } catch (e) {
             console.log('e : ', e)
             res.render("airdrop", {
-                "airList": "",
+                "nftList": "",
                 "pagination": pagination,
                 "balance": 0,
                 'amount': req.session.amount
             })
+        }
+    });
+}
+
+exports.sell = async (req, res, next) => {
+
+    let {sellPrice, nftSeq} = req.body;
+
+    let obj = {}
+    obj.sellSeq = uuidv4();
+    obj.sellAmount = 1;
+    obj.sellPrice = sellPrice;
+    obj.nftSeq = nftSeq;
+    obj.cmpnyCd = req.user.cmpnyCd;
+    obj.mSeq = req.user.mSeq;
+    obj.memId = req.user.memId;
+    obj.sellStatus = "CMDT00000000000080";
+    obj.payCd = "CMDT00000000000071";
+    obj.contractAddress = "CMDT00000000000071";
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    //pay log
+    var logObj = {};
+    logObj.cmpnyCd = req.user.cmpnyCd;
+    logObj.mSeq = req.user.mSeq;
+    logObj.payCode = "[" + obj.buyNum + "] buy";
+    logObj.payRequest = req.user.memId;
+    logObj.userIp = requestIp.getClientIp(req);
+
+    mydb.executeTx(async conn => {
+        try {
+            console.log("===========coin sell=============")
+
+            let status = await Query.QGetStatus(obj, conn);
+
+            if (status == 'CMDT00000000000030') {
+
+                let sellStsCtn = await Query.QGetSellReqSts(obj, conn);
+                        console.log(sellStsCtn)
+                        if (parseInt(sellStsCtn) > 0) {
+                            conn.rollback();
+                            logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 판매 확인 중에 있습니다. 판매중인 NFT를 확인하여 취소 후 재신청 해주세요."
+                            logObj.isSuccess = "00"
+                            await Query.QSetHistory(logObj, conn);
+                            console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 판매 확인 중에 있습니다. 판매중인 NFT를 확인하여 취소 후 재신청 해주세요.")
+                            res.json(rtnUtil.successFalse("500", "판매 확인 중에 있습니다.  완료 후 재 신청해주세요.", "", ""));
+                        } else {
+                            try {
+                                let domain = '';
+                                if(req.headers.host.indexOf('localhost') > -1){
+                                    domain = localUrl;
+                                }else{
+                                    domain = req.headers.host;
+                                }
+                                obj.domain = domain;
+                                let config = await Query.QGetConfigInfo(obj, conn);
+
+                                obj.realPrice = Number(sellPrice) * (1 - Number(config.sell_fee) / 100);
+                                await Query.QInsNftSell(obj, conn);
+                                conn.commit();
+                                //cs_nft_buy insert
+                                obj.userId = req.user.cmpnyNm;
+                                let companyInfo = await Query.QGetCompanyInfo(obj, conn)
+                                console.log('companyInfo :' , companyInfo)
+                                let nftBuyObj = {};
+                                nftBuyObj.coinSellSeq = obj.sellSeq;
+                                nftBuyObj.mSeq = companyInfo[0].m_seq;
+                                nftBuyObj.bankSeq = companyInfo[0].bank_seq;
+                                let wallet = await Query.QGetMemberWalletLimit1(nftBuyObj, conn);
+                                nftBuyObj.coinAddr = wallet[0].coin_addr;
+                                nftBuyObj.buySeq = uuidv4();
+                                nftBuyObj.sellSeq = obj.sellSeq;
+                                nftBuyObj.buyAmount = 1;
+                                nftBuyObj.ikonId = '';
+                                nftBuyObj.buyType = '';
+                                console.log(nftBuyObj)
+                                await Query.QSetInsNftBuy(nftBuyObj, conn);
+                                conn.commit();
+                                obj.seq = obj.sellSeq;
+                                obj.operRate = 0;
+                                obj.fee = config.buy_fee;
+                                obj.platformFee = config.platform_fee;
+                                obj.platformAmount = Number(sellPrice) * (Number(config.platform_fee) / 100);
+                                obj.platformAmount = obj.platformAmount < 1000 ? 1000 : obj.platformAmount;
+                                await Query.QInsCoinSellCacl(obj, conn);
+                                
+                                res.json(rtnUtil.successTrue("200", "", ""));
+                            } catch (e) {
+                                conn.rollback();
+                                console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 오류 발생  ")
+                                console.log(e)
+                                logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 오류 발생  "
+                                logObj.isSuccess = "00"
+                                await Query.QSetHistory(logObj, conn);
+                                res.json(rtnUtil.successFalse("500", "구매에 실패 하였습니다. 관리자에게 문의 하세요.", "", ""));
+                            }
+
+                        }
+                
+            } else {
+                conn.rollback();
+                logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 회원상태를 확인해주세요."
+                logObj.isSuccess = "00"
+                await Query.QSetHistory(logObj, conn);
+                console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 회원상태를 확인해주세요.")
+                res.json(rtnUtil.successFalse("500", "회원상태를 확인해주세요.", "", ""));
+            }
+
+        } catch (e) {
+            conn.rollback();
+            console.log(e)
+            logObj.payResponse = e.message
+            logObj.isSuccess = "00"
+            await Query.QSetHistory(logObj, conn);
+            res.json(rtnUtil.successFalse("500", "", e.message, e));
         }
     });
 }

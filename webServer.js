@@ -104,7 +104,7 @@ app.use(function (req, res, next) {
 function fnGetConfigInfo(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " SELECT cpc.max_amt, cpc.min_amt, cpc.is_captcha, cpc.is_pause, cpc.site_url, cpc.login_text, cpc.pwd_text, cpc.found_text, cpc.company_nm, cpc.suspension_min, cpc.is_auto_suspension_view "
-        sql += " , cc.sign_yn"
+        sql += " , cc.sign_yn, IFNULL(cpc.sell_fee, 0) sell_fee, IFNULL(cpc.buy_fee, 0) buy_fee"
         sql += " FROM cs_pay_config cpc"
         sql += " left join cs_company cc on cpc.cmpny_cd = cc.cmpny_cd"
         sql += " WHERE site_url LIKE '%" + param.domain + "%'"

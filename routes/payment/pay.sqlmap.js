@@ -3,6 +3,7 @@ function fnGetCompanyInfo(param, conn) {
         var sql = " SELECT cm.m_seq, fn_get_name(cc.admin_grade) "
         sql += " , cc.input_info1_bank, cc.input_info1_acc, cc.input_info1_name, cc.input_info2 , cc.coin_rate, cc.seller_seq, cbw.balance, cc.point_view_yn, sign_yn "
         sql += " , cnb.bank_nm nft_bank_nm, cnb.bank_acc nft_bank_acc, cnb.acc_nm nft_acc_nm";
+        sql += " , (select seq from cs_bank where m_seq = cm.m_seq) bank_seq";
         sql += " FROM cs_member cm inner join cs_company cc ON cm.cmpny_cd = cc.cmpny_cd AND cc.admin_grade = 'CMDT00000000000002'"
         sql += " inner join cs_balance_wallet cbw ON cbw.m_seq = cm.m_seq "
         sql += " left join cs_nft_bank cnb on cnb.seq = cm.bank_seq";
@@ -98,10 +99,10 @@ function fsUptMeberBalance(param, conn) {
 function fnSetCoinBuy(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " INSERT INTO " + param.cs_coin_sell + " "
-        sql += " (seq, m_seq, buy_num, pay_num, usd_cost, seller_seq, coin_rate) "
+        sql += " (seq, m_seq, buy_num, pay_num, usd_cost, krw_cost, seller_seq, coin_rate) "
         sql += "  VALUES('" + param.seq + "', (select m_seq from cs_member cm where mem_id = '" + param.memId + "' and cm.cmpny_cd = '" + param.cmpnyCd + "'), '" + param.buyNum + "'"
         sql += " , (select floor('" + param.buyNum + "' * (csc.coin_rate/100)) from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
-        sql += " , '" + param.usdCost + "', (select seller_seq from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
+        sql += " , '" + param.usdCost + "', '"+param.krwCost+"', (select seller_seq from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "')) "
         sql += " , (select csc.coin_rate from cs_company csc where csc.cmpny_cd = (select cmpny_cd from cs_member cm1 where cm1.mem_id = '" + param.memId + "' and cm1.cmpny_cd = '" + param.cmpnyCd + "'))) "
 
         console.log(sql)
@@ -344,7 +345,7 @@ function fnSetHistory(param, conn) {
 */
 function fnGetConfigInfo(param, conn) {
     return new Promise(function (resolve, reject) {
-        var sql = " SELECT max_amt, min_amt, is_captcha, is_pause, site_url, login_text, pwd_text, found_text, cmpny_cd, company_nm, suspension_min, is_auto_suspension_view  "
+        var sql = " SELECT max_amt, min_amt, is_captcha, is_pause, site_url, login_text, pwd_text, found_text, cmpny_cd, company_nm, suspension_min, is_auto_suspension_view, IFNULL(sell_fee, 0) sell_fee, IFNULL(buy_fee, 0) buy_fee, IFNULL(platform_fee, 0) platform_fee  "
         sql += " FROM cs_pay_config "
         sql += " WHERE site_url = '" + param.domain + "'"
 
@@ -894,6 +895,141 @@ function fnGetAirdropListTotal(param, conn) {
     });
 }
 
+function fnGetMyNftListTotal(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "select count(1) count from (";
+
+        sql += " select COUNT(nft_seq) from ";
+        sql += " ((select cns.nft_seq, cnb.buy_amount, 0 tot_price from cs_nft_buy cnb inner join cs_nft_sell cns on cnb.sell_seq = cns.sell_seq  ";
+        sql += " where cnb.m_seq = '" + param.mSeq + "' ";
+        sql += " and cnb.buy_status = 'CMDT00000000000087') ";
+        sql += " union all ";
+        sql += " (select nft_seq, 1 buy_amount, tot_price from cs_nft_airdrop where m_seq = '" + param.mSeq + "' ";
+        sql += " and use_yn = 'Y' order by create_dt desc limit 1)) T inner join cs_nft_mst cnm on T.nft_seq = cnm.seq ";
+        sql += " group by nft_seq) TT ";
+
+        console.log('fnGetMyNftListTotal >> ' , sql);
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret[0].count);
+        });
+    });
+}
+
+function fnGetMyNftList(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+
+        sql += " select cnm.nft_nm, cnm.nft_desc, cnm.contract_addr, cnm.file_path, T.nft_seq, sum(T.buy_amount) buy_amount, sum(T.tot_price) price from ";
+        sql += " ((select cns.nft_seq, cnb.buy_amount, 0 tot_price from cs_nft_buy cnb inner join cs_nft_sell cns on cnb.sell_seq = cns.sell_seq  ";
+        sql += " where cnb.m_seq = '" + param.mSeq + "' ";
+        sql += " and cnb.buy_status = 'CMDT00000000000087') ";
+        sql += " union all ";
+        sql += " (select nft_seq, 1 buy_amount, tot_price from cs_nft_airdrop where m_seq = '" + param.mSeq + "' ";
+        sql += " and use_yn = 'Y' order by create_dt desc limit 1)) T inner join cs_nft_mst cnm on T.nft_seq = cnm.seq ";
+        sql += " group by nft_seq ";
+
+        console.log('fnGetMyNftList >> ' , sql);
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnInsNftSell(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += " INSERT INTO cs_nft_sell ";
+        sql += " (sell_seq, nft_seq, cmpny_cd, sell_amount, sell_price, sell_status, pay_cd, m_seq, create_dt, update_dt, contract_address, token_id, sell_type, nft_nm, nft_desc, category_cd, nft_img, collection_seq, is_public, from_addr, airdrop_yn, real_price) ";
+        sql += " VALUES('"+param.sellSeq+"','"+param.nftSeq+"','"+param.cmpnyCd+"','"+param.sellAmount+"','"+param.sellPrice+"', ";
+        sql += " '"+param.sellStatus+"','"+param.payCd+"','"+param.mSeq+"', now(), now(), ";
+        sql += " (select contract_addr from cs_nft_mst where seq = '"+param.nftSeq+"'), (select token_id from cs_nft_airdrop where m_seq = '"+param.mSeq+"' and nft_seq = '"+param.nftSeq+"' and use_yn = 'Y' limit 1),'CMDT00000000000084', ";
+        sql += " (select nft_nm from cs_nft_mst where seq = '"+param.nftSeq+"'), (select nft_desc from cs_nft_mst where seq = '"+param.nftSeq+"'), ";
+        sql += " (select category_cd from cs_nft_mst where seq = '"+param.nftSeq+"'), (select file_path from cs_nft_mst where seq = '"+param.nftSeq+"'), (select collection_seq from cs_nft_mst where seq = '"+param.nftSeq+"'), 'N', '', 'Y', '"+param.realPrice+"') ";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+
+
+
+function fnInsCoinSellCacl(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = "";
+        sql += " INSERT INTO cs_coin_sell_cacl ";
+        sql += " (sell_seq, oper_rate, fee, platform_fee, platform_amount, create_dt) ";
+        sql += " VALUES('"+param.seq+"', '"+param.operRate+"', '"+param.fee+"', '"+param.platformFee+"', '"+param.platformAmount+"', CURRENT_TIMESTAMP) ";
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+function fnGetSellReqSts(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = " select count(1) sellStsCtn from cs_nft_sell where m_seq = '"+param.mSeq+"' "
+        sql += " and sell_status = 'CMDT00000000000080' "
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret[0].sellStsCtn);
+        });
+    });
+}
+
+function fnGetCompanyInfoByMseq(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = " SELECT cm.m_seq, fn_get_name(cc.admin_grade) "
+        sql += " , cc.input_info1_bank, cc.input_info1_acc, cc.input_info1_name, cc.input_info2 , cc.coin_rate, cc.seller_seq, cbw.balance, cc.point_view_yn, sign_yn "
+        sql += " , cnb.bank_nm nft_bank_nm, cnb.bank_acc nft_bank_acc, cnb.acc_nm nft_acc_nm";
+        sql += " , (select seq from cs_bank where m_seq = cm.m_seq) bank_seq";
+        sql += " FROM cs_member cm inner join cs_company cc ON cm.cmpny_cd = cc.cmpny_cd AND cc.admin_grade = 'CMDT00000000000002'"
+        sql += " inner join cs_balance_wallet cbw ON cbw.m_seq = cm.m_seq "
+        sql += " left join cs_nft_bank cnb on cnb.seq = cm.bank_seq";
+        sql += " WHERE cm.m_seq = '" + param.mSeq + "' "
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+module.exports.QGetCompanyInfoByMseq = fnGetCompanyInfoByMseq;
+module.exports.QGetSellReqSts = fnGetSellReqSts;
+module.exports.QInsCoinSellCacl = fnInsCoinSellCacl;
+module.exports.QInsNftSell = fnInsNftSell;
+module.exports.QGetMyNftListTotal = fnGetMyNftListTotal;
+module.exports.QGetMyNftList = fnGetMyNftList;
 module.exports.QGetAirdropListTotal = fnGetAirdropListTotal;
 module.exports.QGetAirdropList = fnGetAirdropList;
 module.exports.QGetNftBuyMainList = fnGetNftBuyMainList;
