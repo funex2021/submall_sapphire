@@ -828,20 +828,17 @@ function fnGetNftListByAirdrop(param, conn) {
 function fnGetNftBuyMainList(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
-        sql += "select t.* from ( ";
-        sql += " select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount , DATE_FORMAT(ccsl.create_dt, '%Y-%m-%d %H:%i:%s') as create_dt from "+param.cs_coin_sell_detail+" ccsd";
-        sql += " left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq";
-        sql += " inner join "+param.cs_coin_sell+" ccsl on ccsd.sell_seq  = ccsl.seq";
-        sql += " where 1=1";
-        sql += " and ccsl.m_seq = '" + param.mSeq + "'";
-        sql += " union all";
-        sql += " select cnm.file_path nft_img, cnm.nft_nm, ccsd.send_txid, '1' buy_amount , DATE_FORMAT(ccsl.create_dt, '%Y-%m-%d %H:%i:%s') as create_dt  from cs_coin_sell_detail_log ccsd";
-        sql += " left join cs_nft_mst cnm on cnm.seq = ccsd.nft_seq";
-        sql += " inner join cs_coin_sell_log ccsl on ccsd.sell_seq  = ccsl.seq";
-        sql += " where 1=1";
-        sql += " and ccsl.m_seq = '" + param.mSeq + "'";
-        sql += " ) t "
-        sql += " order by t.create_dt desc "
+        sql += " select ";
+        sql += " cns.nft_img, ";
+        sql += "    cns.nft_nm, ";
+        sql += "    cnb.buy_amount, ";
+        sql += "    cns.contract_address  as send_txid , ";
+        sql += "    DATE_FORMAT(cnb.create_dt, '%Y-%m-%d %H:%i:%s') as create_dt ";
+        sql += " from cs_nft_buy cnb ";
+        sql += " left join cs_nft_sell cns on cnb.sell_seq = cns.sell_seq ";
+        sql += " where cnb.buy_status = 'CMDT00000000000087' ";
+        sql += " and cnb.m_seq = '" + param.mSeq + "'";
+        sql += " order by create_dt desc ";
         sql += " limit 0,5 ";
 
         console.log('fnGetNftBuyMainList >> ' , sql);
