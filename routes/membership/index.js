@@ -14,9 +14,7 @@ var isAuthenticated = function (req, res, next) {
 
 router.post("/signin", (req, res, next) => {
 
-    let {amount} = req.body;
-
-    console.log('req.amount : ' + amount);
+    let {amount , saveYn} = req.body;
     if (amount != undefined) {
         req.session.amount = amount;
     }
@@ -40,6 +38,11 @@ router.post("/signin", (req, res, next) => {
             }
 
             if (req.session.amount != null && req.session.amount != undefined) {
+                if(saveYn == 'Y'){
+                    res.cookie('saveId' , user.memId);
+                }else{
+                    res.cookie('saveId' , '');
+                }
                 return res.redirect("/p/buyview")
             } else {
                 return res.redirect(307, '/p/view');

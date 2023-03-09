@@ -46,7 +46,7 @@
                                                 <path d="M12.8389 10.4964L21.1425 2.19182C20.7403 1.52484 20.1729 0.972764 19.4952 0.588847C18.8175 0.204931 18.0523 0.00212789 17.2734 0H4.5461C3.76721 0.00212789 3.00201 0.204931 2.3243 0.588847C1.6466 0.972764 1.07926 1.52484 0.677002 2.19182L8.98066 10.4964C9.493 11.0067 10.1867 11.2932 10.9098 11.2932C11.6329 11.2932 12.3265 11.0067 12.8389 10.4964Z" fill="#374557" fill-opacity="0.6"></path>
                                             </svg>
                                         </span>
-                                        <input class="nftmax-wc__form-input" type="text" name="login-form-username" id="login-form-username" value="<%=userId%>" placeholder="<%=config.login_text%>" />
+                                        <input class="nftmax-wc__form-input" type="text" name="login-form-username" id="login-form-username" value="" placeholder="<%=config.login_text%>" />
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <div class="nftmax-wc__check-inline">
                                         <div class="nftmax-wc__checkbox">
-                                            <input class="nftmax-wc__form-check" id="checkbox" name="checkbox" type="checkbox">
+                                            <input class="nftmax-wc__form-check" id="idSave" name="checkbox" type="checkbox">
                                             <label for="checkbox">아이디 저장하기</label>
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@
         </div>
     </section>
     <!-- End NFTMax Welcome -->
-
+<input type="hidden" id="alertMessage" value="<%= alertMessage %>">
 </div>
 </body>
 <%- include('includes/modal') %>
@@ -101,14 +101,29 @@
 <% } %>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-
     $(document).ready(function (){
+       let saveId = '<%=saveId%>';
+       if(nullChk(saveId)){
+           $("#login-form-username").val(saveId);
+           $('#idSave').prop('checked', true);
+       }
        if(isMobile()){
            $("#bgArea").hide();
            $("#bodyArea").append("<img src='/images/intro_img.png' id='imgArea' />");
            setTimeout(introEnd , 2000);
        }
+        if ($('#alertMessage').val() != "") {
+            fnAlertModal($('#alertMessage').val());
+        }
     });
+
+    function nullChk(obj){
+        let rtn = true;
+        if(null == obj || !obj  || obj === undefined){
+            rtn = false;
+        }
+        return rtn;
+    }
 
     function introEnd(){
         $("#bgArea").show();
@@ -172,6 +187,16 @@
         hiddenField4.setAttribute('name', 'amount');
         hiddenField4.setAttribute('value', $('#amount').val());
         form.appendChild(hiddenField4);
+
+        let saveYn = "N";
+        if($("#idSave").is(':checked')){
+            saveYn = "Y";
+        }
+        let hiddenField5 = document.createElement('input');
+        hiddenField5.setAttribute('type', 'hidden');
+        hiddenField5.setAttribute('name', 'saveYn');
+        hiddenField5.setAttribute('value', saveYn);
+        form.appendChild(hiddenField5);
 
         document.body.appendChild(form);
         form.submit();
