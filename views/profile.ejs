@@ -50,16 +50,20 @@
                                                                         <div class="nftmax-ptabs__form-main">
                                                                             <div class="nftmax__item-form--group">
                                                                                 <label class="nftmax__item-label">ID</label>
-                                                                                <input class="nftmax__item-input" type="text" id="user_id" placeholder="RaidParty Fighters" required="required" value="<%=memInfo.user_id%>" readOnly>
+                                                                                <input class="nftmax__item-input" type="text" id="user_id" required="required" value="<%=memInfo.user_id%>" readOnly>
                                                                                 <p class="nftmax__item-fee-text">수정이 불가능합니다.</p>
                                                                             </div>
                                                                             <div class="nftmax__item-form--group">
                                                                                 <label class="nftmax__item-label">이름</label>
-                                                                                <input class="nftmax__item-input" type="text" id="user_nm" placeholder="RaidParty Fighters" required="required" value="<%=memInfo.user_name%>">
+                                                                                <input class="nftmax__item-input" type="text" id="user_nm" placeholder="이름을 입력해주세요." required="required" value="<%=memInfo.user_name%>">
                                                                             </div>
                                                                             <div class="nftmax__item-form--group">
                                                                                 <label class="nftmax__item-label">Email </label>
-                                                                                <input class="nftmax__item-input" type="email" id="user_email" placeholder="info@youremail.com" required="required" value="<%=memInfo.user_email%>">
+                                                                                <input class="nftmax__item-input" type="email" id="user_email" placeholder="이메일을 입력해주세요." required="required" value="<%=memInfo.user_email%>">
+                                                                            </div>
+                                                                            <div class="nftmax__item-form--group">
+                                                                                <label class="nftmax__item-label">Pin </label>
+                                                                                <input class="nftmax__item-input" type="password" id="pin" placeholder="핀번호를 입력해주세요." required="required" value="<%=memInfo.pin%>" onkeyup="numCheck(this);" maxlength="4">
                                                                             </div>
                                                                         </div>
                                                             
@@ -89,7 +93,7 @@
                                                                                 <% if (memInfo.user_bank != ''){%>
                                                                                     <p class="nftmax-paymentm__text">은행 : <%=memInfo.user_bank%></p>
                                                                                     <p class="nftmax-paymentm__text">예금주 : <%=memInfo.user_holder%></p>
-                                                                                    <p class="nftmax-paymentm__text">계좌번호 : <%=memInfo.user_num%></p>
+                                                                                    <p class="nftmax-paymentm__text">계좌번호 : <a href="javascript:void(0);" onclick="fnCopy('<%=memInfo.user_num%>')" style="text-decoration: underline;"><%=memInfo.user_num%></a></p>
                                                                                     <span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">변경</span>
                                                                                 <%}else{%>
                                                                                     <span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">등록</span>
@@ -144,12 +148,10 @@
                                                                                 <input class="nftmax__item-input" type="text" id="bank_acc" placeholder="예금주 입력하세요." required="required" value="<%=memInfo.user_num%>" >
                                                                             </div>
                                                                         </div>
-                                                                   
                                                                     </li>
-
                                                                 </ul>
                                                             </div>
-                                                            <div class="nftmax__item-button--group nftmax__ptabs-bottom" id="bankBtnArea">
+                                                            <div class="nftmax__item-button--group nftmax__ptabs-bottom" id="bankBtnArea" style="display: none;">
                                                                 <span class="nftmax__item-button--single nftmax__item-button--cancel" onclick="fnBankCancel()" style="cursor: pointer;">취소</span>
                                                                 <% if (memInfo.user_bank != ''){%>
                                                                     <span class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " type="submit" onClick="fnModify(2)" style="cursor: pointer;">수정</span>
@@ -267,9 +269,16 @@
             }
         }
 
+        if ($("#pin").val() == '' ) {
+            return fnAlertModal('핀 번호를 입력해주세요.');
+        }else if($("#pin").val().length != 4){
+            return fnAlertModal('핀 번호는 4자리로 입력해주세요.');
+        }
+
         let data = {
             userNm: $("#user_nm").val(),
             userEmail : $("#user_email").val(),
+            pin : $("#pin").val()
         }
 
         $.ajax({
@@ -335,10 +344,6 @@
     function fnModifyPass(){
         if ($('#mem_pass').val() == '') {
             return fnAlertModal('비밀번호는 필수 입력값입니다.');
-        }else {
-            if (!passChk()) {
-                return;
-            }
         }
 
         if ($('#chk_mem_pass').val() == '') {
@@ -399,11 +404,13 @@
     function fnBankModiry() {
         $('#bankInfo').hide();
         $('#bankModify').show();
+        $('#bankBtnArea').show();
     }
 
     function fnBankCancel() {
         $('#bankInfo').show();
         $('#bankModify').hide();
+        $('#bankBtnArea').hide();
     }
 </script>
 <style>

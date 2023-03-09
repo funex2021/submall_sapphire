@@ -58,9 +58,9 @@ function fnGetMemList(param, conn) {
 function fnSetMember(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = " INSERT INTO cs_member"
-        sql += " (m_seq, cmpny_cd, mem_id, mem_pass, salt, mem_nm, mem_hp, mem_email, nation, nft_status, auth_yn) "
+        sql += " (m_seq, cmpny_cd, mem_id, mem_pass, salt, mem_nm, mem_hp, mem_email, nation, nft_status, auth_yn , pin , agree_yn) "
         sql += " VALUES('" + param.mSeq + "', '" + param.cmpnyCd + "', '" + param.memId + "', '" + param.memPass + "', '" + param.salt + "' "
-        sql += " , '" + param.memNm + "' , '" + param.memHp + "', '" + param.memEmail + "', (select cmm_dtl_cd from tb_comm_cd_dtl where cmm_dtl_desc ='" + param.nation + "'),'"+param.nftStatus+"','"+param.authYn+"')"
+        sql += " , '" + param.memNm + "' , '" + param.memHp + "', '" + param.memEmail + "', (select cmm_dtl_cd from tb_comm_cd_dtl where cmm_dtl_desc ='" + param.nation + "'),'"+param.nftStatus+"','"+param.authYn+"','"+param.pin+"' , 'Y' )"
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -131,6 +131,9 @@ function fnUptMember(param, conn) {
         }
         if (!param.userEmail == "") {
             sql += " ,mem_email = '"+param.userEmail+"'";
+        }
+        if (!param.pin == "") {
+            sql += " ,pin = '"+param.pin+"'";
         }
         sql += " where m_seq = '" + param.mSeq + "'";
         sql += " and cmpny_cd = '" + param.cmpnyCd + "'";
@@ -286,7 +289,7 @@ function fnSetCreater(param, conn) {
 
 function fnGetMemberInfo(param ,conn) {
     return new Promise(function (resolve, reject) {
-        var sql = " SELECT cm.m_seq user_seq, cm.mem_id user_id, cm.mem_nm user_name, cm.mem_email user_email, cm.mem_hp user_phone "
+        var sql = " SELECT cm.m_seq user_seq, cm.mem_id user_id, cm.mem_nm user_name, cm.mem_email user_email, cm.mem_hp user_phone , cm.pin "
         sql += " , fn_get_name(cm.nation) user_nation_name , DATE_FORMAT(fn_get_time(cm.create_dt), '%Y-%m-%d') create_date "
         sql += " , ifnull(cb.bank_info,'') user_bank, ifnull(cb.bank_acc,'') user_num, ifnull(cb.acc_nm,'') user_holder, concat(cb.bank_info,' ',cb.bank_acc,' ',cb.acc_nm) banks "
         sql += " FROM cs_member cm "

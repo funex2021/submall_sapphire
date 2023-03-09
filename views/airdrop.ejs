@@ -44,6 +44,7 @@
                                                         <tr>
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">상품</th>
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">sales</th>
+                                                            <th class="nftmax-table__column-2 nftmax-table__h2">지급일</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">변동금액</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">누적금액</th>
                                                         </tr>
@@ -55,18 +56,18 @@
                                                                         <tr>
                                                                             <td class="nftmax-table__column-2 nftmax-table__data-2">
                                                                                 <div class="nftmax-table__product">
-                                                                                    <a href="#n" onclick="fnGetNftImageInfo('http://nftnting.com','<%= el.nft_img %>');">
+                                                                                    <a href="javascript:void(0);" onclick="fnGetNftImageInfo('http://nftnting.com','<%= el.nft_img %>');">
                                                                                         <div class="nftmax-table__product-img">
                                                                                             <img src="http://nftnting.com/<%= el.nft_img %>" alt="#">
                                                                                         </div>
                                                                                     </a>
                                                                                     <div class="nftmax-table__product-content">
-                                                                                        <a href="#n" onclick="fnGetNftImageInfo('http://nftnting.com','<%= el.nft_img %>');">
+                                                                                        <a href="javascript:void(0);" onclick="fnGetNftImageInfo('http://nftnting.com','<%= el.nft_img %>');">
                                                                                             <h4 class="nftmax-table__product-title">
                                                                                                 <%= el.nft_nm %>
                                                                                             </h4>
                                                                                         </a>
-                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="#n">CNFT</a></p>
+                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="javascript:void(0);">CNFT</a></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -77,17 +78,24 @@
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
-                                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
                                                                                 <div class="nftmax-table__amount nftmax-table__text-one">
                                                                                     <span class="nftmax-table__text">
-                                                                                        <b><%= el.price %></b>
+                                                                                       <b><%= el.create_dt %></b>
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
                                                                             <td class="nftmax-table__column-3 nftmax-table__data-3">
                                                                                 <div class="nftmax-table__amount nftmax-table__text-one">
                                                                                     <span class="nftmax-table__text">
-                                                                                        <b><%= el.tot_price %></b>
+                                                                                          <b><%= Number(el.price ).toLocaleString('ko-KR')%></b>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                                    <span class="nftmax-table__text">
+                                                                                        <b><%= Number(el.tot_price ).toLocaleString('ko-KR')%></b>
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
@@ -267,18 +275,25 @@
                         pcHtml +=               '<b>지급</b>';
                         pcHtml +=           '</span>'; 
                         pcHtml +=       '</div>'; 
-                        pcHtml +=   '</td>'; 
+                        pcHtml +=   '</td>';
+                        pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">';
+                        pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">';
+                        pcHtml +=           '<span class="nftmax-table__text">';
+                        pcHtml +=               '<b>' + airList[i].create_dt + '</b>';
+                        pcHtml +=           '</span>';
+                        pcHtml +=       '</div>';
+                        pcHtml +=   '</td>';
                         pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">'; 
                         pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">'; 
                         pcHtml +=           '<span class="nftmax-table__text">'; 
-                        pcHtml +=               '<b>' + airList[i].price + '</b>';
+                        pcHtml +=               '<b>' + numberComma(airList[i].price) + '</b>';
                         pcHtml +=           '</span>'; 
                         pcHtml +=       '</div>'; 
                         pcHtml +=   '</td>'; 
                         pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">'; 
                         pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">'; 
                         pcHtml +=           '<span class="nftmax-table__text">'; 
-                        pcHtml +=               '<b>' + airList[i].tot_price + '</b>';
+                        pcHtml +=               '<b>' + numberComma(airList[i].tot_price) + '</b>';
                         pcHtml +=           '</span>'; 
                         pcHtml +=       '</div>'; 
                         pcHtml +=   '</td>'; 

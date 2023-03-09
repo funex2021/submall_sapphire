@@ -30,8 +30,8 @@
 		
 		
 		$(".dashboard-banner__slider").slick({
-			autoplay:false,
-			speed: 800,
+			autoplay:true,
+			speed: 500,
 			autoplaySpeed: 3500,
 			slidesToShow: 1,
 			pauseOnHover: true,
@@ -41,8 +41,7 @@
 			centerPadding: '0px',
 			dots: true,
 			arrows:false,
-			cssEase: 'ease',
-			speed: 700,
+			// cssEase: 'ease',
 			draggable: true,
 			prevArrow: '<button class="Prev"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>',
 			nextArrow: '<button class="Next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>',
@@ -58,7 +57,6 @@
 			center:false,
 			arrows:true,
 			cssEase: 'ease',
-			speed: 700,
 			draggable: true,
 			prevArrow: '<button class="Prev"><svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.09766 1.1499L1.13307 9.11449L9.09766 17.0791" stroke="url(#paint0_linear_220_23410)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><defs><linearGradient id="paint0_linear_220_23410" x1="9.09766" y1="1.1499" x2="-4.2474" y2="7.96749" gradientUnits="userSpaceOnUse"><stop stop-color="#F539F8"></stop><stop offset="0.416763" stop-color="#C342F9"></stop><stop offset="1" stop-color="#5356FB"></stop></linearGradient></defs></svg></button>',
 			nextArrow: '<button class="Next"><svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.34766 17.0801L9.31224 9.11549L1.34766 1.15091" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>',
@@ -113,8 +111,6 @@
 			centerPadding: '0px',
 			dots: false,
 			arrows:true,
-			cssEase: 'ease',
-			speed: 700,
 			draggable: true,
 			prevArrow: '<button class="Prev"><svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.34766 17.0801L9.31224 9.11549L1.34766 1.15091" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>',
 			nextArrow: '<button class="Next"><svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.09766 1.1499L1.13307 9.11449L9.09766 17.0791" stroke="url(#paint0_linear_220_23410)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><defs><linearGradient id="paint0_linear_220_23410" x1="9.09766" y1="1.1499" x2="-4.2474" y2="7.96749" gradientUnits="userSpaceOnUse"><stop stop-color="#F539F8"></stop><stop offset="0.416763" stop-color="#C342F9"></stop><stop offset="1" stop-color="#5356FB"></stop></linearGradient></defs></svg></button>',
@@ -157,8 +153,6 @@
 			centerPadding: '0px',
 			dots: false,
 			arrows:true,
-			cssEase: 'ease',
-			speed: 700,
 			draggable: true,
 			prevArrow: '<button class="Prev"><svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.09766 1.1499L1.13307 9.11449L9.09766 17.0791" stroke="url(#paint0_linear_220_23410)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><defs><linearGradient id="paint0_linear_220_23410" x1="9.09766" y1="1.1499" x2="-4.2474" y2="7.96749" gradientUnits="userSpaceOnUse"><stop stop-color="#F539F8"></stop><stop offset="0.416763" stop-color="#C342F9"></stop><stop offset="1" stop-color="#5356FB"></stop></linearGradient></defs></svg></button>',
 			nextArrow: '<button class="Next"><svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.34766 17.0801L9.31224 9.11549L1.34766 1.15091" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>',
@@ -207,8 +201,6 @@
 			centerPadding: '0px',
 			dots: false,
 			arrows:true,
-			cssEase: 'ease',
-			speed: 700,
 			draggable: true,
 			prevArrow: '<button class="Prev"><i class="fa-solid fa-angle-left"></i></button>',
 			nextArrow: '<button class="Next"><i class="fa-solid fa-angle-right"></i></button>',
@@ -258,8 +250,6 @@
 			centerPadding: '0px',
 			dots: false,
 			arrows:true,
-			cssEase: 'ease',
-			speed: 700,
 			draggable: true,
 			prevArrow: '<button class="Prev"><i class="fa-solid fa-angle-left"></i></button>',
 			nextArrow: '<button class="Next"><i class="fa-solid fa-angle-right"></i></button>',
@@ -334,8 +324,5 @@
 			}
 			
 		});
-		
-		
-		
 	});
 })(jQuery);

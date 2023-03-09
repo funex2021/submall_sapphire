@@ -112,7 +112,8 @@ exports.buyview = async (req, res, next) => {
                     "pagination": pagination,
                     "nftMallUrl": nftMallUrl,
                     "nftList" : nftList,
-                    "menuNum":0
+                    "menuNum": 0 ,
+                    "siteUrl" : localUrl
                 })
             } catch (e) {
                 console.log(e)
@@ -455,9 +456,8 @@ exports.withdraw = async (req, res, next) => {
             if (pageIndex == "" || pageIndex == null) {
                 pageIndex = 1;
             }
-            ;
 
-            let pagination = await pagingUtil.getPagination(pageIndex, totalPageCount)
+            let pagination = await pagingUtil.getPagination(pageIndex, totalPageCount) ;
             obj.pageIndex = pageIndex;
             obj.rowsPerPage = pagination.rowsPerPage;
             pagination.totalItems = totalPageCount;

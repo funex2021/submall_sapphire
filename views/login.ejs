@@ -4,8 +4,8 @@
     <%- include('includes/cdn') %>
     <title><%=config.found_text%> | Login</title>
 </head>
-<body>
-<div class="body-bg" style="background-image:url('/images/body-bg.jpg')">
+<body id="bodyArea">
+<div class="body-bg" style="background-image:url('/images/body-bg.jpg')" id="bgArea">
 
     <!-- NFTMax Welcome -->
     <section class="nftmax-wc nftmax-wc__full">
@@ -60,6 +60,14 @@
                                         <input class="nftmax-wc__form-input" name="login-form-password" id="login-form-password" type="password"  placeholder="<%=config.pwd_text%>" />
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="nftmax-wc__check-inline">
+                                        <div class="nftmax-wc__checkbox">
+                                            <input class="nftmax-wc__form-check" id="checkbox" name="checkbox" type="checkbox">
+                                            <label for="checkbox">아이디 저장하기</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group mt-lg-5 mt-5">
                                     <div class="nftmax-wc__button">
                                         <button class="ntfmax-wc__btn" onclick="fnLogin()">로그인</button>
@@ -73,13 +81,6 @@
                                 </div>
                                 <input type="hidden" name="amount" id="amount" />
                                 <input type="hidden" name="is_captcha" id="is_captcha" value="<%=config.is_captcha%>"/>
-                                <% if (config.sign_yn == 'Y') { %>
-                                <div class="form-group">
-                                    <div class="nftmax-wc__bottom">
-                                        <p class="nftmax-wc__text">Dont’t have an aceount ? <a href="/signUp">Sign up free</a></p>
-                                    </div>
-                                </div>
-                                <% } %>
                             </div>
                             <!-- End Sign in Form -->
                         </div>
@@ -93,34 +94,26 @@
 
 </div>
 </body>
+<%- include('includes/modal') %>
 </html>
 <% if (config.is_captcha == 'Y') { %>
     <script src="https://www.google.com/recaptcha/api.js"></script>
 <% } %>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function fnAlertModal(text) {
-        Swal.fire({
-            title: "알림",
-            text: text,
-            heightAuto: false,
-            showCloseButton: true,
-        });
+
+    $(document).ready(function (){
+       if(isMobile()){
+           $("#bgArea").hide();
+           $("#bodyArea").append("<img src='/images/intro_img.png' id='imgArea' />");
+           setTimeout(introEnd , 2000);
+       }
+    });
+
+    function introEnd(){
+        $("#bgArea").show();
     }
 
-    function fnRedirectModal(text, url) {
-        Swal.fire({
-            title: "알림",
-            text: text,
-            type: "success",
-            heightAuto: false,
-            allowOutsideClick: false,
-        }).then(function (result) {
-            if (true) {
-                window.location = url;
-            }
-        });
-    }
 
     $(function () {
         // fnLogin()
@@ -183,10 +176,58 @@
         document.body.appendChild(form);
         form.submit();
     }
+
+    function isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
 </script>
 
 <style>
-    .nftmax-wc__middle{
-        max-height: 450px;
+#imgArea {
+    width:100%;
+    height:100%;
+    display: inline-block;
+    animation: fadeout 4s;
+    -moz-animation: fadeout 4s; /* Firefox */
+    -webkit-animation: fadeout 4s; /* Safari and Chrome */
+    -o-animation: fadeout 4s; /* Opera */
+    animation-fill-mode: forwards;
+}
+@keyframes fadeout {
+    from {
+        opacity: 1;
     }
+    to {
+        opacity: 0;
+    }
+}
+@-moz-keyframes fadeout { /* Firefox */
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@-webkit-keyframes fadeout { /* Safari and Chrome */
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@-o-keyframes fadeout { /* Opera */
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.nftmax-wc__middle{
+    max-height: 450px;
+}
 </style>

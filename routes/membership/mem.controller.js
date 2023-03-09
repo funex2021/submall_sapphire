@@ -227,7 +227,7 @@ exports.coinInfo = async (req, res, next) => {
 }
 
 exports.signUpProc = async (req, res, next) => {
-    let {id, email, password, name, acc_nm, bank_nm, bank_code, bank_acc, hp, seq} = req.body;
+    let {id, email, password, name, acc_nm, bank_nm, bank_code, bank_acc, hp, pin} = req.body;
 
     let obj = {};
     obj.memId = id;
@@ -282,6 +282,8 @@ exports.signUpProc = async (req, res, next) => {
             obj.nation = '82';
             obj.nftStatus = 'CMDT00000000000076';
             obj.authYn = 'Y';
+            obj.pin = pin;
+            obj.agreeYn = 'Y'
             await Query.QSetMember(obj, conn);
 
             obj.coinTyp = 'CMDT00000000000078';
@@ -569,12 +571,13 @@ exports.accAuth = async (req, res, next) => {
 
 
 exports.updateInfo = async (req, res, next) => {
-    let {userNm , userEmail} = req.body;
+    let {userNm , userEmail , pin} = req.body;
     let obj = {};
     obj.userNm = userNm;
     obj.userEmail = userEmail;
     obj.cmpnyCd = req.user.cmpnyCd;
     obj.memId = req.user.memId;
+    obj.pin = pin;
 
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);

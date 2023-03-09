@@ -67,6 +67,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="nftmax-wc__form-label">핀번호</label>
+                                    <div class="form-group__input">
+                                        <input class="nftmax-wc__form-input" type="password" name="login-form-username" id="pin" value="" placeholder="핀번호를 입력해주세요."  onkeyup="numCheck(this);" maxlength="4" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="nftmax-wc__check-inline">
+                                        <div class="nftmax-wc__checkbox">
+                                            <input class="nftmax-wc__form-check" id="agreeYn" name="checkbox" type="checkbox">
+                                            <label for="checkbox"><a href="javascript:void(0);" onclick="fnAgreePop();" style="text-decoration: underline;">[이용약관]</a>에 동의</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <div class="nftmax-wc__button">
                                         <button class="ntfmax-wc__btn" onclick="signUp()">회원가입</button>
                                         <button class="ntfmax-wc__btn ntfmax-wc__btn-google" onclick="location.href='/login'">취소</button>
@@ -103,10 +117,6 @@
 
         if ($("#password").val() == '') {
             return fnAlertModal('비밀번호를 입력해 주세요.');
-        } else {
-            if (!passChk()) {
-                return;
-            }
         }
 
         if ($("#name").val() == '') {
@@ -117,6 +127,16 @@
             return fnAlertModal('핸드폰 번호를 입력해주세요.');
         }
 
+        if ($("#pin").val() == '' ) {
+            return fnAlertModal('핀 번호를 입력해주세요.');
+        }else if($("#pin").val().length != 4){
+            return fnAlertModal('핀 번호는 4자리로 입력해주세요.');
+        }
+
+        if(!$('#agreeYn').is(':checked')){
+            return fnAlertModal('이용약관에 동의해주세요.');
+        }
+
         wrapWindowByMaskShow();
 
         let data = {
@@ -125,6 +145,7 @@
             password: $("#password").val(),
             name: $("#name").val(),
             hp: $("#hp").val(),
+            pin : $("#pin").val(),
         }
 
         $.ajax({
@@ -166,5 +187,67 @@
             return true;
         }
     }
-    
+
+    function fnAgreePop(){
+        let html = '';
+        html += '        <h3 class="nftmax-ptabs__page-title">1. Definitions</h3>';
+        html += '        <p>';
+        html += '            What you do own when you buy an NFT are the keys to a non-fungible – perhaps unique – token. That token is yours to trade or hold or display in Decentraland.';
+        html += '            But the digital file associated with an NFT is just as easy to copy and paste and download as any other – the Finally,';
+        html += '            players lose their NFTs sometimes according to the rules and regulations of the NFT game.';
+        html += '        </p>';
+        html += '        <h3 class="nftmax-ptabs__page-title">2. Acceptance</h3>';
+        html += '        <p>';
+        html += '            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.';
+        html += '            Velit officia consequat duis enim velit mollit.';
+        html += '            Exercitation veniam consequat sunt nostrud amet.Capacity.';
+        html += '            You confirm that you have the legal capacity to receive and hold and make use of the NFT under French jurisdiction and any other relevant jurisdiction.Acceptance.';
+        html += '            By participating in the Sale, You accept and agree to these Terms and Conditions without any condition or restriction.';
+        html += '            If You do not agree to this Contract, You shall not participate in the Sale made by the Company Exercitation veniam consequat sunt nostrud amet.Capacity.';
+        html += '            You confirm that you have the legal capacity to receive and hold find to end.Contract, You shall not participate in the Sale made by the Company Exercitation venia';
+        html += '        </p>';
+        html += '        <blockquote>';
+        html += '            These Terms and Conditions are related to the sale of NFTs by the Company (the “Company”) on its Website.';
+        html += '            It solely governs the contractual relationship between You and the Company regarding the Sale and any related contract.';
+        html += '        </blockquote>';
+        html += '        <h3 class="nftmax-ptabs__page-title">3. The Sale</h3>';
+        html += '        <p>';
+        html += '            The Company offers NFTs featuring the Betonyou universe.';
+        html += '            The holders of one or more NFTs will be able to win cryptos while playing video games.';
+        html += '            In the future, the Company plans to develop its own games and Metaverse around the Betonyou universe (“Project”).';
+        html += '        </p>';
+        html += '        <p>';
+        html += '            To release the NFTs and fund the project, the Company offers NFTs from a dedicated website("Sale").';
+        html += '            The web address of this website will be given at the time of the mint.';
+        html += '            The NFT acquisition does not confer any rights on the Company or in the future development.';
+        html += '        </p>';
+        html += '        <h3 class="nftmax-ptabs__page-title">4. Purchaser’s obligations</h3>';
+        html += '        <p>To the fullest extent permitted by applicable law, You undertake to indemnify, defend and hold harmless the Company from and against all claims, demands, actions, damages, losses, costs and expenses (including attorneys’ fees) that arise from or relate to (i) your Subscription or use of the NFTs; (ii) your responsibilities or obligations under this Contract; and (iii) your breach of this Contract.</p>';
+        html += '        <p> Company undertakes to act with the care normally expected from a professional in his field and to comply with the best practice in force. The best endeavor obligation only binds the Company.</p>';
+
+
+        Swal.fire({
+            html:html
+            ,
+            heightAuto: false,
+            showCloseButton: true,
+            animation: false
+        }).then((result) => {
+        });
+
+
+
+    }
 </script>
+<style>
+    .nftmax-wc__form-main input{
+        height: 42px;
+    }
+    .nftmax-wc__button .ntfmax-wc__btn{
+        height: 48px;
+    }
+    .nftmax-wc__button{
+        gap: 15px;
+    }
+</style>
+

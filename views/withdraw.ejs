@@ -44,6 +44,7 @@
                                                         <tr>
                                                             <th class="nftmax-table__column-1 nftmax-table__h1">상품</th>
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">sales</th>
+                                                            <th class="nftmax-table__column-2 nftmax-table__h2">구매일</th>
                                                             <th class="nftmax-table__column-3 nftmax-table__h3">상태</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">구매금액</th>
                                                             <th colspan="2" class="nftmax-table__column-5 nftmax-table__h5">기타</th>
@@ -64,7 +65,7 @@
                                                                             <td class="nftmax-table__column-1 nftmax-table__data-1">
                                                                                 <div class="nftmax-table__product">
                                                                                     <% if (status == '완료') { %>
-                                                                                    <a href="#n" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');">
+                                                                                    <a href="javascript:void(0);" onclick="fnGetNftBuyInfo('<%=el.seq%>','<%=index%>');">
                                                                                         <div class="nftmax-table__product-img">
                                                                                             <img src="http://nftnting.com/<%= el.nftImg %>" alt="#">
                                                                                         </div>
@@ -106,6 +107,13 @@
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
+                                                                            <td class="nftmax-table__column-2 nftmax-table__data-2">
+                                                                                <div class="nftmax-table__amount nftmax-table__text-one">
+                                                                                    <span class="nftmax-table__text">
+                                                                                        <b><%= el.create_dt %></b>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </td>
                                                                             <td class="nftmax-table__column-3 nftmax-table__data-3">
                                                                                 <div class="nftmax-table__amount nftmax-table__text-two">
                                                                                     <span class="nftmax-table__text">
@@ -131,13 +139,13 @@
                                                                             </td>
                                                                             <td class="nftmax-table__column-5 nftmax-table__data-5">
                                                                                 <% if (status == '대기') { %>
-                                                                                    <a href="#n" class="nftmax-btn trs-white bl-color"
+                                                                                    <a href="javascript:void(0);" class="nftmax-btn trs-white bl-color"
                                                                                     onclick="chkAcc('<%= parseInt(buy_num).toLocaleString('ko-KR') %>','<%=cmpnyInfo.nft_bank_nm%>','<%=cmpnyInfo.nft_bank_acc%>','<%=cmpnyInfo.nft_acc_nm%>');">계좌 확인</a>
                                                                                 <% } %>
                                                                             </td>
                                                                             <td class="nftmax-table__column-5 nftmax-table__data-5">
                                                                                 <% if (status == '대기') { %>
-                                                                                    <a href="#n" class="nftmax-btn nftmax-btn__secondary radius" onclick="buyCancelView('<%=el.seq%>');">취소</a>
+                                                                                    <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius" onclick="buyCancelView('<%=el.seq%>');">취소</a>
                                                                                 <% } %>
                                                                             </td>
                                                                         </tr>
@@ -470,7 +478,14 @@
                         pcHtml +=               '<b>' + withdrawList[i].title + '</b>';
                         pcHtml +=           '</span>'; 
                         pcHtml +=       '</div>'; 
-                        pcHtml +=   '</td>'; 
+                        pcHtml +=   '</td>';
+                        pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">';
+                        pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-one">';
+                        pcHtml +=           '<span class="nftmax-table__text">';
+                        pcHtml +=               '<b>' + withdrawList[i].create_dt + '</b>';
+                        pcHtml +=           '</span>';
+                        pcHtml +=       '</div>';
+                        pcHtml +=   '</td>';
                         pcHtml +=   '<td class="nftmax-table__column-3 nftmax-table__data-3">'; 
                         pcHtml +=       '<div class="nftmax-table__amount nftmax-table__text-two">'; 
                         pcHtml +=           '<span class="nftmax-table__text">'; 
@@ -488,13 +503,13 @@
                         pcHtml +=   '</td>'; 
                         pcHtml +=   '<td class="nftmax-table__column-5 nftmax-table__data-5">'; 
                         if(withdrawList[i].confirm_sts_name == '대기') {
-                            pcHtml +=   '<a href="#n" class="nftmax-btn trs-white bl-color"'; 
+                            pcHtml +=   '<a href="javascript:void(0);" class="nftmax-btn trs-white bl-color"'; 
                             pcHtml +=   'onclick="chkAcc(' + parseInt(withdrawList[i].buy_num).toLocaleString('ko-KR') + ',' + $("#nftBankNm").val() + ',' + $("#nftBankAcc").val() + ',' + $("#nftAccNm").val()+ ');">계좌 확인</a>'; 
                         }
                         pcHtml +=   '</td>'; 
                         pcHtml +=   '<td class="nftmax-table__column-5 nftmax-table__data-5">'; 
                         if(withdrawList[i].confirm_sts_name == '대기') {
-                            pcHtml +=       '<a href="#n" class="nftmax-btn nftmax-btn__secondary radius" onclick="buyCancelView(' + withdrawList[i].seq + ');">취소</a>'; 
+                            pcHtml +=       '<a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius" onclick="buyCancelView(' + withdrawList[i].seq + ');">취소</a>'; 
                         }
                         pcHtml +=   '</td>'; 
                         pcHtml +='</tr>'; 
