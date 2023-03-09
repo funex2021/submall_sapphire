@@ -5,6 +5,7 @@ const pay = require('./pay.controller')
 var requestIp = require('request-ip');
 
 const payUtil = require(path.join(process.cwd(), '/routes/config/common/payUtil'))
+const exchangeUtil = require(path.join(process.cwd(), '/routes/services/exchangeUtil'))
 
 var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
@@ -30,7 +31,7 @@ router.post('/addView', isAuthenticated, isAuthYn, pay.addWithdraw);
 router.get('/airView', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.airView);
 router.post('/airAddView', isAuthenticated, isAuthYn, pay.airAddView);
 
-router.get('/buyview', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buyview);
+router.get('/buyview', isAuthenticated, isAuthYn, payUtil.isStatusCheck, exchangeUtil.fnGetExchangeRate, pay.buyview);
 router.get('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheck, pay.buypage);
 router.post('/buy', isAuthenticated, isAuthYn, payUtil.isStatusCheckAjax, pay.buy);
 

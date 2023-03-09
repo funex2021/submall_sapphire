@@ -234,7 +234,7 @@ exports.buypage = async (req, res, next) => {
 
 exports.buy = async (req, res, next) => {
 
-    let {selectSellSeqArr, selectBuyAmountArr, selectSellPriceArr, bankSeq} = req.body;
+    let {selectSellSeqArr, selectBuyAmountArr, selectSellPriceArr, bankSeq, ikonId, buyType} = req.body;
     selectSellSeqArr = JSON.parse(selectSellSeqArr);
     selectBuyAmountArr = JSON.parse(selectBuyAmountArr);
     selectSellPriceArr = JSON.parse(selectSellPriceArr);
@@ -245,6 +245,7 @@ exports.buy = async (req, res, next) => {
     obj.cmpnyCd = req.user.cmpnyCd;
     obj.memId = req.user.memId;
     obj.cs_coin_sell = req.user.cs_coin_sell;
+
 
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
@@ -317,6 +318,8 @@ exports.buy = async (req, res, next) => {
                                         nftBuyObj.buySeq = uuidv4();
                                         nftBuyObj.sellSeq = selectSellSeqArr[i];
                                         nftBuyObj.buyAmount = selectBuyAmountArr[i];
+                                        nftBuyObj.ikonId = ikonId;
+                                        nftBuyObj.buyType = buyType;
                                         console.log(nftBuyObj)
                                         //nft 수량체크
                                         let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);

@@ -149,12 +149,6 @@
                                 <!-- End Single Wallet -->
                                 <!-- Single Wallet -->
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
-                                    <div class="nftmax-balance-info mt-1">
-                                        <h4>NFT 결제금액 :&nbsp;</h4>
-                                        <h4 id="totalPrice"></h4>
-                                    </div>
-                                </li>
-                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <table id="nftmax-table__main" class="nftmax-table__main nftmax-table__main-v1">
                                         <!-- NFTMax Table Head -->
                                         <thead class="nftmax-table__head">
@@ -168,6 +162,24 @@
                                         <tbody class="nftmax-table__body" id="selectNft">
                                         </tbody>
                                     </table>
+                                </li>
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info mt-1">
+                                        <h4>NFT 총 금액 :&nbsp;</h4>
+                                        <h4 id="totalPrice"></h4>
+                                    </div>
+                                </li>
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info">
+                                        <p style="margin-bottom: 1px;">환율/수수료 :&nbsp;</p>
+                                        <p style="margin-bottom: 1px;" id="operRate"></p>
+                                    </div>
+                                </li>
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info mt-1">
+                                        <h4>결제금액 :&nbsp;</h4>
+                                        <h4 id="totalPriceKrw"></h4>
+                                    </div>
                                 </li>
                                 <input type="hidden" id="bank_seq">
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
@@ -191,6 +203,32 @@
                                     </div>
                                 </li>
                                 <!-- End Single Wallet -->
+                                <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax__item-form--group">
+                                        <label class="nftmax__item-label">IKON BIT ID : </label>
+                                        <input class="nftmax__item-input" type="text" placeholder="" id="ikonId" required="required">
+                                        <!-- <p class="nftmax__item-fee-text">Your email for marketplace notifications</p> -->
+                                    </div>
+                                    <!-- <div class="nftmax-balance-info">
+                                        <p style="margin-bottom: 1px;">ID :&nbsp;</p>
+                                        <input class="nftmax__item-input" type="text" id="user_nm" placeholder="IKON BIT ID" required="required" value="">
+                                    </div> -->
+                                    
+                                </li>
+                                <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax__item-radio--group">
+                                        <input class="nftmax__item-radio-title" type="radio" placeholder="" name="buyType" required="required" value="package">
+                                        <label class="nftmax__item-radio-label">패키지 구매</label>&nbsp;&nbsp;
+                                        <input class="nftmax__item-radio-title" type="radio" placeholder="" name="buyType" required="required" value="trading">
+                                        <label class="nftmax__item-radio-label">트레이딩 구매</label>
+                                        <!-- <p class="nftmax__item-fee-text">Your email for marketplace notifications</p> -->
+                                    </div>
+                                    <!-- <div class="nftmax-balance-info">
+                                        <p style="margin-bottom: 1px;">ID :&nbsp;</p>
+                                        <input class="nftmax__item-input" type="text" id="user_nm" placeholder="IKON BIT ID" required="required" value="">
+                                    </div> -->
+                                    
+                                </li>
                             </ul>
                             <div class="nftmax__item-button--group">
                                 <button class="nftmax__item-button--single nftmax-btn nftmax-btn__bordered bg radius " data-bs-dismiss="modal" onclick="fnBuy()">확인</button>
@@ -289,11 +327,15 @@
                 success: function (result) {
                     if (result.success) {
                         $("#totalPrice").html($("#price_view").val()+" USD");
+                        console.log('$("#price").val() : ', $("#price").val())
+                        console.log('result.data.oper_rate : ' , result.data.oper_rate)
+                        $("#totalPriceKrw").html((Number($("#price").val()) * 1.01 * Number(result.data.oper_rate)).toLocaleString('ko-KR')+ " KRW");
+                        $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / 1 %");
                         $("#acc_nm").html(result.data.acc_nm);
                         $("#bank_nm").html(result.data.bank_nm);
                         $("#bank_acc").html(result.data.bank_acc);
                         $("#bank_seq").val(result.data.seq);
-
+                        
                         let trLen = $("#selectBody > li").length;
                         $("#selectNft").html("");
                         let html = "";
@@ -342,6 +384,16 @@
         let max_amt = $('input[name=max_amt]').val();
         let min_amt = $('input[name=min_amt]').val();
 
+        let ikonId = $("#ikonId").val();
+        if(ikonId == null || ikonId == '') {
+            return fnAlertModal('IKON BIT ID를 입력해주세요.');
+        }
+
+        let buyType = $('input[name="buyType"]:checked').val()
+        if(buyType == undefined) {
+            return fnAlertModal('패키지 / 트레이딩 구매 구분을 선택해주세요.');
+        }
+
         // if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
         //     return fnAlertModal(min_amt + '만원 이상 구매 가능합니다.');
         //     // alert(min_amt + '만원 이상 구매 가능합니다.');
@@ -358,6 +410,8 @@
             selectBuyAmountArr: JSON.stringify(selectBuyAmountArr),
             selectSellPriceArr: JSON.stringify(selectSellPriceArr),
             bankSeq: $("#bank_seq").val(),
+            ikonId: ikonId,
+            buyType: buyType,
         }
 
         $.ajax({
