@@ -8,7 +8,7 @@
 <div class="body-bg" style="background-image:url('/images/body-bg.jpg')">
     <%- include('includes/nav') %>
     <%- include('includes/header') %>
-    <div class="body-bg" style="background-image:url('/images/body-bg.png')" >
+    <div class="body-bg" style="background-image:url('/images/body-bg.png');height: 100%;">
         <section class="nftmax-adashboard nftmax-show">
             <div class="container">
                 <div class="row">
@@ -25,6 +25,7 @@
                                                 <!-- Single Tab -->
                                                 <div class="tab-pane fade show active" id="id1" role="tabpanel" aria-labelledby="nav-home-tab">
                                                     <div class="row nftmax-gap-sq30">
+                                                        <% if (nftList.length > 0){ %>
                                                         <% nftList.forEach(function(el, index) { %>
                                                             <div class="col-lg-4 col-md-6 col-12">
                                                                 <!-- Marketplace Single Item -->
@@ -83,6 +84,13 @@
                                                                 <!-- End Marketplace Item -->
                                                             </div>
                                                         <% }) %>
+                                                        <%} else { %>
+                                                                <div class="welcome-cta mg-top-40">
+                                                                    <div class="welcome-cta__heading">
+                                                                        <h2 class="welcome-cta__title">보유 NFT가 없습니다.</h2>
+                                                                    </div>
+                                                                </div>
+                                                        <%}%>
                                                     </div>
                                                 </div>
                                             </div>
