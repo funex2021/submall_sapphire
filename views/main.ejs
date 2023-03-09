@@ -84,7 +84,7 @@
                                                 </div>
                                                 <div class="dashboard-banner__button mt-5">
                                                     <div class="dashboard-banner__single-btn dashboard-banner__main-btn">
-                                                        <a href="javascript:void(0);" onclick="fnCopy('http://<%=siteUrl%>')" class="nftmax-btn nftmax-btn__secondary radius" style="color: #fff;">사이트주소 복사하기</a>
+                                                        <a href="javascript:void(0);" onclick="fnKakao()" class="nftmax-btn nftmax-btn__secondary radius" id="kakao-link-btn" style="color: #fff;">사이트주소 공유</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,8 +168,12 @@
     <!-- End NFTmax Dashboard -->
 
 </div>
-
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js" integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
 <script>
+    $(document).ready(function (){
+        Kakao.init('622c4dc4cd6bc0d81c22bda31d7ee08e');
+    });
+
     function fnViewMoreText(){
         $("#textMoreArea").show();
         $("#textCloseBtn").show();
@@ -179,6 +183,31 @@
         $("#textMoreArea").hide();
         $("#textCloseBtn").hide();
         $("#textMoreBtn").show();
+    }
+
+    function fnKakao(){
+    let url = '<%=siteUrl%>';
+    Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+            imageUrl:'http://'+url+'/images/cnft_logo.png',
+            title: 'cnft',
+            link: {
+                mobileWebUrl: 'http://'+url,
+                webUrl: 'http://'+url,
+            }
+        },
+        buttons: [
+            {
+                title: '사이트 접속',
+                link: {
+                    mobileWebUrl: 'http://'+url,
+                    webUrl: 'http://'+url,
+                }
+            },
+        ]
+    });
+
     }
 </script>
 <style>
