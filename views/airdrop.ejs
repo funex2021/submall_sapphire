@@ -47,6 +47,7 @@
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">지급일</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">변동금액</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">누적금액</th>
+                                                            <th class="nftmax-table__column-4 nftmax-table__h4">txid</th>
                                                         </tr>
                                                         </thead>
                                                         <!-- NFTMax Table Body -->
@@ -96,6 +97,13 @@
                                                                                 <div class="nftmax-table__amount nftmax-table__text-one">
                                                                                     <span class="nftmax-table__text">
                                                                                         <b><%= Number(el.tot_price ).toLocaleString('ko-KR')%></b>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="nftmax-table__column-3 nftmax-table__data-3">
+                                                                                <div class="nftmax-table__amount nftmax-table__text-one" onclick="newWindow('<%=String(el.txid)%>')">
+                                                                                    <span class="nftmax-table__text">
+                                                                                        <b><%=String(el.txid).substring(0,15)%>...</b>
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
@@ -194,6 +202,10 @@
 
 </html>
 <script>
+
+    function newWindow(txid) {
+        window.open("https://baobab.scope.klaytn.com/tx/"+txid, "_blank");
+    }
     $(function () {
         $('#startDatePicker').datepicker({
             format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
