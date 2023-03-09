@@ -504,7 +504,7 @@ function fnSetInsNftBuy(param, conn) {
         var sql = "";
         sql += "insert into cs_nft_buy (buy_seq, sell_seq, m_seq, buy_amount, coin_sell_seq, bank_seq, coin_addr, ikon_id, buy_type) values";
         sql += " ('"+param.buySeq+"','"+param.sellSeq+"','"+param.mSeq+"','"+param.buyAmount+"','"+param.coinSellSeq+"','"+param.bankSeq+"','"+param.coinAddr+"','"+param.ikonId+"','"+param.buyType+"')";
-        
+
         console.log(sql)
         conn.query(sql, (err, ret) => {
             if (err) {
@@ -860,7 +860,7 @@ function fnGetAirdropList(param, conn) {
 
         sql += " select (select file_path from cs_nft_mst cnm where seq = cna.nft_seq) nft_img, ";
         sql += "  (select nft_nm from cs_nft_mst cnm where seq = cna.nft_seq) nft_nm, ";
-        sql += " nft_seq, price, tot_price, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
+        sql += " nft_seq, price, tot_price, txid, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
         sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
         sql += " limit " + (param.pageIndex - 1) * param.rowsPerPage + "," + param.rowsPerPage
 
