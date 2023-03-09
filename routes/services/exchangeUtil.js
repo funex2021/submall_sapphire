@@ -20,7 +20,7 @@ var fnGetExchangeRate = async function (req, res, next) {
                     next();
                 } else {
                     console.log('myExchange : ', myExchange)
-                    if(myExchange[0].is_after < 0) {
+                    if(myExchange[0].is_after < -6) {
                         let exchangeInfo = await axios.get('https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRWUSD');
                         console.log('exchangeInfo.data : ', exchangeInfo.data[0])
                         await fnInsExchangeInfo(exchangeInfo.data[0], conn)
@@ -41,7 +41,7 @@ var fnGetExchangeRate = async function (req, res, next) {
 function fnGetExchangeInfo(conn) {
     return new Promise(function (resolve, reject) {
       var sql =" SELECT seq, origin_rate, oper_rate, create_dt, update_dt, "
-      sql +=" TIMESTAMPDIFF(minute, STR_TO_DATE(date_format(CURRENT_TIMESTAMP(),'%Y-%m-%d 08:59:00'), '%Y-%m-%d %H:%i:%s'), create_dt) is_after "
+      sql +=" TIMESTAMPDIFF(hour, CURRENT_TIMESTAMP(), create_dt) is_after "
       sql += " FROM cs_exchange_rate order by create_dt desc limit 1"
     //   sql += " VALUES('"+param.cmpnyCd+"', '"+param.mSeq+"', '"+param.payCode+"', '"+param.payRequest+"', '"+param.payResponse+"', '"+param.userIp+"', '"+param.isSuccess+"')  "
       

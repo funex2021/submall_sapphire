@@ -1067,6 +1067,7 @@ exports.sell = async (req, res, next) => {
                                 let config = await Query.QGetConfigInfo(obj, conn);
 
                                 obj.realPrice = Number(sellPrice) * (1 - Number(config.sell_fee) / 100);
+                                obj.isSell = 'Y'
                                 await Query.QInsNftSell(obj, conn);
                                 conn.commit();
                                 //cs_nft_buy insert

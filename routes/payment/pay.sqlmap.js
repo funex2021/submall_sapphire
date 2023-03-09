@@ -861,7 +861,7 @@ function fnGetAirdropList(param, conn) {
 
         sql += " select (select file_path from cs_nft_mst cnm where seq = cna.nft_seq) nft_img, ";
         sql += "  (select nft_nm from cs_nft_mst cnm where seq = cna.nft_seq) nft_nm, ";
-        sql += " nft_seq, price, tot_price, txid, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
+        sql += " nft_seq, price, tot_price, txid, is_sell, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
         sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
         sql += " limit " + (param.pageIndex - 1) * param.rowsPerPage + "," + param.rowsPerPage
 
@@ -947,12 +947,12 @@ function fnInsNftSell(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
         sql += " INSERT INTO cs_nft_sell ";
-        sql += " (sell_seq, nft_seq, cmpny_cd, sell_amount, sell_price, sell_status, pay_cd, m_seq, create_dt, update_dt, contract_address, token_id, sell_type, nft_nm, nft_desc, category_cd, nft_img, collection_seq, is_public, from_addr, airdrop_yn, real_price) ";
+        sql += " (sell_seq, nft_seq, cmpny_cd, sell_amount, sell_price, sell_status, pay_cd, m_seq, create_dt, update_dt, contract_address, token_id, sell_type, nft_nm, nft_desc, category_cd, nft_img, collection_seq, is_public, from_addr, airdrop_yn, real_price, is_sell) ";
         sql += " VALUES('"+param.sellSeq+"','"+param.nftSeq+"','"+param.cmpnyCd+"','"+param.sellAmount+"','"+param.sellPrice+"', ";
         sql += " '"+param.sellStatus+"','"+param.payCd+"','"+param.mSeq+"', now(), now(), ";
         sql += " (select contract_addr from cs_nft_mst where seq = '"+param.nftSeq+"'), (select token_id from cs_nft_airdrop where m_seq = '"+param.mSeq+"' and nft_seq = '"+param.nftSeq+"' and use_yn = 'Y' limit 1),'CMDT00000000000084', ";
         sql += " (select nft_nm from cs_nft_mst where seq = '"+param.nftSeq+"'), (select nft_desc from cs_nft_mst where seq = '"+param.nftSeq+"'), ";
-        sql += " (select category_cd from cs_nft_mst where seq = '"+param.nftSeq+"'), (select file_path from cs_nft_mst where seq = '"+param.nftSeq+"'), (select collection_seq from cs_nft_mst where seq = '"+param.nftSeq+"'), 'N', '', 'Y', '"+param.realPrice+"') ";
+        sql += " (select category_cd from cs_nft_mst where seq = '"+param.nftSeq+"'), (select file_path from cs_nft_mst where seq = '"+param.nftSeq+"'), (select collection_seq from cs_nft_mst where seq = '"+param.nftSeq+"'), 'N', '', 'Y', '"+param.realPrice+"'), '"+param.isSell+"' ";
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
