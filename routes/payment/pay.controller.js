@@ -234,7 +234,7 @@ exports.buypage = async (req, res, next) => {
 
 exports.buy = async (req, res, next) => {
 
-    let {selectSellSeqArr, selectBuyAmountArr, selectSellPriceArr, bankSeq, ikonId, buyType} = req.body;
+    let {selectSellSeqArr, selectBuyAmountArr, selectSellPriceArr, bankSeq, ikonId, buyType, operRate} = req.body;
     selectSellSeqArr = JSON.parse(selectSellSeqArr);
     selectBuyAmountArr = JSON.parse(selectBuyAmountArr);
     selectSellPriceArr = JSON.parse(selectSellPriceArr);
@@ -334,22 +334,22 @@ exports.buy = async (req, res, next) => {
 
                                         await Query.QSetInsNftBuy(nftBuyObj, conn);
 
-                                        for (let j=0; j<nftBuyObj.buyAmount; j++) {
-                                            //매출 api 호출
-                                            let data = {};
-                                            data.m_id = req.user.memId;
-                                            data.buy_seq = nftBuyObj.buySeq;
-                                            data.nft_seq = nftSellInfo[0].nft_seq;
-                                            data.tkn_id = j;
-                                            data.pdt_nm = nftSellInfo[0].nft_nm;
-                                            data.pdt_price = nftSellInfo[0].sell_price;
-                                            data.pdt_desc = nftSellInfo[0].nft_desc;
-                                            data.nft_url = nftMallUrl + nftSellInfo[0].nft_img;
-                                            data.ardrp_gubun = 'SALE000000000000001';
-                                            data.sls_sts = 'SALE000000000000004';
+                                        // for (let j=0; j<nftBuyObj.buyAmount; j++) {
+                                        //     //매출 api 호출
+                                        //     let data = {};
+                                        //     data.m_id = req.user.memId;
+                                        //     data.buy_seq = nftBuyObj.buySeq;
+                                        //     data.nft_seq = nftSellInfo[0].nft_seq;
+                                        //     data.tkn_id = j;
+                                        //     data.pdt_nm = nftSellInfo[0].nft_nm;
+                                        //     data.pdt_price = nftSellInfo[0].sell_price;
+                                        //     data.pdt_desc = nftSellInfo[0].nft_desc;
+                                        //     data.nft_url = nftMallUrl + nftSellInfo[0].nft_img;
+                                        //     data.ardrp_gubun = 'SALE000000000000001';
+                                        //     data.sls_sts = 'SALE000000000000004';
 
-                                            await apiUtil.fnApiCall("/api/sales", data);
-                                        }
+                                        //     await apiUtil.fnApiCall("/api/sales", data);
+                                        // }
                                     }
 
                                     if (parseInt(totalPrice) == selectTotalPrice) {
@@ -357,6 +357,8 @@ exports.buy = async (req, res, next) => {
                                         console.log(obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 구매 요청 ")
                                         logObj.payResponse = obj.memId + " : " + req.user.companyName + " : " + obj.cmpnyCd + " -> 구매 요청 "
                                         logObj.isSuccess = "01"
+                                        obj.usdCost = obj.buyNum;
+                                        obj.buyNum = Number(obj.usdCost) * Number(operRate) * 1.007;
                                         await Query.QSetHistory(logObj, conn);
                                         await Query.QSetCoinBuy(obj, conn);
                                         await Query.QSetIsBuy(obj, conn);
@@ -1045,7 +1047,7 @@ exports.haveNft = async (req, res, next) => {
                 'srtDt': srtDt,
                 'endDt': endDt,
                 'userId': userId,
-                "menuNum":5
+                "menuNum":6
             })
 
         } catch (e) {

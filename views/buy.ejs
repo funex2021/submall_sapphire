@@ -256,6 +256,7 @@
     let selectSellSeqArr = [];
     let selectBuyAmountArr = [];
     let selectSellPriceArr = [];
+    let operRate = 0;
     const price = document.querySelector('#price');
     const clearBtn = document.querySelector('.clear-btn');
     const nextBtn = document.querySelector('.next-btn');
@@ -328,8 +329,9 @@
                     $("#totalPrice").html($("#price_view").val() + " USD");
                     console.log('$("#price").val() : ', $("#price").val())
                     console.log('result.data.oper_rate : ', result.data.oper_rate)
-                    $("#totalPriceKrw").html((Number($("#price").val()) * 1.01 * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
-                    $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / 1 %");
+                    $("#totalPriceKrw").html((Number($("#price").val()) * 1.007 * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
+                    $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / 0.7 %");
+                    operRate = result.data.oper_rate;
                     $("#acc_nm").html(result.data.acc_nm);
                     $("#bank_nm").html(result.data.bank_nm);
                     $("#bank_acc").html(result.data.bank_acc);
@@ -411,6 +413,7 @@
             bankSeq: $("#bank_seq").val(),
             ikonId: ikonId,
             buyType: buyType,
+            operRate: operRate
         }
 
         wrapWindowByMaskShow();
