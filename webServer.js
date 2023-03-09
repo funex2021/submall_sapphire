@@ -34,7 +34,7 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: false}));
-
+app.use(cookieParser());
 app.use(cors())
 var passport = require('passport') //passport module add
 const passportConfig = require('./routes/passport'); // 여기
@@ -161,12 +161,18 @@ app.get('/', function (req, res, next) {
             let companyName = config.company_nm;
             ucompanyName = companyName.toUpperCase();
             let alertMessage = req.flash("alertMessage");
+            let saveId = "";
+            if(req.cookies['saveId']){
+                saveId = req.cookies['saveId']
+            }
+
             res.render("login", {
                 'alertMessage': alertMessage,
                 'userId': userId,
                 'ucompanyName': ucompanyName,
                 'companyName': companyName,
-                'config:': config
+                'config': config,
+                'saveId':saveId
             })
             return;
         } catch (e) {
@@ -205,13 +211,17 @@ app.get('/login', function (req, res, next) {
             ucompanyName = companyName.toUpperCase();
             let alertMessage = req.flash("alertMessage");
             let userId = "";
-
+            let saveId = "";
+            if(req.cookies['saveId']){
+                saveId = req.cookies['saveId']
+            }
             res.render("login", {
                 'alertMessage': alertMessage,
                 'userId': userId,
                 'ucompanyName': ucompanyName,
                 'companyName': companyName,
-                'config:': config
+                'config': config,
+                'saveId':saveId
             })
             return;
         } catch (e) {
@@ -237,7 +247,7 @@ app.get('/signUp', function (req, res, next) {
             res.locals.config = config;
 
             res.render("signUp", {
-                'config:': config
+                'config': config
             })
             return;
         } catch (e) {
