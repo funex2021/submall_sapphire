@@ -114,7 +114,7 @@
                                         </ul>
                                         <div class="mt-4">
                                             <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__primary radius clear-btn">초기화</a>
-                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius next-btn">구매하기</a>
+                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius next-btn" onclick="fnPinPop()">구매하기</a>
                                         </div>
                                     </div>
                                     <!-- End Sidebar Creator Lists -->
@@ -165,8 +165,8 @@
                                 </li>
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info mt-1">
-                                        <h4>NFT 총 금액 :&nbsp;</h4>
-                                        <h4 id="totalPrice"></h4>
+                                        <h4 style="margin-bottom: 1px;">NFT 총 금액 :&nbsp;</h4>
+                                        <h4 style="margin-bottom: 1px;" id="totalPrice"></h4>
                                     </div>
                                 </li>
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
@@ -177,8 +177,8 @@
                                 </li>
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info mt-1">
-                                        <h4>결제금액 :&nbsp;</h4>
-                                        <h4 id="totalPriceKrw"></h4>
+                                        <h4 style="margin-bottom: 1px;">결제금액 :&nbsp;</h4>
+                                        <h4 style="margin-bottom: 1px;" id="totalPriceKrw"></h4>
                                     </div>
                                 </li>
                                 <input type="hidden" id="bank_seq">
@@ -204,9 +204,9 @@
                                 </li>
                                 <!-- End Single Wallet -->
                                 <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
-                                    <div class="nftmax__item-form--group">
+                                    <div class="nftmax__item-form--group ">
                                         <label class="nftmax__item-label">IKON BIT ID : </label>
-                                        <input class="nftmax__item-input" type="text" placeholder="" id="ikonId" required="required">
+                                        <input class="nftmax__item-input ikon_bit_id" type="text" placeholder="" id="ikonId" required="required" maxlength="30">
                                         <!-- <p class="nftmax__item-fee-text">Your email for marketplace notifications</p> -->
                                     </div>
                                     <!-- <div class="nftmax-balance-info">
@@ -245,6 +245,7 @@
     </div>
 </div>
 </body>
+<%- include('includes/modal') %>
 </html>
 <script>
     if ($("#price").val() == '') {
@@ -314,65 +315,63 @@
         // $('.modal-text').html('금액을 입력해주세요.');
     })
 
-    nextBtn.addEventListener('click', () => {
-        if (price.value == "" || price.value == 0) {
-            fnAlertModal('NFT상품을 선택해주세요.');
-            $("#price").val(0);
-        } else {
-            $.ajax({
-                url: '/p/showAccount',
-                dataType: 'json',
-                type: 'POST',
-                data: null,
-                success: function (result) {
-                    if (result.success) {
-                        $("#totalPrice").html($("#price_view").val()+" USD");
-                        console.log('$("#price").val() : ', $("#price").val())
-                        console.log('result.data.oper_rate : ' , result.data.oper_rate)
-                        $("#totalPriceKrw").html((Number($("#price").val()) * 1.01 * Number(result.data.oper_rate)).toLocaleString('ko-KR')+ " KRW");
-                        $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / 1 %");
-                        $("#acc_nm").html(result.data.acc_nm);
-                        $("#bank_nm").html(result.data.bank_nm);
-                        $("#bank_acc").html(result.data.bank_acc);
-                        $("#bank_seq").val(result.data.seq);
-                        
-                        let trLen = $("#selectBody > li").length;
-                        $("#selectNft").html("");
-                        let html = "";
-                        for (let i=0; i<trLen; i++) {
+    function fnBuyPop() {
+        wrapWindowByMaskShow();
+        $.ajax({
+            url: '/p/showAccount',
+            dataType: 'json',
+            type: 'POST',
+            data: null,
+            success: function (result) {
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    $("#totalPrice").html($("#price_view").val() + " USD");
+                    console.log('$("#price").val() : ', $("#price").val())
+                    console.log('result.data.oper_rate : ', result.data.oper_rate)
+                    $("#totalPriceKrw").html((Number($("#price").val()) * 1.01 * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
+                    $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / 1 %");
+                    $("#acc_nm").html(result.data.acc_nm);
+                    $("#bank_nm").html(result.data.bank_nm);
+                    $("#bank_acc").html(result.data.bank_acc);
+                    $("#bank_seq").val(result.data.seq);
 
-                            html += "<tr>"
-                            html += "<td class='nftmax-table__column-1 nftmax-table__data-1'>"
-                            let nameArea = "#selectBody > li:eq("+i+") > .nftmax-sidebar__creator .nftmax-sidebar__creator-name";
-                            html += $(nameArea).text();
-                            html += "</td>"
-                            html += "<td class='nftmax-table__column-2 nftmax-table__data-2'>"
-                            let countArea = "#selectBody > li:eq("+i+") > .nftmax-sidebar__button .nftmax-request_request";
-                            html += $(countArea).text();
-                            html += "</td>"
-                            html += "<td class='nftmax-table__column-3 nftmax-table__data-3'>"
-                            let priceArea = "#selectBody > li:eq("+i+") > .nftmax-sidebar__creator .nftmax-sidebar__creator-link";
-                            html += $(priceArea).text();
-                            html += "</td>"
-                            html += "</tr>"
-                        }
+                    let trLen = $("#selectBody > li").length;
+                    $("#selectNft").html("");
+                    let html = "";
+                    for (let i = 0; i < trLen; i++) {
 
-                        console.log(trLen)
-
-                        $("#selectNft").append(html);
-                        $('#buyAlarm').modal('show');
-                    } else {
-                        fnAlertModal('계좌 확인 시 오류가 발생했습니다.');
-                        // alert('계좌 확인 시 오류가 발생했습니다.');
+                        html += "<tr>"
+                        html += "<td class='nftmax-table__column-1 nftmax-table__data-1'>"
+                        let nameArea = "#selectBody > li:eq(" + i + ") > .nftmax-sidebar__creator .nftmax-sidebar__creator-name";
+                        html += $(nameArea).text();
+                        html += "</td>"
+                        html += "<td class='nftmax-table__column-2 nftmax-table__data-2'>"
+                        let countArea = "#selectBody > li:eq(" + i + ") > .nftmax-sidebar__button .nftmax-request_request";
+                        html += $(countArea).text();
+                        html += "</td>"
+                        html += "<td class='nftmax-table__column-3 nftmax-table__data-3'>"
+                        let priceArea = "#selectBody > li:eq(" + i + ") > .nftmax-sidebar__creator .nftmax-sidebar__creator-link";
+                        html += $(priceArea).text();
+                        html += "</td>"
+                        html += "</tr>"
                     }
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    console.log(trLen)
+
+                    $("#selectNft").append(html);
+                    $('#buyAlarm').modal('show');
+                } else {
                     fnAlertModal('계좌 확인 시 오류가 발생했습니다.');
                     // alert('계좌 확인 시 오류가 발생했습니다.');
-                } //function끝
-            });
-        }
-    })
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
+                fnAlertModal('계좌 확인 시 오류가 발생했습니다.');
+                // alert('계좌 확인 시 오류가 발생했습니다.');
+            } //function끝
+        });
+    }
 
     function fnBuy() {
         let objKrw = $('input[name=price]').val();
@@ -414,12 +413,14 @@
             buyType: buyType,
         }
 
+        wrapWindowByMaskShow();
         $.ajax({
             url: '/p/buy',
             dataType: 'json',
             type: 'POST',
             data: data,
             success: function (result) {
+                wrapWindowByMaskHide();
                 if (result.success) {
                     $('#buyAlarm').modal('hide');
                     fnAlertModal('구매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
@@ -432,6 +433,7 @@
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 fnAlertModal('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
+                wrapWindowByMaskHide();
                 
             }
         });
@@ -460,4 +462,57 @@
         }
 
     }
+
+    function fnPinPop(){
+        if (price.value == "" || price.value == 0) {
+            $("#price").val(0);
+            return fnAlertModal('NFT상품을 선택해주세요.');
+        }else{
+            Swal.fire({
+                title: '핀 번호를 입력해주세요.',
+                customClass: {
+                    title: 'text-lg'
+                },
+                showCloseButton: true,
+                html: `<input id="pinNum" type="password" maxLength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '')" inputmode="numeric" placeholder="핀 번호" class="nftmax__item-input"  />`,
+                preConfirm: async () => {
+                    let pin = $('#pinNum').val();
+                    if(!nullChk(pin)){
+                        Swal.showValidationMessage('핀번호를 입력해주세요.');
+                    }else if(pin.length != 4){
+                        Swal.showValidationMessage('핀번호를 4자리 입력해주세요.');
+                    }
+
+                    let data = {};
+                    data.pin = pin;
+                    wrapWindowByMaskShow();
+                    $.ajax({
+                        url: "/m/pinnCheck",
+                        dataType: "json",
+                        type: "POST",
+                        data: data,
+                        success: function (result) {
+                            console.log(result);
+                            wrapWindowByMaskHide();
+                            if (result.success) {
+                                fnBuyPop();
+                            } else {
+                                fnAlertModal(result.message);
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            wrapWindowByMaskHide();
+                            fnAlertModal("Failed due to an unknown server error.");
+                        }, //function끝
+                    });
+                },
+            });
+        }
+    }
+
 </script>
+<style>
+    .ikon_bit_id{
+        height: 35px;
+    }
+</style>

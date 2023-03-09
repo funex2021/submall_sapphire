@@ -101,6 +101,14 @@
         return str.toString().replace(",", "");
     }
 
+    function nullChk(obj){
+        let rtn = true;
+        if(null == obj || !obj  || obj === undefined){
+            rtn = false;
+        }
+        return rtn;
+    }
+
 </script>
 <style>
     .nftmax-header__amount{

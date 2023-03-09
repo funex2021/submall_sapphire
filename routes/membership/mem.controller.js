@@ -676,4 +676,35 @@ exports.updatePass = async (req, res, next) => {
 }
 
 
+exports.pinnCheck = async (req, res, next) => {
+    let { pin } = req.body;
+
+    let obj = {};
+    obj.pin = pin;
+    obj.cmpnyCd = req.user.cmpnyCd;
+    obj.memId = req.user.memId;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let memInfo = await Query.QGetMemberInfo(obj, conn);
+            if (memInfo.length < 1) {
+                return res.json(rtnUtil.successFalse("500", "핀번호 확인에 실패하였습니다.잠시후 다시 시도해주세요","",""));
+            }
+
+            if(memInfo[0].pin == obj.pin){
+                return res.json(rtnUtil.successTrue( "비밀번호가 변경되었습니다. 다시 로그인해주세요."));
+            }else{
+                res.json(rtnUtil.successFalse("500", "핀번호가 올바르지 않습니다.","",""));
+            }
+
+        } catch (e) {
+            console.log(e);
+            res.json(rtnUtil.successFalse("500", "핀번호가 올바르지 않습니다. 잠시후 다시 시도해주세요.","",""));
+        }
+    });
+}
+
 
