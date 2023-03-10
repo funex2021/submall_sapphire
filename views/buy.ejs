@@ -163,27 +163,27 @@
                                         </tbody>
                                     </table>
                                 </li>
-                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
-                                    <div class="nftmax-balance-info mt-1">
-                                        <h4 style="margin-bottom: 1px;">NFT 총 금액 :&nbsp;</h4>
-                                        <h4 style="margin-bottom: 1px;" id="totalPrice"></h4>
-                                    </div>
-                                </li>
+<!--                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">-->
+<!--                                    <div class="nftmax-balance-info mt-1">-->
+<!--                                        <h4 style="margin-bottom: 1px;">NFT 총 금액 :&nbsp;</h4>-->
+<!--                                        <h4 style="margin-bottom: 1px;" id="totalPrice"></h4>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                                 <!-- <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info">
                                         <p style="margin-bottom: 1px;" id="rateTitle"></p>
                                         <p style="margin-bottom: 1px;" id="rateDetail"></p>
                                     </div>
                                 </li> -->
-                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
-                                    <div class="nftmax-balance-info">
-                                        <p style="margin-bottom: 1px;" id="feeTitle"></p>
-                                        <p style="margin-bottom: 1px;" id="feeDetail"></p>
-                                    </div>
-                                </li>
+<!--                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">-->
+<!--                                    <div class="nftmax-balance-info">-->
+<!--                                        <p style="margin-bottom: 1px;" id="feeTitle"></p>-->
+<!--                                        <p style="margin-bottom: 1px;" id="feeDetail"></p>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info mt-1">
-                                        <h4 style="margin-bottom: 1px;">총결제금액 :&nbsp;</h4>
+                                        <h4 style="margin-bottom: 1px;">NFT결제금액 :&nbsp;</h4>
                                         <h4 style="margin-bottom: 1px;" id="totalPriceKrw"></h4>
                                     </div>
                                 </li>
@@ -305,16 +305,14 @@
             success: function (result) {
                 wrapWindowByMaskHide();
                 if (result.success) {
-                    $("#totalPrice").html($("#price_view").val() + " KRW");
+                    // $("#totalPrice").html($("#price_view").val() + " KRW");
                     console.log('$("#price").val() : ', $("#price").val())
                     console.log('result.data.oper_rate : ', result.data.oper_rate)
-                    $("#totalPriceKrw").html((Number($("#price").val()) * (1 + Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
+                    $("#totalPriceKrw").html((Number($("#price").val()).toLocaleString('ko-KR') +" KRW"));
                     // $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / <%= config.buy_fee %> %");
                     // operRate = result.data.oper_rate;
                     // $("#rateTitle").html('환율적용금액(' + result.data.oper_rate.toLocaleString('ko-KR') + ") : ");
                     // $("#rateDetail").html((Number($("#price").val()) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
-                    $("#feeTitle").html('대행 수수료(<%= config.buy_fee %>%)');
-                    $("#feeDetail").html((Number($("#price").val()) * (Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
                     $("#acc_nm").html(result.data.acc_nm);
                     $("#bank_nm").html(result.data.bank_nm);
                     $("#bank_acc").html(result.data.bank_acc);
@@ -388,6 +386,8 @@
         //     // alert(max_amt + '만원 이하 구매 가능합니다.');
         // }
 
+
+        console.log('objKrw' , objKrw);
         let data = {
             objKrw: objKrw,
             selectSellSeqArr: JSON.stringify(selectSellSeqArr),
@@ -420,7 +420,7 @@
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 fnAlertModal('세션이 종료 되었습니다. 로그인 후 다시 이용해 주세요.');
                 wrapWindowByMaskHide();
-                
+
             }
         });
     }
