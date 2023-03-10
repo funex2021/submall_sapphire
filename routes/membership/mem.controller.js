@@ -6,6 +6,7 @@ const logUtil = require(path.join(process.cwd(), '/routes/services/logUtil'))
 const encryption = require(path.join(process.cwd(), '/routes/services/encUtil'));
 const CONSTS = require(path.join(process.cwd(), '/routes/services/const'));
 const smsUtil = require(path.join(process.cwd(), "/routes/services/smsUtil"));
+const mailUtil = require(path.join(process.cwd(), "/routes/services/mailUtil"));
 const axios = require('axios')
 
 const PropertiesReader = require('properties-reader');
@@ -735,5 +736,93 @@ exports.fnIsAccount = async (req, res, next) => {
         }
     });
 }
+
+
+exports.checkId = async (req, res, next) => {
+    let { id } = req.body;
+
+    let obj = {};
+    obj.memId = id;
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+
+    mydb.executeTx(async conn => {
+        try {
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
+            obj.domain = domain;
+            let config = await Query.QGetConfig(obj, conn);
+            obj.cmpnyCd = config.cmpny_cd;
+
+            let memInfo = await Query.QGetMemberInfo(obj, conn);
+            if (memInfo.length > 0) {
+                return res.json(rtnUtil.successFalse('500', '존재하는 회원 id 입니다.'));
+            }else{
+                return res.json(rtnUtil.successTrue( "회원가입 가능한 id 입니다."));
+            }
+
+        } catch (e) {
+            console.log(e);
+            res.json(rtnUtil.successFalse("500", "접속량이 많아 연결이 지연되고있습니다. 잠시후 다시 시도해주세요.","",""));
+        }
+    });
+}
+
+exports.findPasswordProc = async (req, res, next) => {
+    let pool = req.app.get("pool");
+    let mydb = new Mydb(pool);
+
+    let { id } = req.body;
+
+    let obj = {};
+    obj.memId = id;
+    obj.password = "1234";
+
+    mydb.executeTx(async (conn) => {
+        try {
+            let domain = '';
+            if(req.headers.host.indexOf('localhost') > -1){
+                domain = localUrl;
+            }else{
+                domain = req.headers.host;
+            }
+            obj.domain = domain;
+            let config = await Query.QGetConfigInfo(obj, conn);
+            obj.cmpnyNm = config.company_nm;
+
+            let memInfo = await Query.QGeCompanyInfo(obj, conn);
+            if (memInfo.length > 0) {
+                try {
+                    let passInfo = await encryption.createPasswordHash(obj.password);
+                    obj.memPass = passInfo.password;
+                    obj.salt = passInfo.salt;
+
+                    obj.mSeq = memInfo[0].m_seq;
+                    obj.cmpnyCd = memInfo[0].cmpny_cd;
+                    let upt = await Query.QUptMember(obj, conn);
+
+                    conn.commit();
+
+                    let send = await mailUtil.sendEmail(memInfo[0].mem_email , "NTING NFT Platform", `패스워드가 ${obj.password} 로 초기화 되었습니다. 로그인 즉시 패스워드를 변경해주세요.`);
+                    return res.json(rtnUtil.successTrue(`이메일로 패스워드를 초기화하여 보냈습니다. 로그인 즉시 패스워드를 변경해주세요.`));
+                } catch (e) {
+                    conn.rollback();
+                    console.log(e);
+                    e.json(rtnUtil.successFalse("500", "접속량이 많아 연결이 지연되고있습니다. 잠시후 다시 시도해주세요."));
+                }
+            } else {
+                return res.json(rtnUtil.successFalse("500", "해당하는 아이디가 없습니다. 다시 확인해주세요."));
+            }
+        } catch (e) {
+            conn.rollback();
+            res.json(rtnUtil.successFalse("500", "접속량이 많아 연결이 지연되고있습니다. 잠시후 다시 시도해주세요."));
+        }
+    });
+};
 
 

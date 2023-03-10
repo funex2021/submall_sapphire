@@ -119,4 +119,7 @@ router.post('/updatePass', isAuthenticated , mem.updatePass);
 router.post('/pinnCheck', isAuthenticated , mem.pinnCheck);
 router.post('/fnIsAccount', isAuthenticated , mem.fnIsAccount);
 
+router.post('/checkId', mem.checkId)
+router.post('/findPasswordProc', mem.findPasswordProc)
+
 module.exports = router;
