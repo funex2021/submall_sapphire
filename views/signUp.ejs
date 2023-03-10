@@ -31,7 +31,7 @@
                     <!-- Welcome Form -->
                     <div class="nftmax-wc__form" id="login-form">
                         <div class="nftmax-wc__form-inner">
-                            <div class="nftmax-wc__heading">
+                            <div class="nftmax-wc__heading" style="margin-top: 9rem;">
                                 <h3 class="nftmax-wc__form-title nftmax-wc__form-title__one" style="background-image:url('/images/heading-vector.png')">Sign Up</h3>
                             </div>
                             <!-- Sign in Form -->
@@ -40,6 +40,9 @@
                                     <label class="nftmax-wc__form-label">ID</label>
                                     <div class="form-group__input">
                                         <input class="nftmax-wc__form-input" type="text" name="login-form-username" id="id" value="" placeholder="<%=config.login_text%>" maxlength="20" />
+                                        <div class="nftmax-wc__button">
+                                        <button class="ntfmax-wc__btn mt-1" href="javascript:void(0);" style="height: 38px;" onclick="fnCheckId()">ID 중복체크</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -102,10 +105,51 @@
 <%- include('includes/modal') %>
 </html>
 <script>
+    let chkId = "";
+    function fnCheckId(){
+        if ($("#id").val() == '') {
+            return fnAlertModal('아이디를 입력해 주세요.');
+        }
+
+        wrapWindowByMaskShow();
+
+        let data = {
+            id: $("#id").val(),
+        }
+
+        $.ajax({
+            url: '/m/checkId',
+            dataType: 'json',
+            type: 'POST',
+            data: data,
+            success: function (result) {
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    fnAlertModal(result.message);
+                    chkId = $("#id").val();
+                } else {
+                    fnAlertModal(result.message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
+                fnAlertModal('접속량이 많아 연결이 지연되고있습니다. 잠시후 다시 시도해주세요.');
+            } //function끝
+        });
+    }
+
+
     function signUp() {
         if ($("#id").val() == '') {
             return fnAlertModal('아이디를 입력해 주세요.');
         }
+
+        if(chkId == ""){
+            return fnAlertModal('아이디 중복체크를 진행해 주세요.');
+        }else if($("#id").val() != chkId){
+            return fnAlertModal('아이디 중복체크를 진행한 아이디와 다른아이디입니다. 다시 진행해 주세요.');
+        }
+
         if ($("#email").val() == '') {
             return fnAlertModal('이메일을 입력해 주세요.');
         } else {

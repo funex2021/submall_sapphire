@@ -543,6 +543,32 @@ function fnGetConfigInfo(param, conn) {
     });
 }
 
+function fnGetCompanyInfo(param, conn) {
+    return new Promise(function (resolve, reject) {
+        var sql = " SELECT cm.m_seq , cm.mem_id, cm.cmpny_cd, cm.mem_pass, cm.salt, cm.mem_nm, cm.mem_hp , cm.mem_email "
+        sql += " , (select cmpny_nm from cs_company where cmpny_cd = cm.cmpny_cd) cmpny_nm "
+        sql += " , cm.mem_email, nation, fn_get_name(cm.nation) nation_name , DATE_FORMAT(cm.create_dt, '%Y-%m-%d %H:%i:%s') create_dt "
+        sql += " , cm.bank_seq , cm.auth_yn";
+        sql += " ,cw.coin_addr, cw.coin_pk "
+        sql += " FROM cs_member cm left join cs_wallet cw ON cw.m_seq = cm.m_seq"
+        // sql += " FROM cs_member cm"
+        sql += " WHERE cm.mem_id = '" + param.memId + "'"
+        sql += " and cw.default_yn = 'Y'"
+        sql += " and cm.mem_status = 'CMDT00000000000030' "
+        sql += " and cm.cmpny_cd = (select cmpny_cd from cs_company where cmpny_nm = '" + param.cmpnyNm + "' )"
+
+        console.log(sql)
+        conn.query(sql, (err, ret) => {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(ret);
+        });
+    });
+}
+
+
 module.exports.QGetMemTotal = fnGetMemTotal;
 module.exports.QGetMemberList = fnGetMemList;
 module.exports.QSetMember = fnSetMember;
@@ -574,3 +600,4 @@ module.exports.QGetBankCertification = fnGetBankCertification;
 module.exports.QUptBankCertification = fnUptBankCertification;
 
 module.exports.QGetConfigInfo = fnGetConfigInfo;
+module.exports.QGeCompanyInfo = fnGetCompanyInfo;
