@@ -39,33 +39,16 @@
                                                     <% })%>
                                                 </div>
                                                 <% } %>
-
-
                                             </div>
                                             <div class="dashboard-banner__column dashboard-banner__column--two">
                                                 <div class="nftmax-header__author nftmax-header__author-two ">
                                                     <div class="nftmax-header__author-content ">
                                                         <h4 class="nftmax-header__author-title nftmax-header__author-title--two nftmax-lspacing"></h4>
                                                         <p class="nftmax-font-regular" style="color: #fff;">
-                                                            CNFT는 CNX네트워크를 기반으로한 <br/>
-                                                            메타버스 공간에서 메타버스간의 소통시<br/>
-                                                            GAS로 사용되는 새로운 개념에 하이브리드코인입니다.<br/>
+                                                            MATC 코인은 전국 '한우야!' 프랜차이즈 가맹점에서 현금 대신 간편한 결제시스템을 지원하는 핀테크 솔류션입니다. <br/>
+                                                            MATC코인을 기반으로하여 M-NFT는 미레 지향적인 메타버스 플랫폼내에서 자유로운 거래와 플랫폼 사용 GAS로 이용됩니다.<br/>
                                                         </p>
-                                                        <div class="dashboard-banner__button" id="textMoreBtn">
-                                                            <div class="dashboard-banner__single-btn">
-                                                                <a onclick="fnViewMoreText();" class="nftmax-btn trs-white">더보기</a>
-                                                            </div>
-                                                        </div>
-
                                                         <hr/>
-                                                        <p class="nftmax-font-regular" style="color: #fff; display: none;" id="textMoreArea">
-                                                            CNFT는  COFINEX거래소의 CNX메인넷을 <br/>
-                                                            기반으로 탄생한  CNM코인의 NFT형식코인이며,<br/>
-                                                            메타버스 공간에에서의 <br/>
-                                                            RISK FINANCING COIN으로<br/>
-                                                            FINANCE UTILITY 중심 코인의 역할을<br/>
-                                                            수행합니다.<br/>
-                                                        </p>
                                                         <div class="dashboard-banner__button" id="textCloseBtn" style="display: none;">
                                                             <div class="dashboard-banner__single-btn">
                                                                 <a onclick="fnViewColseText();" class="nftmax-btn trs-white">감추기</a>
@@ -82,8 +65,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <hr/>
-                                                <div class="dashboard-banner__button">
+                                                <div class="dashboard-banner__button mt-5">
                                                     <div class="dashboard-banner__single-btn dashboard-banner__main-btn">
                                                         <a href="javascript:void(0);" onclick="fnKakao()" class="nftmax-btn nftmax-btn__secondary radius" id="kakao-link-btn" style="color: #fff;">카카오톡 공유</a>
                                                     </div>
@@ -178,24 +160,13 @@
         Kakao.init('622c4dc4cd6bc0d81c22bda31d7ee08e');
     });
 
-    function fnViewMoreText(){
-        $("#textMoreArea").show();
-        $("#textCloseBtn").show();
-        $("#textMoreBtn").hide();
-    }
-    function fnViewColseText(){
-        $("#textMoreArea").hide();
-        $("#textCloseBtn").hide();
-        $("#textMoreBtn").show();
-    }
-
     function fnKakao(){
     let url = '<%=siteUrl%>';
     Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
-            imageUrl:'http://'+url+'/images/cnft_logo.png',
-            title: 'cnft',
+            imageUrl:'http://'+url+'/images/matc_logo.png',
+            title: 'matc',
             link: {
                 mobileWebUrl: 'http://'+url,
                 webUrl: 'http://'+url,
