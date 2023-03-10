@@ -114,7 +114,7 @@
                                         </ul>
                                         <div class="mt-4">
                                             <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__primary radius clear-btn">초기화</a>
-                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius next-btn" onclick="fnPinPop()">구매하기</a>
+                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius next-btn" onclick="fnIsAleardy()">구매하기</a>
                                         </div>
                                     </div>
                                     <!-- End Sidebar Creator Lists -->
@@ -171,13 +171,19 @@
                                 </li>
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info">
-                                        <p style="margin-bottom: 1px;">환율/수수료 :&nbsp;</p>
-                                        <p style="margin-bottom: 1px;" id="operRate"></p>
+                                        <p style="margin-bottom: 1px;" id="rateTitle"></p>
+                                        <p style="margin-bottom: 1px;" id="rateDetail"></p>
+                                    </div>
+                                </li>
+                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <div class="nftmax-balance-info">
+                                        <p style="margin-bottom: 1px;" id="feeTitle"></p>
+                                        <p style="margin-bottom: 1px;" id="feeDetail"></p>
                                     </div>
                                 </li>
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info mt-1">
-                                        <h4 style="margin-bottom: 1px;">결제금액 :&nbsp;</h4>
+                                        <h4 style="margin-bottom: 1px;">총결제금액 :&nbsp;</h4>
                                         <h4 style="margin-bottom: 1px;" id="totalPriceKrw"></h4>
                                     </div>
                                 </li>
@@ -330,8 +336,12 @@
                     console.log('$("#price").val() : ', $("#price").val())
                     console.log('result.data.oper_rate : ', result.data.oper_rate)
                     $("#totalPriceKrw").html((Number($("#price").val()) * (1 + Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
-                    $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / <%= config.buy_fee %> %");
+                    // $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / <%= config.buy_fee %> %");
                     operRate = result.data.oper_rate;
+                    $("#rateTitle").html('환율적용금액(' + result.data.oper_rate.toLocaleString('ko-KR') + ") : ");
+                    $("#rateDetail").html((Number($("#price").val()) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
+                    $("#feeTitle").html('대행 수수료(<%= config.buy_fee %>%)');
+                    $("#feeDetail").html((Number($("#price").val()) * (Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
                     $("#acc_nm").html(result.data.acc_nm);
                     $("#bank_nm").html(result.data.bank_nm);
                     $("#bank_acc").html(result.data.bank_acc);
@@ -464,6 +474,36 @@
             }
         }
 
+    }
+
+    function fnIsAleardy(){
+        if (price.value == "" || price.value == 0) {
+            $("#price").val(0);
+            return fnAlertModal('NFT상품을 선택해주세요.');
+        }else{
+            wrapWindowByMaskShow();
+            let data = {};
+            data.status = 'buy';
+            $.ajax({
+                url: "/p/aleardyCheck",
+                dataType: "json",
+                type: "POST",
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                    wrapWindowByMaskHide();
+                    if (result.success) {
+                        fnPinPop();
+                    } else {
+                        fnAlertModal(result.message);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    wrapWindowByMaskHide();
+                    fnAlertModal("Failed due to an unknown server error.");
+                }, //function끝
+            });
+        }
     }
 
     function fnPinPop(){

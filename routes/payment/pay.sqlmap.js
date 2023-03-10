@@ -854,13 +854,17 @@ function fnGetNftBuyMainList(param, conn) {
 
 function fnGetAirdropList(param, conn) {
     return new Promise(function (resolve, reject) {
-        var sql = "";
-
+        var sql = "select T.* from (";
         sql += " select (select file_path from cs_nft_mst cnm where seq = cna.nft_seq) nft_img, ";
         sql += "  (select nft_nm from cs_nft_mst cnm where seq = cna.nft_seq) nft_nm, ";
         sql += " nft_seq, price, tot_price, txid, is_sell, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
-        sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
+        sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' ";
+        sql += " union all  ";
+        sql += " select nft_img, nft_nm, nft_seq, sell_price price, real_price tot_price, '' txid, 'Y' is_sell, create_dt from cs_nft_sell where airdrop_yn = 'Y' and sell_status = 'CMDT00000000000080' and m_seq = '" + param.mSeq + "' order by create_dt desc) T ";
         sql += " limit " + (param.pageIndex - 1) * param.rowsPerPage + "," + param.rowsPerPage
+
+        
+
 
         console.log('fnGetAirdropList >> ' , sql);
         conn.query(sql, (err, ret) => {
@@ -875,10 +879,13 @@ function fnGetAirdropList(param, conn) {
 
 function fnGetAirdropListTotal(param, conn) {
     return new Promise(function (resolve, reject) {
-        var sql = "";
-
-        sql += " select count(1) totSum ";
-        sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' order by create_dt desc ";
+        var sql = "select COUNT(1) from (";
+        sql += " select (select file_path from cs_nft_mst cnm where seq = cna.nft_seq) nft_img, ";
+        sql += "  (select nft_nm from cs_nft_mst cnm where seq = cna.nft_seq) nft_nm, ";
+        sql += " nft_seq, price, tot_price, txid, is_sell, DATE_FORMAT(fn_get_time(cna.create_dt), '%Y-%m-%d %H:%i:%s') create_dt ";
+        sql += " from cs_nft_airdrop cna where m_seq = '" + param.mSeq + "' ";
+        sql += " union all  ";
+        sql += " select nft_img, nft_nm, nft_seq, sell_price price, real_price tot_price, '' txid, 'Y' is_sell, create_dt from cs_nft_sell where airdrop_yn = 'Y' and sell_status = 'CMDT00000000000080' and m_seq = '" + param.mSeq + "' order by create_dt desc) T ";
 
 
         console.log('fnGetAirdropListTotal >> ' , sql);

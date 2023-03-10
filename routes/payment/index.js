@@ -48,6 +48,7 @@ router.get('/mynft', isAuthenticated, isAuthYn, pay.mynft)
 router.get('/haveNft', isAuthenticated, isAuthYn, pay.haveNft);
 router.post('/haveNft', isAuthenticated, isAuthYn, pay.haveNft);
 
+router.post('/aleardyCheck', isAuthenticated, isAuthYn, pay.aleardyCheck);
 
 
 module.exports = router

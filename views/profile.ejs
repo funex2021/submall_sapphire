@@ -368,6 +368,14 @@
 </div>
 
 <script>
+    
+    $(function(){
+        if("<%=menu%>" == "account") {
+            $(".list-group-item")[1].click();
+            fnBankModiry();
+        }
+    });
+
     function fnModify(index) {
         if(index == 1) {
             fnModifyInfo();

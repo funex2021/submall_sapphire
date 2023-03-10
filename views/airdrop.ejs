@@ -45,8 +45,8 @@
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">상품</th>
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">sales</th>
                                                             <th class="nftmax-table__column-2 nftmax-table__h2">날짜</th>
-                                                            <th class="nftmax-table__column-4 nftmax-table__h4">변동금액</th>
-                                                            <th class="nftmax-table__column-4 nftmax-table__h4">누적금액</th>
+                                                            <th class="nftmax-table__column-4 nftmax-table__h4">변동(예정)금액</th>
+                                                            <th class="nftmax-table__column-4 nftmax-table__h4">누적(예정)금액</th>
                                                             <th class="nftmax-table__column-4 nftmax-table__h4">txid</th>
                                                         </tr>
                                                         </thead>
@@ -76,13 +76,19 @@
                                                                                 <div class="nftmax-table__amount nftmax-table__text-one">
                                                                                     <span class="nftmax-table__text">
                                                                                         <% if (el.is_sell == 'Y') {%>
-                                                                                            <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">판매</p>
+                                                                                            <p class="nftmax-table__text nftmax-table__up-down nftmax-rcolor">
+                                                                                                판매 
+                                                                                                <% if (el.txid == '') {%>
+                                                                                                    (대기)
+                                                                                                <% }%>
+                                                                                            </p>
                                                                                         <% } else {%>
                                                                                         <b>지급</b>
                                                                                         <% }%>
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
+                                                                           
                                                                             <td class="nftmax-table__column-2 nftmax-table__data-2">
                                                                                 <div class="nftmax-table__amount nftmax-table__text-one">
                                                                                     <span class="nftmax-table__text">
@@ -104,14 +110,22 @@
                                                                             <td class="nftmax-table__column-3 nftmax-table__data-3">
                                                                                 <div class="nftmax-table__amount nftmax-table__text-one">
                                                                                     <span class="nftmax-table__text">
-                                                                                        <b><%= Number(el.tot_price ).toLocaleString('ko-KR')%></b>
+                                                                                        <b>
+                                                                                            <% if (el.is_sell == 'Y' && (el.txid == '' || el.txid == null)) {%>
+                                                                                                <%= (Number(airdropPrice) - Number(el.price)).toLocaleString('ko-KR')%>
+                                                                                            <% } else { %>
+                                                                                                <%= Number(el.tot_price ).toLocaleString('ko-KR')%>
+                                                                                            <% } %>
+                                                                                        </b>
                                                                                     </span>
                                                                                 </div>
                                                                             </td>
                                                                             <td class="nftmax-table__column-3 nftmax-table__data-3">
                                                                                 <div class="nftmax-table__amount nftmax-table__text-one" onclick="newWindow('<%=String(el.txid)%>')">
                                                                                     <span class="nftmax-table__text">
+                                                                                        <% if ((el.txid != null && el.txid != '')) {%>
                                                                                         <b><%=String(el.txid).substring(0,15)%>...</b>
+                                                                                        <% }%>
                                                                                     </span>
                                                                                 </div>
                                                                             </td>

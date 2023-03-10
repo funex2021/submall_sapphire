@@ -117,5 +117,6 @@ router.post('/updateInfo', isAuthenticated ,mem.updateInfo);
 router.post('/updateBank', isAuthenticated , mem.updateBank);
 router.post('/updatePass', isAuthenticated , mem.updatePass);
 router.post('/pinnCheck', isAuthenticated , mem.pinnCheck);
+router.post('/fnIsAccount', isAuthenticated , mem.fnIsAccount);
 
 module.exports = router;

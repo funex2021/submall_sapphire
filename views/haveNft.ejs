@@ -76,7 +76,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <% if(el.price > 0) { %>
-                                                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius" data-index="<%=index%>" onclick="fnPinPop('<%=el.price.toLocaleString()%>', '<%=el.price%>', '<%=el.nft_seq%>')">판매</a>
+                                                                            <a href="javascript:void(0);" class="nftmax-btn nftmax-btn__secondary radius" data-index="<%=index%>" onclick="fnIsAccount('<%=el.price.toLocaleString()%>', '<%=el.price%>', '<%=el.nft_seq%>')">판매</a>
                                                                             <% } %>
                                                                         </div>
                                                                     </div>
@@ -119,18 +119,18 @@
                                     <!-- Single Wallet -->
                                     <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                         <div class="nftmax-balance-info m-1">
-                                            <p style="margin-bottom: 1px;">선택하신 상품의 판매금액을 입력해주세요. <br/>판매를 진행하시겠습니까? </p>
+                                            <p style="margin-bottom: 1px;">에어드랍으로 보유하신 CNFT 판매를 진행하시겠습니까? <br/>내 정보에서 은행정보를 다시 한 번 확인해주세요.</p>
                                         </div>
                                     </li>
-                                    <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                    <!-- <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                         <div class="nftmax-balance-info">
                                             <p style="margin-bottom: 1px;">수수료 :&nbsp;</p>
                                             <p style="margin-bottom: 1px;" id="operRate"></p>
                                         </div>
-                                    </li>
+                                    </li> -->
                                     <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                         <div class="nftmax-balance-info mt-1">
-                                            <h4 style="margin-bottom: 1px;">보유금액 :&nbsp;</h4>
+                                            <h4 style="margin-bottom: 1px;">NFT보유금액 :&nbsp;</h4>
                                             <h4 style="margin-bottom: 1px;" id="myPrice"></h4>
                                         </div>
                                     </li>
@@ -144,7 +144,7 @@
                                     </li>
                                     <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                         <div class="nftmax-balance-info mt-1">
-                                            <h4 style="margin-bottom: 1px;">수수료금액 :&nbsp;</h4>
+                                            <h4 style="margin-bottom: 1px;" id="feeTitle"></h4>
                                             <h4 style="margin-bottom: 1px;" id="feePrice"></h4>
                                         </div>
                                     </li>
@@ -180,6 +180,56 @@
 <%- include('includes/modal') %>
 </html>
 <script>
+
+    function fnIsAccount(priceStr, price, nftSeq){
+        wrapWindowByMaskShow();
+        let data = {};
+        $.ajax({
+            url: "/m/fnIsAccount",
+            dataType: "json",
+            type: "POST",
+            data: data,
+            success: function (result) {
+                console.log(result);
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    fnIsAleardy(priceStr, price, nftSeq);
+                } else {
+                    fnRedirectModal(result.message, "/m/profile?menu=account");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
+                fnAlertModal("Failed due to an unknown server error.");
+            }, //function끝
+        });
+    }
+
+    function fnIsAleardy(priceStr, price, nftSeq){
+        wrapWindowByMaskShow();
+        let data = {};
+        data.status = 'sell';
+        $.ajax({
+            url: "/p/aleardyCheck",
+            dataType: "json",
+            type: "POST",
+            data: data,
+            success: function (result) {
+                console.log(result);
+                wrapWindowByMaskHide();
+                if (result.success) {
+                    fnPinPop(priceStr, price, nftSeq);
+                } else {
+                    fnAlertModal(result.message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                wrapWindowByMaskHide();
+                fnAlertModal("Failed due to an unknown server error.");
+            }, //function끝
+        });
+    }
+
     function fnPinPop(price, _price, nftSeq){
         Swal.fire({
             title: '핀 번호를 입력해주세요.',
@@ -223,7 +273,7 @@
     }
 
     function sellPop(price, _price, nftSeq) {
-        $("#operRate").html("<%= config.sell_fee %> %");
+        $("#feeTitle").html("수수료(<%= config.sell_fee %>)% : ");
         $("#myPrice").html(price)
         $("#_myPrice").val(_price)
         $("#nftSeq").val(nftSeq)
@@ -274,7 +324,7 @@
                 wrapWindowByMaskHide();
                 if (result.success) {
                     $('#sellAlarm').modal('hide');
-                    fnRefreshModal('판매를 신청 하셨습니다. 입금 확인 후 구매 됩니다.');
+                    fnRefreshModal('판매 후 등록된 회원님의 계좌로 입금됩니다.');
                 } else {
                     fnAlertModal(result.message);
                 }

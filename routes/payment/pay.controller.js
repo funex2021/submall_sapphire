@@ -1128,3 +1128,40 @@ exports.sell = async (req, res, next) => {
         }
     });
 }
+
+exports.aleardyCheck = async (req, res, next) => {
+
+    let pool = req.app.get('pool');
+    let mydb = new Mydb(pool);
+    let {status} = req.body;
+
+
+    mydb.executeTx(async conn => {
+        try {
+            let obj = {}
+            if(status == 'buy') {
+                obj.cmpnyCd = req.user.cmpnyCd;
+                obj.memId = req.user.memId;
+                obj.cs_coin_sell = req.user.cs_coin_sell;
+                let sellStsCtn = await Query.QGetBuyReqSts(obj, conn);
+                if (parseInt(sellStsCtn) > 0) {
+                    res.json(rtnUtil.successFalse("500", "입금 확인 중에 있습니다.  완료 후 재 신청해주세요.", "", ""));
+                } else {
+                    res.json(rtnUtil.successTrue("200", "", ""));
+                }
+            } else {
+                obj.mSeq = req.user.mSeq;
+                let sellStsCtn = await Query.QGetSellReqSts(obj, conn);
+                if (parseInt(sellStsCtn) > 0) {
+                    res.json(rtnUtil.successFalse("500", "판매 확인 중에 있습니다.  완료 후 재 신청해주세요.", "", ""));
+                } else {
+                    res.json(rtnUtil.successTrue("200", "", ""));
+                }
+            }
+
+        } catch (e) {
+            console.log('e : ', e)
+            res.json(rtnUtil.successFalse("500", "구매상태를 확인해주세요.", "", ""));
+        }
+    });
+}

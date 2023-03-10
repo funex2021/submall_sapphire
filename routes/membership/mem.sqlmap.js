@@ -543,6 +543,7 @@ function fnGetConfigInfo(param, conn) {
     });
 }
 
+
 module.exports.QGetMemTotal = fnGetMemTotal;
 module.exports.QGetMemberList = fnGetMemList;
 module.exports.QSetMember = fnSetMember;
