@@ -234,7 +234,7 @@ exports.buypage = async (req, res, next) => {
 
 exports.buy = async (req, res, next) => {
 
-    let {selectSellSeqArr, selectBuyAmountArr, selectSellPriceArr, bankSeq, ikonId, buyType, operRate} = req.body;
+    let {selectSellSeqArr, selectBuyAmountArr, selectSellPriceArr, bankSeq, operRate} = req.body;
     selectSellSeqArr = JSON.parse(selectSellSeqArr);
     selectBuyAmountArr = JSON.parse(selectBuyAmountArr);
     selectSellPriceArr = JSON.parse(selectSellPriceArr);
