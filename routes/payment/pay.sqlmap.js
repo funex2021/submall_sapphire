@@ -562,7 +562,7 @@ function fnGetNftBankInfo(param, conn) {
     return new Promise(function (resolve, reject) {
         var sql = "";
         sql += "select seq, bank_nm, bank_acc, acc_nm, use_yn, create_dt ";
-        sql += " ,IFNULL((select oper_rate from cs_exchange_rate order by create_dt desc limit 1), 1360) oper_rate ";
+        sql += " ,1 oper_rate ";
         sql += " from cs_nft_bank";
         sql += " where 1=1";
         sql += " and seq = '"+param.bankSeq+"'";

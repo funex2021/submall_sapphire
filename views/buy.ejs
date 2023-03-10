@@ -62,7 +62,7 @@
                                                                     <div class="nftmax-currency">
                                                                         <div class="nftmax-currency__main">
                                                                             <div class="nftmax-currency__content">
-                                                                                <h4 class="nftmax-currency__content-title"><%=Number(el.sell_price).toLocaleString('ko-KR')%> USD</h4>
+                                                                                <h4 class="nftmax-currency__content-title"><%=Number(el.sell_price).toLocaleString('ko-KR')%> KRW</h4>
                                                                                 <p class="nftmax-currency__content-sub"><%=Number(el.buy_amount).toLocaleString('ko-KR')%> / <%=Number(el.sell_amount).toLocaleString('ko-KR')%></p>
                                                                             </div>
                                                                         </div>
@@ -96,7 +96,7 @@
                         <div class="welcome-cta__button">
                             <input type="hidden" class="text-primary" id="price" name="price" style="border: none; background-color: inherit;" readonly>
                             <input class="nftmax-btn nftmax-btn__bordered bg" name="price_view" id="price_view" readonly style="cursor: not-allowed" value="0">
-                            <p class="nftmax-btn trs-white bl-color mb-0">USD</p>
+                            <p class="nftmax-btn trs-white bl-color mb-0">KRW</p>
                         </div>
                     </div>
                     <div class="nftmax-sidebar mg-top-40">
@@ -169,12 +169,12 @@
                                         <h4 style="margin-bottom: 1px;" id="totalPrice"></h4>
                                     </div>
                                 </li>
-                                <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
+                                <!-- <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info">
                                         <p style="margin-bottom: 1px;" id="rateTitle"></p>
                                         <p style="margin-bottom: 1px;" id="rateDetail"></p>
                                     </div>
-                                </li>
+                                </li> -->
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info">
                                         <p style="margin-bottom: 1px;" id="feeTitle"></p>
@@ -207,33 +207,6 @@
                                         <p style="margin-bottom: 1px;">계좌번호 :&nbsp;</p>
                                         <p style="margin-bottom: 1px;" id="bank_acc"></p>
                                     </div>
-                                </li>
-                                <!-- End Single Wallet -->
-                                <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
-                                    <div class="nftmax__item-form--group ">
-                                        <label class="nftmax__item-label">IKON BIT ID : </label>
-                                        <input class="nftmax__item-input ikon_bit_id" type="text" placeholder="" id="ikonId" required="required" maxlength="30">
-                                        <!-- <p class="nftmax__item-fee-text">Your email for marketplace notifications</p> -->
-                                    </div>
-                                    <!-- <div class="nftmax-balance-info">
-                                        <p style="margin-bottom: 1px;">ID :&nbsp;</p>
-                                        <input class="nftmax__item-input" type="text" id="user_nm" placeholder="IKON BIT ID" required="required" value="">
-                                    </div> -->
-                                    
-                                </li>
-                                <li  class="nftmax-wallet__list-single" style="padding : 5px 15px;">
-                                    <div class="nftmax__item-radio--group">
-                                        <input class="nftmax__item-radio-title" type="radio" placeholder="" name="buyType" required="required" value="package">
-                                        <label class="nftmax__item-radio-label">패키지 구매</label>&nbsp;&nbsp;
-                                        <input class="nftmax__item-radio-title" type="radio" placeholder="" name="buyType" required="required" value="trading">
-                                        <label class="nftmax__item-radio-label">트레이딩 구매</label>
-                                        <!-- <p class="nftmax__item-fee-text">Your email for marketplace notifications</p> -->
-                                    </div>
-                                    <!-- <div class="nftmax-balance-info">
-                                        <p style="margin-bottom: 1px;">ID :&nbsp;</p>
-                                        <input class="nftmax__item-input" type="text" id="user_nm" placeholder="IKON BIT ID" required="required" value="">
-                                    </div> -->
-                                    
                                 </li>
                             </ul>
                             <div class="nftmax__item-button--group">
@@ -332,14 +305,14 @@
             success: function (result) {
                 wrapWindowByMaskHide();
                 if (result.success) {
-                    $("#totalPrice").html($("#price_view").val() + " USD");
+                    $("#totalPrice").html($("#price_view").val() + " KRW");
                     console.log('$("#price").val() : ', $("#price").val())
                     console.log('result.data.oper_rate : ', result.data.oper_rate)
                     $("#totalPriceKrw").html((Number($("#price").val()) * (1 + Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
                     // $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / <%= config.buy_fee %> %");
                     // operRate = result.data.oper_rate;
-                    $("#rateTitle").html('환율적용금액(' + result.data.oper_rate.toLocaleString('ko-KR') + ") : ");
-                    $("#rateDetail").html((Number($("#price").val()) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
+                    // $("#rateTitle").html('환율적용금액(' + result.data.oper_rate.toLocaleString('ko-KR') + ") : ");
+                    // $("#rateDetail").html((Number($("#price").val()) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
                     $("#feeTitle").html('대행 수수료(<%= config.buy_fee %>%)');
                     $("#feeDetail").html((Number($("#price").val()) * (Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
                     $("#acc_nm").html(result.data.acc_nm);

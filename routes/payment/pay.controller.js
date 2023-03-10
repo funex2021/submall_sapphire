@@ -318,8 +318,8 @@ exports.buy = async (req, res, next) => {
                                         nftBuyObj.buySeq = uuidv4();
                                         nftBuyObj.sellSeq = selectSellSeqArr[i];
                                         nftBuyObj.buyAmount = selectBuyAmountArr[i];
-                                        nftBuyObj.ikonId = ikonId;
-                                        nftBuyObj.buyType = buyType;
+                                        nftBuyObj.ikonId = '';
+                                        nftBuyObj.buyType = '';
                                         console.log(nftBuyObj)
                                         //nft 수량체크
                                         let cnt = await Query.QGetNftSellCnt(nftBuyObj, conn);
