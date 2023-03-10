@@ -262,7 +262,7 @@
     let selectSellSeqArr = [];
     let selectBuyAmountArr = [];
     let selectSellPriceArr = [];
-    let operRate = 0;
+    let operRate = 1;
     const price = document.querySelector('#price');
     const clearBtn = document.querySelector('.clear-btn');
     const nextBtn = document.querySelector('.next-btn');
@@ -337,7 +337,7 @@
                     console.log('result.data.oper_rate : ', result.data.oper_rate)
                     $("#totalPriceKrw").html((Number($("#price").val()) * (1 + Number("<%= config.buy_fee %>") / 100) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
                     // $("#operRate").html(result.data.oper_rate.toLocaleString('ko-KR') + " / <%= config.buy_fee %> %");
-                    operRate = result.data.oper_rate;
+                    // operRate = result.data.oper_rate;
                     $("#rateTitle").html('환율적용금액(' + result.data.oper_rate.toLocaleString('ko-KR') + ") : ");
                     $("#rateDetail").html((Number($("#price").val()) * Number(result.data.oper_rate)).toLocaleString('ko-KR') + " KRW");
                     $("#feeTitle").html('대행 수수료(<%= config.buy_fee %>%)');
@@ -395,15 +395,15 @@
         let max_amt = $('input[name=max_amt]').val();
         let min_amt = $('input[name=min_amt]').val();
 
-        let ikonId = $("#ikonId").val();
-        if(ikonId == null || ikonId == '') {
-            return fnAlertModal('IKON BIT ID를 입력해주세요.');
-        }
+        // let ikonId = $("#ikonId").val();
+        // if(ikonId == null || ikonId == '') {
+        //     return fnAlertModal('IKON BIT ID를 입력해주세요.');
+        // }
 
-        let buyType = $('input[name="buyType"]:checked').val()
-        if(buyType == undefined) {
-            return fnAlertModal('패키지 / 트레이딩 구매 구분을 선택해주세요.');
-        }
+        // let buyType = $('input[name="buyType"]:checked').val()
+        // if(buyType == undefined) {
+        //     return fnAlertModal('패키지 / 트레이딩 구매 구분을 선택해주세요.');
+        // }
 
         // if (parseInt(objKrw) < parseInt(min_amt * 10000)) {
         //     return fnAlertModal(min_amt + '만원 이상 구매 가능합니다.');
@@ -421,8 +421,8 @@
             selectBuyAmountArr: JSON.stringify(selectBuyAmountArr),
             selectSellPriceArr: JSON.stringify(selectSellPriceArr),
             bankSeq: $("#bank_seq").val(),
-            ikonId: ikonId,
-            buyType: buyType,
+            // ikonId: ikonId,
+            // buyType: buyType,
             operRate: operRate
         }
 
