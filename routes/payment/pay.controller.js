@@ -6,7 +6,7 @@ const rtnUtil = require(path.join(process.cwd(), '/routes/services/rtnUtil'))
 const logUtil = require(path.join(process.cwd(), '/routes/services/logUtil'))
 const pagingUtil = require(path.join(process.cwd(), '/routes/services/pagingUtil'));
 const apiUtil = require(path.join(process.cwd(), '/routes/services/apiUtil'));
-
+const comUtil = require(path.join(process.cwd(), '/routes/services/comUtil'));
 const CONSTS = require(path.join(process.cwd(), '/routes/services/const'))
 
 const {v4: uuidv4} = require('uuid');
@@ -25,7 +25,7 @@ const localUrl = properties.get('com.local.url');
 const payTime = properties.get('com.pay.time');
 const stoptime = properties.get('com.pay.stoptime');
 const nftMallUrl = properties.get('com.nft.mall');
-
+const devMallUrl = properties.get('dev.nft.mall');
 exports.buyview = async (req, res, next) => {
     let pool = req.app.get('pool');
     let mydb = new Mydb(pool);
@@ -100,6 +100,11 @@ exports.buyview = async (req, res, next) => {
                     totTrans = totTrans[0].trans_num;
                 }
 
+                let mallUrl = devMallUrl;
+                if (comUtil.fnIsProd()) {
+                    mallUrl = nftMallUrl;
+                }
+
                 res.render("main", {
                     'cmpnyInfo': cmpnyInfo[0],
                     'coinObj': balance[0].balance,
@@ -110,7 +115,7 @@ exports.buyview = async (req, res, next) => {
                     "totBalance": totBalance,
                     "totTrans": totTrans,
                     "pagination": pagination,
-                    "nftMallUrl": nftMallUrl,
+                    "nftMallUrl": mallUrl,
                     "nftList" : nftList,
                     "menuNum": 0 ,
                     "siteUrl" : localUrl
@@ -203,6 +208,11 @@ exports.buypage = async (req, res, next) => {
                 obj.collection_seq = cmpnyInfoByCd[0].collection_seq
                 let nftList = await Query.QgetNftList(obj, conn);
 
+                let mallUrl = devMallUrl;
+                if (comUtil.fnIsProd()) {
+                    mallUrl = nftMallUrl;
+                }
+
                 res.render("buy", {
                     'cmpnyInfo': cmpnyInfo[0],
                     'coinObj': balance[0].balance,
@@ -214,7 +224,7 @@ exports.buypage = async (req, res, next) => {
                     "totTrans": totTrans,
                     "pagination": pagination,
                     "nftList": nftList,
-                    "nftMallUrl": nftMallUrl,
+                    "nftMallUrl": mallUrl,
                     "menuNum":1
                 })
             } catch (e) {
@@ -637,9 +647,14 @@ exports.selectNftBuyList = async (req, res, next) => {
     mydb.executeTx(async conn => {
         try {
 
+            let mallUrl = devMallUrl;
+            if (comUtil.fnIsProd()) {
+                mallUrl = nftMallUrl;
+            }
+
             let buyList = await Query.QGetNftBuyList(obj, conn);
             for (let i=0; i<buyList.length; i++) {
-                buyList[i].nftMallUrl = nftMallUrl;
+                buyList[i].nftMallUrl = mallUrl;
             }
 
             res.json(rtnUtil.successTrue("200", buyList));
@@ -790,9 +805,14 @@ exports.mynft = async (req, res, next) => {
 
             console.log('nftList::', nftList)
 
+            let mallUrl = devMallUrl;
+            if (comUtil.fnIsProd()) {
+                mallUrl = nftMallUrl;
+            }
+
             res.render("sellRequest", {
                 "config": config,
-                "nftMallUrl": nftMallUrl,
+                "nftMallUrl": mallUrl,
                 "nftList": nftList,
                 "userId": userId,
             })
@@ -988,13 +1008,18 @@ exports.haveNft = async (req, res, next) => {
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
 
+            let mallUrl = devMallUrl;
+            if (comUtil.fnIsProd()) {
+                mallUrl = nftMallUrl;
+            }
+
             console.log({pagination});
             res.render("haveNft", {
                 "nftList": nftList,
                 "pagination": pagination,
                 'amount': req.session.amount,
                 'config': config,
-                "nftMallUrl": nftMallUrl,
+                "nftMallUrl": mallUrl,
                 'userId': userId,
                 "menuNum":6
             })

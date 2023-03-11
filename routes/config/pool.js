@@ -11,10 +11,25 @@ Promise.promisifyAll(require("mysql/lib/Pool").prototype);
 */
 const PropertiesReader = require('properties-reader');
 const properties = PropertiesReader('pay.properties');
-const host = properties.get('com.db.host');
-const user = properties.get('com.db.user');
-const pass = properties.get('com.db.pass');
-const database = properties.get('com.db.database');
+const path = require("path");
+const comUtil = require(path.join(process.cwd(), '/routes/services/comUtil'))
+
+let host = "";
+let user = "";
+let pass = "";
+let database = "";
+
+if(comUtil.fnIsProd()){
+  host = properties.get('com.db.host');
+  user = properties.get('com.db.user');
+  pass = properties.get('com.db.pass');
+  database = properties.get('com.db.database');
+}else{
+  host = properties.get('dev.db.host');
+  user = properties.get('dev.db.user');
+  pass = properties.get('dev.db.pass');
+  database = properties.get('dev.db.database');
+}
 
 const DB_INFO = {
   host     : host,
