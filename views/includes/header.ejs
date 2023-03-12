@@ -75,6 +75,7 @@
     function fnRefreshModal(text) {
         Swal.fire({
             text: text,
+            showCloseButton: true,
             heightAuto: false,
         }).then((result) => {
             if (result.isConfirmed) {

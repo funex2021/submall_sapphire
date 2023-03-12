@@ -85,7 +85,6 @@ app.use(function (req, res, next) {
             return;
         } else {
             if (req.isAuthenticated()) {
-                console.log('login!@')
                 let airdropInfo = await fnGetAirdropInfo(req.user.mSeq, conn);
                 if(airdropInfo.length > 0) {
                     res.locals.airdropPrice = airdropInfo[0].price;
@@ -125,7 +124,7 @@ function fnGetConfigInfo(param, conn) {
 */
 function fnGetAirdropInfo(mSeq, conn) {
     return new Promise(function (resolve, reject) {
-        var sql = " select tot_price price from cs_nft_airdrop cna where m_seq = '" + mSeq + "' and use_yn = 'Y' order by create_dt desc limit 1 "
+        var sql = " select ifnull(tot_price,0) price from cs_nft_airdrop cna where m_seq = '" + mSeq + "' and use_yn = 'Y' order by create_dt desc limit 1 "
 
         console.log(sql)
         conn.query(sql, (err, ret) => {
@@ -277,4 +276,6 @@ app.use(function (err, req, res, next) {
 var server = app.listen(port, function () {
     console.log("Express server has started on port " + port)
 });
+
+
 

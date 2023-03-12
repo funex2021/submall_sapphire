@@ -280,6 +280,124 @@ module.exports = (pool) => {
 
     }));
 
+    // 로그인
+    passport.use('pass-Signin', new LocalStrategy({ // local-signin 라는 전략을짭니다.
+        usernameField: 'memId',
+        passwordField: 'memPass',
+        session: true, // 세션에 저장 여부
+        passReqToCallback: true // 인증을 수행하는 인증 함수로 HTTP request를 그대로  전달할지 여부를 결정한다
+    }, async function (req, memId, memPass, done) {
+        var obj = {};
+        obj.memId = memId;
+
+        let pool = req.app.get('pool');
+        let mydb = new Mydb(pool);
+
+
+        //login log
+        var logObj = {};
+        logObj.cmpnyCd = "";
+        logObj.mSeq = "";
+        logObj.payCode = "login";
+        logObj.payRequest = memId;
+        logObj.userIp = requestIp.getClientIp(req);
+
+        mydb.executeTx(async conn => {
+            try {
+                let domain = '';
+                if(req.headers.host.indexOf('localhost') > -1){
+                    domain = localUrl;
+                }else{
+                    domain = req.headers.host;
+                }
+                obj.domain = domain;
+                let config = await fnGetConfigInfo(obj, conn);
+
+                let user = {};
+
+                obj.cmpnyNm = config.company_nm;
+                if (memId == config.company_nm) {
+                    //nft몰 companyCd 가져오기
+                    obj.cmpnyNm = 'nft';
+                    user.adminYn = 'Y'
+                } else {
+                    user.adminYn = 'N'
+                }
+
+                let memInfo = await fnGetCompanyInfo(obj, conn);
+
+                if (memInfo.length > 0) {
+                    user.mSeq = memInfo[0].m_seq;
+                    user.memId = memInfo[0].mem_id;
+                    user.cmpnyCd = memInfo[0].cmpny_cd; //req.user.cmpnyCd;
+                    user.memNm = memInfo[0].mem_nm;
+                    user.coinAddr = memInfo[0].coin_addr;
+                    user.bankSeq = memInfo[0].bank_seq;
+                    user.authYn = 'Y';
+
+                    //ip check
+                    obj.cmpnyCd = memInfo[0].cmpny_cd;
+                    let ip = requestIp.getClientIp(req);
+                    console.log('ip : ' + ip)
+                    var ipList = await fnGetIpList(obj, conn);
+                    console.log('ipList : ' + JSON.stringify(ipList));
+                    var isContainsIP = true;
+                    for (i = 0; i < ipList.length; i++) {
+                        console.log('ipList[' + i + '].user_ip : ' + ipList[i].user_ip)
+                        if (ipList[i].user_ip == ip) isContainsIP = false;
+                    }
+                    if (!isContainsIP) {
+                        logObj.payResponse = '차단된 아이피 입니다.';
+                        logObj.isSuccess = "00"
+                        // logObj.cmpnyCd = domain;
+                        await fnSetHistory(logObj, conn);
+                        return done(null, null, {message: '차단된 아이피 입니다.'});
+                    }
+
+
+                    let companyName = config.company_nm;
+
+                    user.ucompanyName = companyName.toUpperCase();
+                    user.companyName = companyName;
+
+                    if (tableVer == 0) {
+                        user.cs_coin_sell = "cs_" + cointable + "_sell";
+                        user.cs_coin_trans = "cs_" + cointable + "_trans";
+                        user.cs_nft_sell = "cs_nft_sell";
+                        user.cs_nft_trans = "cs_nft_trans";
+                    } else {
+                        user.cs_coin_sell = "cs_" + cointable + "_sell_" + companyName;
+                        user.cs_coin_trans = "cs_" + cointable + "_trans_" + companyName;
+                        user.cs_coin_sell_detail = "cs_" + cointable + "_sell_detail_" + companyName;
+                        user.cs_coin_trans_detail = "cs_" + cointable + "_trans_detail_" + companyName;
+                        user.cs_nft_sell = "cs_nft_sell_" + companyName;
+                        user.cs_nft_trans = "cs_nft_trans_" + companyName;
+                    }
+
+                    logObj.mSeq = memInfo[0].m_seq;
+                    logObj.cmpnyCd = memInfo[0].cmpny_cd;
+                    logObj.payResponse = "login seccess"
+                    logObj.isSuccess = "01"
+                    await fnSetHistory(logObj, conn);
+
+                    done(null, user);
+                } else {
+                    logObj.payResponse = '존재하지 않은 아이디입니다. ID를 확인해 주세요'
+                    logObj.isSuccess = "00"
+                    // logObj.cmpnyCd = domain;
+                    await fnSetHistory(logObj, conn);
+                    console.log('존재하지 않은 아이디입니다. ID를 확인해 주세요')
+                    return done(null, user, {message: '존재하지 않은 아이디입니다. ID를 확인해 주세요'});
+                }
+            } catch (e) {
+                return done(e)
+            }
+
+        })
+
+    }));
+
+
 
     /*
     * 회원조회

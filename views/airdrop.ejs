@@ -57,18 +57,18 @@
                                                                         <tr>
                                                                             <td class="nftmax-table__column-2 nftmax-table__data-2">
                                                                                 <div class="nftmax-table__product">
-                                                                                    <a href="javascript:void(0);" onclick="fnGetNftImageInfo('http://nftnting.com','<%= el.nft_img %>');">
+                                                                                    <a href="javascript:void(0);" onclick="fnGetNftImageInfo('<%= mallUrl %>','<%= el.nft_img %>');">
                                                                                         <div class="nftmax-table__product-img">
-                                                                                            <img src="http://nftnting.com/<%= el.nft_img %>" alt="#">
+                                                                                            <img src="<%= mallUrl %><%= el.nft_img %>" alt="#">
                                                                                         </div>
                                                                                     </a>
                                                                                     <div class="nftmax-table__product-content">
-                                                                                        <a href="javascript:void(0);" onclick="fnGetNftImageInfo('http://nftnting.com','<%= el.nft_img %>');">
+                                                                                        <a href="javascript:void(0);" onclick="fnGetNftImageInfo('<%= mallUrl %>','<%= el.nft_img %>');">
                                                                                             <h4 class="nftmax-table__product-title">
                                                                                                 <%= el.nft_nm %>
                                                                                             </h4>
                                                                                         </a>
-                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="javascript:void(0);">MATC</a></p>
+                                                                                        <p class="nftmax-table__product-desc">Owned by  <a href="javascript:void(0);">GGMNFT</a></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -293,13 +293,13 @@
                         pcHtml +=   '<td class="nftmax-table__column-2 nftmax-table__data-2">';
                         pcHtml +=       '<div class="nftmax-table__product">';
                         pcHtml +=           '<div class="nftmax-table__product-img">'; 
-                        pcHtml +=               '<img src="http://nftnting.com/' + airList[i].nft_img + '" alt="#">'; 
+                        pcHtml +=               '<img src="<%= mallUrl %>/' + airList[i].nft_img + '" alt="#">'; 
                         pcHtml +=           '</div>'; 
                         pcHtml +=           '<div class="nftmax-table__product-content">'; 
                         pcHtml +=               '<h4 class="nftmax-table__product-title">'; 
                         pcHtml +=                   airList[i].nft_nm; 
                         pcHtml +=               '</h4>'; 
-                        pcHtml +=               '<p class="nftmax-table__product-desc">Owned by  <a href="javascript:void(0);">MATC</a></p>';
+                        pcHtml +=               '<p class="nftmax-table__product-desc">Owned by  <a href="javascript:void(0);">GGMNFT</a></p>';
                         pcHtml +=           '</div>'; 
                         pcHtml +=       '</div>'; 
                         pcHtml +=   '</td>'; 

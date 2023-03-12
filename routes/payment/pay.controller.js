@@ -344,22 +344,22 @@ exports.buy = async (req, res, next) => {
 
                                         await Query.QSetInsNftBuy(nftBuyObj, conn);
 
-                                        // for (let j=0; j<nftBuyObj.buyAmount; j++) {
-                                        //     //매출 api 호출
-                                        //     let data = {};
-                                        //     data.m_id = req.user.memId;
-                                        //     data.buy_seq = nftBuyObj.buySeq;
-                                        //     data.nft_seq = nftSellInfo[0].nft_seq;
-                                        //     data.tkn_id = j;
-                                        //     data.pdt_nm = nftSellInfo[0].nft_nm;
-                                        //     data.pdt_price = nftSellInfo[0].sell_price;
-                                        //     data.pdt_desc = nftSellInfo[0].nft_desc;
-                                        //     data.nft_url = nftMallUrl + nftSellInfo[0].nft_img;
-                                        //     data.ardrp_gubun = 'SALE000000000000001';
-                                        //     data.sls_sts = 'SALE000000000000004';
+                                        for (let j=0; j<nftBuyObj.buyAmount; j++) {
+                                            //매출 api 호출
+                                            let data = {};
+                                            data.m_id = req.user.memId;
+                                            data.buy_seq = nftBuyObj.buySeq;
+                                            data.nft_seq = nftSellInfo[0].nft_seq;
+                                            data.tkn_id = j;
+                                            data.pdt_nm = nftSellInfo[0].nft_nm;
+                                            data.pdt_price = nftSellInfo[0].sell_price;
+                                            data.pdt_desc = nftSellInfo[0].nft_desc;
+                                            data.nft_url = nftMallUrl + nftSellInfo[0].nft_img;
+                                            data.ardrp_gubun = 'SALE000000000000001';
+                                            data.sls_sts = 'SALE000000000000004';
 
-                                        //     await apiUtil.fnApiCall("/api/sales", data);
-                                        // }
+                                            await apiUtil.fnApiCall("/api/sales", data);
+                                        }
                                     }
 
                                     if (parseInt(totalPrice) == selectTotalPrice) {
@@ -502,10 +502,13 @@ exports.withdraw = async (req, res, next) => {
             }else{
                 domain = req.headers.host;
             }
-            console.log('domain : ' + domain)
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
 
+            let mallUrl = devMallUrl;
+            if (comUtil.fnIsProd()) {
+                mallUrl = nftMallUrl;
+            }
             console.log({pagination});
             res.render("withdraw", {
                 'cmpnyInfo': cmpnyInfo[0],
@@ -513,6 +516,7 @@ exports.withdraw = async (req, res, next) => {
                 "pagination": pagination,
                 "coinObj": balance[0].balance,
                 'amount': req.session.amount,
+                "mallUrl" : mallUrl,
                 'config': config,
                 'srtDt': srtDt,
                 'endDt': endDt,
@@ -685,6 +689,8 @@ exports.buyCancel = async (req, res, next) => {
             obj.buy_status = 'CMDT00000000000086';
             await Query.QUptNftBuyStatus(obj, conn);
 
+            //todo 취소 값으로 api 호출
+
             conn.commit();
 
             res.json(rtnUtil.successTrue("200", ''));
@@ -723,7 +729,7 @@ exports.notice = async (req, res, next) => {
             }else{
                 domain = req.headers.host;
             }
-            console.log('domain : ' + domain)
+      
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
 
@@ -891,9 +897,13 @@ exports.airView = async (req, res, next) => {
             }else{
                 domain = req.headers.host;
             }
-            console.log('domain : ' + domain)
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
+
+            let mallUrl = devMallUrl;
+            if (comUtil.fnIsProd()) {
+                mallUrl = nftMallUrl;
+            }
 
             console.log({pagination});
             res.render("airdrop", {
@@ -902,6 +912,7 @@ exports.airView = async (req, res, next) => {
                 "pagination": pagination,
                 "coinObj": balance[0].balance,
                 'amount': req.session.amount,
+                'mallUrl' : mallUrl,
                 'config': config,
                 'srtDt': srtDt,
                 'endDt': endDt,
@@ -995,16 +1006,14 @@ exports.haveNft = async (req, res, next) => {
             pagination.totalItems = totalPageCount;
 
             let nftList = await Query.QGetMyNftList(obj, conn);
-
-            console.log('nftList : ', nftList)
-
+            
             let domain = '';
             if(req.headers.host.indexOf('localhost') > -1){
                 domain = localUrl;
             }else{
                 domain = req.headers.host;
             }
-            console.log('domain : ' + domain)
+      
             obj.domain = domain;
             let config = await Query.QGetConfigInfo(obj, conn);
 
@@ -1120,7 +1129,7 @@ exports.sell = async (req, res, next) => {
                                 obj.platformAmount = Number(sellPrice) * (Number(config.platform_fee) / 100);
                                 obj.platformAmount = obj.platformAmount < 1000 ? 1000 : obj.platformAmount;
                                 await Query.QInsCoinSellCacl(obj, conn);
-                                
+
                                 res.json(rtnUtil.successTrue("200", "", ""));
                             } catch (e) {
                                 conn.rollback();

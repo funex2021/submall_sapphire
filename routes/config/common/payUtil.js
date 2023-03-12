@@ -29,7 +29,7 @@ var isStatusCheck = async function (req, res, next) {
         domain = req.headers.host;
       }
 
-      console.log('domain : ' + domain)
+
       obj.domain = domain;
       let config = await fnGetConfigInfo(obj, conn);
       console.log('config : ' + JSON.stringify(config))
@@ -43,7 +43,7 @@ var isStatusCheck = async function (req, res, next) {
             }else{
               domain = req.headers.host;
             }
-            console.log('domain : ' + domain)
+      
             obj.domain = domain;
             res.render("login",{'alertMessage':'회원 정지 되었습니다.', 'config':config, 'userId':''})
             return;
@@ -125,7 +125,7 @@ var isStatusCheckAjax = async function (req, res, next) {
       }else{
         domain = req.headers.host;
       }
-      console.log('domain : ' + domain)
+
       obj.domain = domain;
       let config = await fnGetConfigInfo(obj, conn);
       if(config != null && config.is_auto_suspension_view == 'Y') {
