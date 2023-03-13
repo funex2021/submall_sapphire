@@ -91,9 +91,9 @@
                                                                             <div class="nftmax-paymentm__content">
                                                                                 <h4 class="nftmax-paymentm__title">은행정보</h4>
                                                                                 <% if (memInfo.user_bank != ''){%>
-                                                                                    <p class="nftmax-paymentm__text">은행 : <%=memInfo.user_bank%></p>
-                                                                                    <p class="nftmax-paymentm__text">예금주 : <%=memInfo.user_holder%></p>
-                                                                                    <p class="nftmax-paymentm__text">계좌번호 : <a href="javascript:void(0);" onclick="fnCopy('<%=memInfo.user_num%>')" style="text-decoration: underline;"><%=memInfo.user_num%></a></p>
+                                                                                    <p class="nftmax-paymentm__text" id="txt_user_bank">은행 : <%=memInfo.user_bank%></p>
+                                                                                    <p class="nftmax-paymentm__text" id="txt_user_holder">예금주 : <%=memInfo.user_holder%></p>
+                                                                                    <p class="nftmax-paymentm__text" id="txt_user_num">계좌번호 : <a href="javascript:void(0);" onclick="fnCopy('<%=memInfo.user_num%>')" style="text-decoration: underline;"><%=memInfo.user_num%></a></p>
                                                                                     <span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">변경</span>
                                                                                 <%}else{%>
                                                                                     <span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">등록</span>
@@ -458,7 +458,12 @@
             success: function (result) {
                 wrapWindowByMaskHide();
                 if (result.success) {
+                    $("#txt_user_bank").html('은행 : ' + $("#bank_info").val());
+                    $("#txt_user_holder").html('예금주 : ' + $("#acc_nm").val());
+                    $("#txt_user_num").html('계좌번호 : <a href="javascript:void(0);" onclick="fnCopy(' + $("#bank_acc").val()+ ');" style="text-decoration: underline;">' + $("#bank_acc").val()+'</a>');
+
                     fnAlertModal(result.message);
+                    fnBankCancel();
                 } else {
                     fnAlertModal(result.message);
                 }
