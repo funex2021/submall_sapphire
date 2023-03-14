@@ -1,11 +1,14 @@
 const axios = require('axios');
 const qs = require('qs');
 
+const path = require('path');
+
 const PropertiesReader = require('properties-reader');
 const properties = PropertiesReader('pay.properties');
+const devUrl = properties.get('dev.api.url');
 const apiUrl = properties.get('com.api.url');
+const comUtil = require(path.join(process.cwd(), '/routes/services/comUtil'))
 
-const path = require('path');
 const logUtil = require(path.join(process.cwd(), '/routes/services/logUtil'))
 
 //api 호출 함수
@@ -23,7 +26,10 @@ function fnApiCall(_url, _data, _contentType , _methodType){
             contentType = _contentType;
         }
 
-        let callApiUrl = apiUrl;
+        let callApiUrl = devUrl;
+        if(comUtil.fnIsProd){
+            callApiUrl = apiUrl;
+        }
 
         let methodType = 'post';
         if(_methodType != null && _methodType != ''){
