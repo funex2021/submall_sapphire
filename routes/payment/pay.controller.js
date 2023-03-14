@@ -309,7 +309,7 @@ exports.buy = async (req, res, next) => {
                                 //nft구매
                                 let nftBuyObj = {};
                                 nftBuyObj.coinSellSeq = obj.seq;
-                                nftBuyObj.mSeq = req.user.mSeq;;
+                                nftBuyObj.mSeq = req.user.mSeq;
                                 nftBuyObj.bankSeq = bankSeq;
 
                                 //지갑정보조회(limit1)
@@ -318,12 +318,27 @@ exports.buy = async (req, res, next) => {
 
                                 let totalPrice = 0;
                                 let selectTotalPrice = 0;
-
                                 for (let j=0; j<selectSellPriceArr.length; j++) {
                                     selectTotalPrice = selectTotalPrice + parseInt(selectSellPriceArr[j]);
                                 }
 
+
                                 if (selectSellSeqArr.length > 0) {
+                                    let domain = '';
+                                    if(req.headers.host.indexOf('localhost') > -1){
+                                        domain = localUrl;
+                                    }else{
+                                        domain = req.headers.host;
+                                    }
+                                    obj.domain = domain;
+                                    let feeConfig = await Query.QGetConfigInfo(obj, conn);
+                                    let checkPrice = selectTotalPrice * (1+Number(feeConfig.buy_fee)/100) * Number(operRate);
+                                    console.log('checkPrice' , checkPrice);
+                                    console.log('obj.buyNum' , obj.buyNum);
+                                    if(checkPrice != parseInt(obj.buyNum)){
+                                        conn.rollback();
+                                        return res.json(rtnUtil.successFalse("500", "결제금액이 상이 합니다. 다시 구매해 주세요.", "", ""));
+                                    }
                                     for (let i=0; i<selectSellSeqArr.length; i++) {
                                         nftBuyObj.buySeq = uuidv4();
                                         nftBuyObj.sellSeq = selectSellSeqArr[i];

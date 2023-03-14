@@ -95,7 +95,7 @@
                         </div>
                         <div class="welcome-cta__button">
                             <input type="hidden" class="text-primary" id="price" name="price" style="border: none; background-color: inherit;" readonly>
-                            <input class="nftmax-btn nftmax-btn__bordered bg" name="price_view" id="price_view" readonly style="cursor: not-allowed" value="0">
+                            <input class="nftmax-btn nftmax-btn__bordered bg" name="price_view" id="price_view" readonly style="cursor: not-allowed;max-width:80%" value="0">
                             <p class="nftmax-btn trs-white bl-color mb-0">KRW</p>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                                 <!-- End Single Wallet -->
                                 <!-- Single Wallet -->
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
-                                    <table id="nftmax-table__main" class="nftmax-table__main nftmax-table__main-v1">
+                                    <table id="nftmax-table__main" class="nftmax-table__main nftmax-table__main-v1" style="display: inline-block">
                                         <!-- NFTMax Table Head -->
                                         <thead class="nftmax-table__head">
                                         <tr>
@@ -183,8 +183,8 @@
 <!--                                </li>-->
                                 <li class="nftmax-wallet__list-single" style="padding : 5px 15px;">
                                     <div class="nftmax-balance-info mt-1">
-                                        <h4 style="margin-bottom: 1px;">NFT결제금액 :&nbsp;</h4>
-                                        <h4 style="margin-bottom: 1px;" id="totalPriceKrw"></h4>
+                                        <h4 style="margin-bottom: 1px;font-size: 14px;">NFT결제금액 :&nbsp;</h4>
+                                        <h4 style="margin-bottom: 1px;font-size: 14px;" id="totalPriceKrw"></h4>
                                     </div>
                                 </li>
                                 <input type="hidden" id="bank_seq">
@@ -404,6 +404,8 @@
             // buyType: buyType,
             operRate: operRate
         }
+
+        console.log('data' , data);
 
         wrapWindowByMaskShow();
         $.ajax({
