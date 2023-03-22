@@ -461,12 +461,19 @@
             success: function (result) {
                 wrapWindowByMaskHide();
                 if (result.success) {
-                    let html = "";
-                    html += '<p class="nftmax-paymentm__text">은행 : ' + $("#bank_info").val() + '</p>';
-                    html += '<p class="nftmax-paymentm__text">예금주 : ' +$("#acc_nm").val()+ '</p>';
-                    html += '<p class="nftmax-paymentm__text">계좌번호 : <a href="javascript:void(0);" onclick="fnCopy(' + $("#bank_acc").val()+ ');" style="text-decoration: underline;">' + $("#bank_acc").val()+'</a></p>';
-                    html += '<span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">변경</span>'
-                    $("#noHaveInfo").html(html);
+                    let bankInfo = '<%=memInfo.user_bank%>';
+                    if(!nullChk(bankInfo)){
+                        let html = "";
+                        html += '<p class="nftmax-paymentm__text" id="txt_user_bank">은행 : ' + $("#bank_info").val() + '</p>';
+                        html += '<p class="nftmax-paymentm__text" id="txt_user_holder">예금주 : ' +$("#acc_nm").val()+ '</p>';
+                        html += '<p class="nftmax-paymentm__text" id ="txt_user_num">계좌번호 : <a href="javascript:void(0);" onclick="fnCopy(' + $("#bank_acc").val()+ ');" style="text-decoration: underline;">' + $("#bank_acc").val()+'</a></p>';
+                        html += '<span class="nftmax-paymentm__badge nftmax__ok" onclick="fnBankModiry()" style="cursor: pointer;">변경</span>'
+                        $("#noHaveInfo").html(html);
+                    }else{
+                        $("#txt_user_bank").html('은행 : ' + $("#bank_info").val());
+                        $("#txt_user_holder").html('예금주: ' + $("#acc_nm").val());
+                        $("#txt_user_num").html('계좌번호 : <a href="javascript:void(0);" onclick="fnCopy(' + $("#bank_acc").val()+ ');" style="text-decoration: underline;">' + $("#bank_acc").val()+'</a>');
+                    }
                     fnAlertModal(result.message);
                     fnBankCancel();
                 } else {
