@@ -257,6 +257,9 @@
     function selectPrice(obj) {
         price.value = parseInt(price.value) + parseInt(obj.dataset.price);
         $("#price_view").val(Number(price.value).toLocaleString('ko-KR'));
+        if(selectSellSeqArr.length > 0){
+            return fnAlertModal('한번에 하나의 상품만 구매 가능합니다.');
+        }
         let html = "";
         fnAlertModal(obj.dataset.nftnm +' 상품을 선택하였습니다.');
         let selectRrice = obj.dataset.price;
